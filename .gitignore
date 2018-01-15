@@ -5,3 +5,4 @@ build/
 *.gch
 
 lib/nanogui/*
+lib/glm/*
