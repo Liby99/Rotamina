@@ -10,5 +10,10 @@ add_definitions(${NANOGUI_EXTRA_DEFS})
 
 include_directories(src/extern)
 
+file(GLOB animator_sources src/intern/*/*.cpp)
+SET(animator ${animator_sources})
+add_library(animator ${animator})
+target_link_libraries(animator nanogui ${NANOGUI_EXTRA_LIBS})
+
 add_executable(my_test test/my_test.cpp)
-target_link_libraries(my_test nanogui ${NANOGUI_EXTRA_LIBS})
+target_link_libraries(my_test animator)

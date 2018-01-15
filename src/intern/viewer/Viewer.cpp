@@ -1,9 +1,5 @@
 #include "viewer/Viewer.h"
 
-const int Viewer::DEFAULT_WIDTH = 1440;
-const int Viewer::DEFAULT_HEIGHT = 960;
-const std::string Viewer::DEFAULT_NAME = "CSE 169 Animation Viewer";
-
 void Viewer::initiateLayout() {
     
     using namespace nanogui;
@@ -12,7 +8,7 @@ void Viewer::initiateLayout() {
 }
 
 void Viewer::draw(NVGcontext * ctx) {
-    Screen.draw(ctx);
+    Screen::draw(ctx);
 }
 
 void Viewer::drawContents() {
@@ -32,7 +28,7 @@ void Viewer::drawContents() {
     mShader.drawIndexed(GL_TRIANGLES, 0, 2);
 }
 
-Viewer::Viewer() : nanogui::Screen(Eigen::Vector2i(Viewer::DEFAULT_WIDTH, Viewer::DEFAULT_HEIGHT), Viewer::DEFAULT_NAME) {
+Viewer::Viewer() : nanogui::Screen(Eigen::Vector2i(1440, 960), "CSE 169 Animation Viewer") {
     
     using namespace nanogui;
     

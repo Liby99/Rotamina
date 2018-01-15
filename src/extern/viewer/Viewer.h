@@ -22,11 +22,6 @@ class Viewer : public nanogui::Screen {
         
     public:
         
-        // Size default values
-        const int DEFAULT_WIDTH;
-        const int DEFAULT_HEIGHT;
-        const std::string DEFAULT_NAME;
-        
         Viewer();
         ~Viewer();
         
