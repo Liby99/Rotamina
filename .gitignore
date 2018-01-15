@@ -1,4 +1,7 @@
 *.DS_Store
+
+build/
+
 *.gch
 
-include/nanogui/*
+lib/nanogui/*
