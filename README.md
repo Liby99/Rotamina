@@ -2,8 +2,6 @@
 
 ## Installation
 
-<!-- TODO -->
-
 ``` bash
-$ git clone ... --recursive
+$ git clone https://github.com/Liby99/CSE169-Animation.git --recursive
 ```
