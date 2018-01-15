@@ -1,34 +1,9 @@
 #include "viewer/Viewer.h"
 
-void Viewer::initiateLayout() {
-    
-    using namespace nanogui;
-    
-    // TODO: Initiate Layout
-}
+Viewer * Viewer::app = nullptr;
 
-void Viewer::draw(NVGcontext * ctx) {
-    Screen::draw(ctx);
-}
-
-void Viewer::drawContents() {
-    using namespace nanogui;
-
-    /* Draw the window contents using OpenGL */
-    mShader.bind();
-
-    Matrix4f mvp;
-    mvp.setIdentity();
-    mvp.topLeftCorner<3,3>() = Matrix3f(Eigen::AngleAxisf((float) glfwGetTime(),  Vector3f::UnitZ())) * 0.25f;
-
-    mvp.row(0) *= (float) mSize.y() / (float) mSize.x();
-    
-    mShader.setUniform("modelViewProj", mvp);
-    
-    mShader.drawIndexed(GL_TRIANGLES, 0, 2);
-}
-
-Viewer::Viewer() : nanogui::Screen(Eigen::Vector2i(1440, 960), "CSE 169 Animation Viewer") {
+Viewer::Viewer(int width, int height, std::string name) :
+nanogui::Screen(Eigen::Vector2i(width, height), name) {
     
     using namespace nanogui;
     
@@ -71,4 +46,55 @@ Viewer::Viewer() : nanogui::Screen(Eigen::Vector2i(1440, 960), "CSE 169 Animatio
 
 Viewer::~Viewer() {
     mShader.free();
+}
+
+void Viewer::initiateLayout() {
+    
+    using namespace nanogui;
+    
+    // TODO: Initiate Layout
+}
+
+void Viewer::draw(NVGcontext * ctx) {
+    Screen::draw(ctx);
+}
+
+void Viewer::drawContents() {
+    using namespace nanogui;
+
+    /* Draw the window contents using OpenGL */
+    mShader.bind();
+
+    Matrix4f mvp;
+    mvp.setIdentity();
+    mvp.topLeftCorner<3,3>() = Matrix3f(Eigen::AngleAxisf((float) glfwGetTime(),  Vector3f::UnitZ())) * 0.25f;
+
+    mvp.row(0) *= (float) mSize.y() / (float) mSize.x();
+    
+    mShader.setUniform("modelViewProj", mvp);
+    
+    mShader.drawIndexed(GL_TRIANGLES, 0, 2);
+}
+
+void Viewer::initiate(int width, int height, std::string name, std::function<void(Viewer &)> f) {
+    try {
+        nanogui::init();
+        
+        if (app) {
+            delete app;
+            app = nullptr;
+        }
+        
+        app = new Viewer(width, height, name);
+        f(*app);
+        app->drawAll();
+        app->setVisible(true);
+        nanogui::mainloop();
+        
+        nanogui::shutdown();
+    }
+    catch (const std::runtime_error &e) {
+        std::string error_msg = std::string("Caught a fatal error: ") + std::string(e.what());
+        std::cerr << error_msg << std::endl;
+    }
 }
