@@ -56,22 +56,6 @@ void Viewer::draw(NVGcontext * ctx) {
 void Viewer::drawContents() {
     using namespace nanogui;
     
-    // int currTime = glfwGetTime();
-    
-    // Matrix4 view = camera->getViewMatrix(currTime);
-    // Matrix4 pers = camera->getPerspectiveMatrix(currTime);
-    //
-    // Matrix4 vp = view * pers;
-    //
-    // for (Object * object : objects) {
-    //     Matrix4 mvp = object->getModelMatrix() * vp;
-    //
-    //     shader.setUniform("modelViewProj", mvp);
-    //
-    //     object->;
-    // }
-    //
-    
     shader.bind();
     
     MatrixXu indices(3, 2); /* Draw 2 triangles */
