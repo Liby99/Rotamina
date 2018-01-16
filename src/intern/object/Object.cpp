@@ -53,10 +53,10 @@ void Object::draw() {
     indices.col(1) << 2, 3, 0;
     
     MatrixXf positions(3, 4);
-    positions.col(0) << -1, -1, 0;
-    positions.col(1) <<  1, -1, 0;
-    positions.col(2) <<  1,  1, 0;
-    positions.col(3) << -1,  1, 0;
+    positions.col(0) << -0.1, -0.1, 0;
+    positions.col(1) <<  0.1, -0.1, 0;
+    positions.col(2) <<  0.1,  0.1, 0;
+    positions.col(3) << -0.1,  0.1, 0;
     
     MatrixXf normals(3, 4);
     normals.col(0) << 0, 0, 1;

@@ -3,16 +3,25 @@
 using namespace rotamina;
 
 Viewer::Viewer(int width, int height, std::string name) : nanogui::Screen(Eigen::Vector2i(width, height), name) {
+    
+    // Initiate camera
     camera = rotamina::Camera();
     camera.setAspect((float) width / (float) height);
-}
-
-Viewer::~Viewer() {
     
+    // Initiate keyboard array
+    for (int i = 0; i < 128; i++) {
+        keyboard[i] = false;
+    }
 }
 
-void Viewer::initiateLayout() {
-    // TODO: Initiate Layout
+bool Viewer::keyboardEvent(int key, int scancode, int action, int modifiers) {
+    keyboard[key] = (action == GLFW_PRESS);
+    return true;
+}
+
+bool Viewer::resizeEvent(const Eigen::Vector2i & size) {
+    camera.setAspect((float) size[0] / (float) size[1]);
+    return true;
 }
 
 void Viewer::draw(NVGcontext * ctx) {
@@ -20,6 +29,12 @@ void Viewer::draw(NVGcontext * ctx) {
 }
 
 void Viewer::drawContents() {
+    
+    Eigen::Vector3f pos = camera.getPosition();
+    pos = Eigen::AngleAxisf((float) glfwGetTime() - prevTime, Eigen::Vector3f(0, 1, 0)) * pos;
+    camera.setPosition(pos);
+    prevTime = (float) glfwGetTime();
+    
     Eigen::Matrix4f vp = camera.getViewPerspective();
     for (rotamina::Object * obj : objects) {
         Eigen::Matrix4f model = obj->getTransform();
@@ -45,10 +60,15 @@ rotamina::Object & Viewer::getObject(int index) {
 void Viewer::createViewer(int width, int height, std::string name, std::function<void(Viewer &)> init) {
     try {
         nanogui::init();
+        
+        // Initiate the viewer
         Viewer viewer = Viewer(width, height, name);
         init(viewer);
         viewer.drawAll();
         viewer.setVisible(true);
+        
+        // Setup the function
+        
         nanogui::mainloop();
         nanogui::shutdown();
     }

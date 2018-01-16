@@ -111,8 +111,8 @@ Eigen::Matrix4f Transform::perspective(float fovy, float aspect, float zNear, fl
 
 Eigen::Matrix4f Transform::lookAt(const Eigen::Vector3f & position, const Eigen::Vector3f & target, const Eigen::Vector3f & up) {
     Eigen::Vector3f z = position - target,
-                    y = up,
-                    x = y.cross(z);
+                    x = up.cross(z),
+                    y = z.cross(x);
     x.normalize();
     y.normalize();
     z.normalize();

@@ -5,6 +5,7 @@
 #include <nanogui/glutil.h>
 #include <nanogui/screen.h>
 
+#include <cmath>
 #include <iostream>
 #include <string>
 #include <functional>
@@ -21,11 +22,15 @@ namespace rotamina {
             rotamina::Camera camera;
             std::vector<rotamina::Object *> objects;
             
-            Viewer(int width, int height, std::string name);
-            ~Viewer();
+            float prevTime = 0.0f;
+            Eigen::Vector2i mousePos;
+            bool keyboard[128];
             
-            void setup(std::function<void()> f);
-            void initiateLayout();
+            Viewer(int width, int height, std::string name);
+            
+            virtual bool keyboardEvent(int key, int scancode, int action, int modifiers);
+            virtual bool resizeEvent(const Eigen::Vector2i & size);
+            
             virtual void draw(NVGcontext * ctx);
             virtual void drawContents();
             
