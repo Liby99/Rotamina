@@ -2,8 +2,6 @@
 
 using namespace rotamina;
 
-Viewer * Viewer::app = nullptr;
-
 Viewer::Viewer(int width, int height, std::string name) : nanogui::Screen(Eigen::Vector2i(width, height), name) {
     
     // Setup the camera
@@ -14,7 +12,7 @@ Viewer::Viewer(int width, int height, std::string name) : nanogui::Screen(Eigen:
 }
 
 Viewer::~Viewer() {
-    
+    deleteObjects();
 }
 
 void Viewer::initiateLayout() {
@@ -45,13 +43,19 @@ void Viewer::drawContents() {
     }
 }
 
-void Viewer::initiate(int width, int height, std::string name, std::function<void(Viewer &)> init) {
+void Viewer::deleteObjects() {
+    for (rotamina::Object * obj : objects) {
+        delete obj;
+    }
+}
+
+void Viewer::createViewer(int width, int height, std::string name, std::function<void(Viewer &)> init) {
     try {
         nanogui::init();
-        viewer = new Viewer(width, height, name);
-        init(*viewer);
-        viewer->drawAll();
-        viewer->setVisible(true);
+        Viewer viewer = Viewer(width, height, name);
+        init(viewer);
+        viewer.drawAll();
+        viewer.setVisible(true);
         nanogui::mainloop();
         nanogui::shutdown();
     }

@@ -34,9 +34,19 @@ namespace rotamina {
             Eigen::Vector3f getTarget() const;
             Eigen::Vector3f getUp() const;
             
+            float getZNear() const;
+            float getZFar() const;
+            float getAspect() const;
+            float getFovy() const;
+            
             void setPosition(Eigen::Vector3f position);
             void setTarget(Eigen::Vector3f target);
             void setUp(Eigen::Vector3f up);
+            
+            void setZNear(float zNear);
+            void setZFar(float zFar);
+            void setAspect(float aspect);
+            void setFovy(float fovy);
     };
 }
 

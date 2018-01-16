@@ -18,8 +18,6 @@ namespace rotamina {
     class Viewer : public nanogui::Screen {
         private:
             
-            static Viewer * app;
-            
             Camera camera;
             std::vector<rotamina::Object *> objects;
             
@@ -31,9 +29,11 @@ namespace rotamina {
             virtual void draw(NVGcontext * ctx);
             virtual void drawContents();
             
+            void deleteObjects();
+            
         public:
             
-            static void initiate(int width, int height, std::string name, std::function<void(Viewer &)> f);
+            static void createViewer(int width, int height, std::string name, std::function<void(Viewer &)> f);
     };
 }
 
