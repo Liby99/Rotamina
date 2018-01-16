@@ -17,7 +17,7 @@
 namespace rotamina {
     
     class Viewer : public nanogui::Screen {
-        private:
+        protected:
             
             rotamina::Camera camera;
             std::vector<rotamina::Object *> objects;
@@ -27,6 +27,7 @@ namespace rotamina {
             bool keyboard[128];
             
             Viewer(int width, int height, std::string name);
+            ~Viewer();
             
             virtual bool keyboardEvent(int key, int scancode, int action, int modifiers);
             virtual bool resizeEvent(const Eigen::Vector2i & size);
@@ -38,7 +39,6 @@ namespace rotamina {
             
             Camera & getCamera();
             void addObject(rotamina::Object & obj);
-            rotamina::Object & getObject(int index);
             
             static void createViewer(int width, int height, std::string name, std::function<void(Viewer &)> f);
     };

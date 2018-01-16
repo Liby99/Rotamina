@@ -14,6 +14,12 @@ Viewer::Viewer(int width, int height, std::string name) : nanogui::Screen(Eigen:
     }
 }
 
+Viewer::~Viewer() {
+    for (rotamina::Object * obj : objects) {
+        delete obj;
+    }
+}
+
 bool Viewer::keyboardEvent(int key, int scancode, int action, int modifiers) {
     keyboard[key] = (action == GLFW_PRESS);
     return true;
@@ -30,17 +36,21 @@ void Viewer::draw(NVGcontext * ctx) {
 
 void Viewer::drawContents() {
     
+    // Refresh camera position and get view perspective
     Eigen::Vector3f pos = camera.getPosition();
     pos = Eigen::AngleAxisf((float) glfwGetTime() - prevTime, Eigen::Vector3f(0, 1, 0)) * pos;
     camera.setPosition(pos);
     prevTime = (float) glfwGetTime();
-    
     Eigen::Matrix4f vp = camera.getViewPerspective();
+    
+    // Draw every object
     for (rotamina::Object * obj : objects) {
+        
+        obj->shader->bind();
         Eigen::Matrix4f model = obj->transform.getTransform();
         Eigen::Matrix4f mvp = model * vp;
-        obj->shader.setUniform("ModelMtx", model);
-        obj->shader.setUniform("ModelViewProjMtx", mvp);
+        obj->shader->setUniform("ModelMtx", model);
+        obj->shader->setUniform("ModelViewProjMtx", mvp);
         obj->draw();
     }
 }
@@ -51,10 +61,6 @@ rotamina::Camera & Viewer::getCamera() {
 
 void Viewer::addObject(rotamina::Object & obj) {
     objects.push_back(&obj);
-}
-
-rotamina::Object & Viewer::getObject(int index) {
-    return *(objects[index]);
 }
 
 void Viewer::createViewer(int width, int height, std::string name, std::function<void(Viewer &)> init) {

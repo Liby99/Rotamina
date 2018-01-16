@@ -1,11 +1,15 @@
+#include <iostream>
+
 #include "utility/Shader.h"
 
 using namespace rotamina;
 
-Shader::Shader() {
+Shader * Shader::defaultShader = nullptr;
+
+Shader::Shader() : nanogui::GLShader() {
     init(
         /* An identifying name */
-        "default_shader",
+        "DEFAULT_SHADER",
 
         /* Vertex shader */
         "#version 400\n"
@@ -36,4 +40,17 @@ Shader::Shader() {
         "    finalColor=sqrt(reflectance);\n"
         "}"
     );
+}
+
+Shader * Shader::getDefaultShader() {
+    if (!defaultShader) {
+        defaultShader = new Shader();
+    }
+    return defaultShader;
+}
+
+void Shader::finish() {
+    if (defaultShader) {
+        delete defaultShader;
+    }
 }

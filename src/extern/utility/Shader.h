@@ -8,9 +8,17 @@
 namespace rotamina {
     
     class Shader : public nanogui::GLShader {
+        private:
+            
+            static Shader * defaultShader;
+            
         public:
+            
             Shader();
             // Shader(std::string filename)
+            
+            static Shader * getDefaultShader();
+            static void finish();
     };
 }
 

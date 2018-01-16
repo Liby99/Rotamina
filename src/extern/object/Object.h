@@ -12,11 +12,12 @@ namespace rotamina {
         public:
             
             Transform transform;
-            Shader shader;
+            Shader * shader;
             
             Object();
             
             virtual void draw();
+            virtual void setShader(Shader & shader);
     };
 }
 
