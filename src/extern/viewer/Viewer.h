@@ -1,4 +1,5 @@
 #ifndef VIEWER_H
+#define VIEWER_H
 
 #include <nanogui/opengl.h>
 #include <nanogui/glutil.h>
@@ -7,19 +8,20 @@
 #include <iostream>
 #include <string>
 #include <functional>
-
-#include "viewer/Scene.h"
+#include <vector>
 
 class Viewer : public nanogui::Screen {
     private:
         
-        nanogui::GLShader mShader; // Temp
         static Viewer * app;
         
-        // Scene
-        // Scene * scene;
+        nanogui::GLShader shader; // Temp
         
-        Viewer(int width, int height, std::string);
+        // Scene
+        // Camera * camera;
+        // std::vector<Object *> objects;
+        
+        Viewer(int width, int height, std::string name);
         ~Viewer();
         
         void setup(std::function<void()> f);
@@ -30,9 +32,6 @@ class Viewer : public nanogui::Screen {
     public:
         
         static void initiate(int width, int height, std::string name, std::function<void(Viewer &)> f);
-        
-        // Setters
-        // void setScene(Scene & scene);
 };
 
 #endif
