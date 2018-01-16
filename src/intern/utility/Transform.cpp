@@ -1,5 +1,7 @@
 #include "utility/Transform.h"
 
+using namespace rotamina;
+
 Transform::Transform() {
     this->position = Eigen::Vector3f(0, 0, 0);
     this->rotation = Eigen::Vector3f(0, 0, 0);

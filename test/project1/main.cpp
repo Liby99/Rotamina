@@ -3,7 +3,7 @@
 
 #include "viewer/Viewer.h"
 
-#include "utility/Transform.h"
+using namespace rotamina;
 
 int main() {
     Viewer::initiate(1440, 960, "CSE 169 - Project 1", [](Viewer & v) {

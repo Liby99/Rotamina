@@ -25,7 +25,7 @@ include_directories(lib/glm/)
 include_directories(src/extern)
 
 # Compile all the cpp files and link to `animator` library along with NanoGui
-file(GLOB animator_sources src/intern/*/*.cpp)
+file(GLOB animator_sources src/intern/*.cpp src/intern/*/*.cpp src/intern/*/*/*.cpp)
 set(animator ${animator_sources})
 add_library(animator ${animator})
 target_link_libraries(animator nanogui ${NANOGUI_EXTRA_LIBS} glm)

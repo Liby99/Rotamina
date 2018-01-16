@@ -4,6 +4,8 @@
 
 #include "utility/Transform.h"
 
+using namespace rotamina;
+
 int main() {
     auto t = Transform();
     t.setPositionX(3);
