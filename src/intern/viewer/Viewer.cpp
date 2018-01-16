@@ -37,7 +37,7 @@ void Viewer::drawContents() {
     
     Eigen::Matrix4f vp = camera.getViewPerspective();
     for (rotamina::Object * obj : objects) {
-        Eigen::Matrix4f model = obj->getTransform();
+        Eigen::Matrix4f model = obj->transform.getTransform();
         Eigen::Matrix4f mvp = model * vp;
         obj->shader.setUniform("ModelMtx", model);
         obj->shader.setUniform("ModelViewProjMtx", mvp);
@@ -67,7 +67,8 @@ void Viewer::createViewer(int width, int height, std::string name, std::function
         viewer.drawAll();
         viewer.setVisible(true);
         
-        // Setup the function
+        // Hack TODO: Find a decent way to enable depth test
+        glEnable(GL_DEPTH_TEST);
         
         nanogui::mainloop();
         nanogui::shutdown();

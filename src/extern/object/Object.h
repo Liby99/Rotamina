@@ -3,22 +3,20 @@
 
 #include <nanogui/glutil.h>
 
+#include "utility/Shader.h"
 #include "utility/Transform.h"
 
 namespace rotamina {
     
     class Object {
-        private:
-            
         public:
             
             Transform transform;
-            nanogui::GLShader shader;
+            Shader shader;
             
             Object();
             
-            Eigen::Matrix4f getTransform() const;
-            void draw();
+            virtual void draw();
     };
 }
 
