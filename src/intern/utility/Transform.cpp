@@ -3,13 +3,21 @@
 using namespace rotamina;
 
 Transform::Transform() {
+    this->anchor = Eigen::Vector3f(0, 0, 0);
     this->position = Eigen::Vector3f(0, 0, 0);
     this->rotation = Eigen::Vector3f(0, 0, 0);
     this->scale = Eigen::Vector3f(1, 1, 1);
 }
 
 Eigen::Matrix4f Transform::getTransform() const {
-    return getTransitionMatrix() * getScaleMatrix() * getRotationMatrix();
+    return getTransitionMatrix() * // Transition
+           getAnchorMatrix() * // Then apply anchor
+           getScaleMatrix() * getRotationMatrix() * // Then scale and rotate
+           getInverseAnchorMatrix(); // First apply inverse anchor
+}
+
+Eigen::Vector3f Transform::getAnchor() const {
+    return anchor;
 }
 
 Eigen::Vector3f Transform::getPosition() const {
@@ -22,6 +30,22 @@ Eigen::Vector3f Transform::getRotation() const {
 
 Eigen::Vector3f Transform::getScale() const {
     return scale;
+}
+
+void Transform::setAnchor(Eigen::Vector3f anchor) {
+    this->anchor = anchor;
+}
+
+void Transform::setAnchorX(float x) {
+    this->anchor[0] = x;
+}
+
+void Transform::setAnchorY(float y) {
+    this->anchor[1] = y;
+}
+
+void Transform::setAnchorZ(float z) {
+    this->anchor[2] = z;
 }
 
 void Transform::setPosition(Eigen::Vector3f position) {
@@ -70,6 +94,45 @@ void Transform::setScaleY(float y) {
 
 void Transform::setScaleZ(float z) {
     this->scale[1] = z;
+}
+
+Eigen::Matrix4f Transform::perspective(float fovy, float aspect, float zNear, float zFar) {
+    float theta = fovy * pi / 360,
+          d = cos(theta) / sin(theta),
+          a = (zFar + zNear) / (zNear - zFar),
+          b = 2 * zFar * zNear / (zNear - zFar);
+    Eigen::Matrix4f mat;
+    mat << d / aspect, 0,  0, 0,
+           0,          d,  0, 0,
+           0,          0,  a, b,
+           0,          0, -1, 0;
+    return mat;
+}
+
+Eigen::Matrix4f Transform::lookAt(const Eigen::Vector3f & position, const Eigen::Vector3f & target, const Eigen::Vector3f & up) {
+    Eigen::Vector3f z = (position - target).norm(),
+                    y = up.norm(),
+                    x = y.cross(z).norm();
+    Eigen::Matrix4f mat;
+    mat << x[0], x[1], x[2], -x.dot(position),
+           y[0], y[1], y[2], -y.dot(position),
+           z[0], z[1], z[2], -z.dot(position),
+           0, 0, 0, 1;
+    return mat;
+}
+
+Eigen::Matrix4f getAnchorMatrix() const {
+    Eigen::Matrix4f mat;
+    mat.setIdentity();
+    mat.col(3) = Eigen::Vector4f(this->anchor[0], this->anchor[1], this->anchor[2], 1);
+    return mat;
+}
+
+Eigen::Matrix4f getInverseAnchorMatrix() const {
+    Eigen::Matrix4f mat;
+    mat.setIdentity();
+    mat.col(3) = Eigen::Vector4f(-this->anchor[0], –this->anchor[1], -this->anchor[2], 1);
+    return mat;
 }
 
 Eigen::Matrix4f Transform::getTransitionMatrix() const {

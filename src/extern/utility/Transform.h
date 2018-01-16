@@ -8,6 +8,7 @@ namespace rotamina {
     class Transform {
         public:
             
+            Eigen::Vector3f anchor;
             Eigen::Vector3f position;
             Eigen::Vector3f rotation;
             Eigen::Vector3f scale;
@@ -16,6 +17,7 @@ namespace rotamina {
             
             Eigen::Matrix4f getTransform() const;
             
+            Eigen::Vector3f getAnchor() const;
             Eigen::Vector3f getPosition() const;
             Eigen::Vector3f getRotation() const;
             Eigen::Vector3f getScale() const;
@@ -35,8 +37,13 @@ namespace rotamina {
             void setScaleY(float y);
             void setScaleZ(float z);
             
+            static Eigen::Matrix4f perspective(float fovy, float aspect, float zNear, float zFar);
+            static Eigen::Matrix4f lookAt(const vec3 & eye, const vec3 & center, const vec3 & up);
+            
         private:
             
+            Eigen::Matrix4f getAnchorMatrix() const;
+            Eigen::Matrix4f getInverseAnchorMatrix() const;
             Eigen::Matrix4f getTransitionMatrix() const;
             Eigen::Matrix4f getRotationMatrixX() const;
             Eigen::Matrix4f getRotationMatrixY() const;
