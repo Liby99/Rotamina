@@ -10,6 +10,7 @@
 #include <functional>
 #include <vector>
 
+#include "camera/Camera.h"
 #include "object/Object.h"
 
 namespace rotamina {
@@ -19,6 +20,7 @@ namespace rotamina {
             
             static Viewer * app;
             
+            Camera camera;
             std::vector<rotamina::Object *> objects;
             
             Viewer(int width, int height, std::string name);

@@ -1,6 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <cmath>
 #include <Eigen/Dense>
 
 #include "utility/Transform.h"

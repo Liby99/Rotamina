@@ -97,7 +97,7 @@ void Transform::setScaleZ(float z) {
 }
 
 Eigen::Matrix4f Transform::perspective(float fovy, float aspect, float zNear, float zFar) {
-    float theta = fovy * M_PI / 360,
+    float theta = fovy / 2,
           d = cos(theta) / sin(theta),
           a = (zFar + zNear) / (zNear - zFar),
           b = 2 * zFar * zNear / (zNear - zFar);

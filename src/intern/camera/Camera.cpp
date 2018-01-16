@@ -12,12 +12,12 @@ Camera::Camera(Eigen::Vector3f position, Eigen::Vector3f target, Eigen::Vector3f
     this->orientation = Eigen::Vector3f(0, 0, 0);
     this->zNear = 0.1f;
     this->zFar = 100.0f;
-    this->aspect = (float) 960 / (float) 1440;
-    this->fovy = 45;
+    this->aspect = (float) 1440 / (float) 960;
+    this->fovy = M_PI / 3.0f;
 }
 
 Eigen::Matrix4f Camera::getViewPerspective() const {
-    return getView() * getPerspective();
+    return getPerspective() * getView();
 }
 
 Eigen::Matrix4f Camera::getView() const {

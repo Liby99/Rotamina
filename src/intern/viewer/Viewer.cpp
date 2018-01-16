@@ -5,6 +5,11 @@ using namespace rotamina;
 Viewer * Viewer::app = nullptr;
 
 Viewer::Viewer(int width, int height, std::string name) : nanogui::Screen(Eigen::Vector2i(width, height), name) {
+    
+    // Setup the camera
+    camera = rotamina::Camera();
+    
+    // Add a default
     objects.push_back(new rotamina::Object());
 }
 
@@ -22,10 +27,11 @@ void Viewer::draw(NVGcontext * ctx) {
 
 void Viewer::drawContents() {
     
-    Eigen::Matrix4f vp;
-    vp.setIdentity();
-    vp.topLeftCorner<3,3>() = Eigen::Matrix3f(Eigen::AngleAxisf((float) glfwGetTime(), Eigen::Vector3f::UnitZ())) * 0.25f;
-    vp.row(0) *= (float) mSize.y() / (float) mSize.x();
+    // Eigen::Matrix4f vp;
+    // vp.setIdentity();
+    // vp.topLeftCorner<3,3>() = Eigen::Matrix3f(Eigen::AngleAxisf((float) glfwGetTime(), Eigen::Vector3f::UnitZ())) * 0.25f;
+    
+    Eigen::Matrix4f vp = camera.getViewPerspective();
     
     for (rotamina::Object * obj : objects) {
         
@@ -39,16 +45,14 @@ void Viewer::drawContents() {
     }
 }
 
-void Viewer::initiate(int width, int height, std::string name, std::function<void(Viewer &)> f) {
+void Viewer::initiate(int width, int height, std::string name, std::function<void(Viewer &)> init) {
     try {
         nanogui::init();
-        
-        app = new Viewer(width, height, name);
-        f(*app);
-        app->drawAll();
-        app->setVisible(true);
+        viewer = new Viewer(width, height, name);
+        init(*viewer);
+        viewer->drawAll();
+        viewer->setVisible(true);
         nanogui::mainloop();
-        
         nanogui::shutdown();
     }
     catch (const std::runtime_error &e) {
