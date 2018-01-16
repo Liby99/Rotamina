@@ -7,7 +7,7 @@ Viewer::Viewer(int width, int height, std::string name) : nanogui::Screen(Eigen:
     
     shader.init(
         /* An identifying name */
-        "a_simple_shader",
+        "default_shader",
 
         /* Vertex shader */
         "#version 400\n"
@@ -38,27 +38,6 @@ Viewer::Viewer(int width, int height, std::string name) : nanogui::Screen(Eigen:
         "    finalColor=sqrt(reflectance);\n"
         "}"
     );
-    
-    MatrixXu indices(3, 2); /* Draw 2 triangles */
-    indices.col(0) << 0, 1, 2;
-    indices.col(1) << 2, 3, 0;
-    
-    MatrixXf positions(3, 4);
-    positions.col(0) << -1, -1, 0;
-    positions.col(1) <<  1, -1, 0;
-    positions.col(2) <<  1,  1, 0;
-    positions.col(3) << -1,  1, 0;
-    
-    MatrixXf normals(3, 4);
-    normals.col(0) << 0, 0, 1;
-    normals.col(1) << 0, 0, 1;
-    normals.col(2) << 0, 0, 1;
-    normals.col(3) << 0, 0, 1;
-    
-    shader.bind();
-    shader.uploadIndices(indices);
-    shader.uploadAttrib("Position", positions);
-    shader.uploadAttrib("Normal", normals);
 }
 
 Viewer::~Viewer() {
@@ -94,6 +73,26 @@ void Viewer::drawContents() {
     //
     
     shader.bind();
+    
+    MatrixXu indices(3, 2); /* Draw 2 triangles */
+    indices.col(0) << 0, 1, 2;
+    indices.col(1) << 2, 3, 0;
+    
+    MatrixXf positions(3, 4);
+    positions.col(0) << -1, -1, 0;
+    positions.col(1) <<  1, -1, 0;
+    positions.col(2) <<  1,  1, 0;
+    positions.col(3) << -1,  1, 0;
+    
+    MatrixXf normals(3, 4);
+    normals.col(0) << 0, 0, 1;
+    normals.col(1) << 0, 0, 1;
+    normals.col(2) << 0, 0, 1;
+    normals.col(3) << 0, 0, 1;
+    
+    shader.uploadIndices(indices);
+    shader.uploadAttrib("Position", positions);
+    shader.uploadAttrib("Normal", normals);
     
     Matrix4f model;
     model.setIdentity();
