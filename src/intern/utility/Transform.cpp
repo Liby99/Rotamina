@@ -97,7 +97,7 @@ void Transform::setScaleZ(float z) {
 }
 
 Eigen::Matrix4f Transform::perspective(float fovy, float aspect, float zNear, float zFar) {
-    float theta = fovy * pi / 360,
+    float theta = fovy * M_PI / 360,
           d = cos(theta) / sin(theta),
           a = (zFar + zNear) / (zNear - zFar),
           b = 2 * zFar * zNear / (zNear - zFar);
@@ -110,9 +110,12 @@ Eigen::Matrix4f Transform::perspective(float fovy, float aspect, float zNear, fl
 }
 
 Eigen::Matrix4f Transform::lookAt(const Eigen::Vector3f & position, const Eigen::Vector3f & target, const Eigen::Vector3f & up) {
-    Eigen::Vector3f z = (position - target).norm(),
-                    y = up.norm(),
-                    x = y.cross(z).norm();
+    Eigen::Vector3f z = position - target,
+                    y = up,
+                    x = y.cross(z);
+    x.normalize();
+    y.normalize();
+    z.normalize();
     Eigen::Matrix4f mat;
     mat << x[0], x[1], x[2], -x.dot(position),
            y[0], y[1], y[2], -y.dot(position),
@@ -121,17 +124,17 @@ Eigen::Matrix4f Transform::lookAt(const Eigen::Vector3f & position, const Eigen:
     return mat;
 }
 
-Eigen::Matrix4f getAnchorMatrix() const {
+Eigen::Matrix4f Transform::getAnchorMatrix() const {
     Eigen::Matrix4f mat;
     mat.setIdentity();
     mat.col(3) = Eigen::Vector4f(this->anchor[0], this->anchor[1], this->anchor[2], 1);
     return mat;
 }
 
-Eigen::Matrix4f getInverseAnchorMatrix() const {
+Eigen::Matrix4f Transform::getInverseAnchorMatrix() const {
     Eigen::Matrix4f mat;
     mat.setIdentity();
-    mat.col(3) = Eigen::Vector4f(-this->anchor[0], –this->anchor[1], -this->anchor[2], 1);
+    mat.col(3) = Eigen::Vector4f(-this->anchor[0], -this->anchor[1], -this->anchor[2], 1);
     return mat;
 }
 

@@ -3,6 +3,8 @@
 
 #include <Eigen/Dense>
 
+#include "utility/Transform.h"
+
 namespace rotamina {
     
     class Camera {
@@ -13,9 +15,9 @@ namespace rotamina {
             Eigen::Vector3f up;
             Eigen::Vector3f orientation;
             
-            float nearPlane;
-            float farPlane;
-            float aspectRatio;
+            float zNear;
+            float zFar;
+            float aspect;
             float fovy;
             
         public:

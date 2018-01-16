@@ -1,6 +1,7 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
+#include <cmath>
 #include <Eigen/Dense>
 
 namespace rotamina {
@@ -22,6 +23,11 @@ namespace rotamina {
             Eigen::Vector3f getRotation() const;
             Eigen::Vector3f getScale() const;
             
+            void setAnchor(Eigen::Vector3f anchor);
+            void setAnchorX(float x);
+            void setAnchorY(float y);
+            void setAnchorZ(float z);
+            
             void setPosition(Eigen::Vector3f position);
             void setPositionX(float x);
             void setPositionY(float y);
@@ -38,7 +44,7 @@ namespace rotamina {
             void setScaleZ(float z);
             
             static Eigen::Matrix4f perspective(float fovy, float aspect, float zNear, float zFar);
-            static Eigen::Matrix4f lookAt(const vec3 & eye, const vec3 & center, const vec3 & up);
+            static Eigen::Matrix4f lookAt(const Eigen::Vector3f & position, const Eigen::Vector3f & target, const Eigen::Vector3f & up);
             
         private:
             

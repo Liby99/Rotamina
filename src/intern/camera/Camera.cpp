@@ -2,18 +2,18 @@
 
 using namespace rotamina;
 
-Camera::Camera() : Camera(Eigen::Vector3f(0, 0, 1), Eigen::Vector3f(0, 0, 0), Eigen::Vector(0, 1, 0)) {}
+Camera::Camera() : Camera(Eigen::Vector3f(0, 0, 1), Eigen::Vector3f(0, 0, 0), Eigen::Vector3f(0, 1, 0)) {}
 
 Camera::Camera(Eigen::Vector3f position, Eigen::Vector3f target, Eigen::Vector3f up) {
-    this.position = position;
-    this.target = target;
-    this.up = up;
+    this->position = position;
+    this->target = target;
+    this->up = up;
     
-    this.orientation = Eigen::Vector3f(0, 0, 0);
-    this.zNear = 0.1f;
-    this.zFar = 100.0f;
-    this.aspect = (float) 960 / (float) 1440;
-    this.fovy = 45;
+    this->orientation = Eigen::Vector3f(0, 0, 0);
+    this->zNear = 0.1f;
+    this->zFar = 100.0f;
+    this->aspect = (float) 960 / (float) 1440;
+    this->fovy = 45;
 }
 
 Eigen::Matrix4f Camera::getViewPerspective() const {
