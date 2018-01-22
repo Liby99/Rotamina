@@ -5,63 +5,63 @@
 Tokenizer::Tokenizer() {
 	File=0;
 	LineNum=0;
-	strcpy(FileName,"");
+	strcpy(FileName, "");
 }
 
 Tokenizer::~Tokenizer() {
-	if(File) {
-		printf("ERROR: Tokenizer::~Tokenizer()- Closing file '%s'\n",FileName);
-		fclose((FILE*)File);
+	if (File) {
+		printf("ERROR: Tokenizer::~Tokenizer()- Closing file '%s'\n", FileName);
+		fclose((FILE *) File);
 	}
 }
 
-bool Tokenizer::open(const char *fname) {
-	File=(void*)fopen(fname,"r");
-	LineNum=1;
-	if(File==0) {
+bool Tokenizer::open(const char * fname) {
+	File = (void*)fopen(fname,"r");
+	LineNum = 1;
+	if (File == 0) {
 		printf("ERROR: Tokenzier::Open()- Can't open file '%s'\n",fname);
 		return false;
 	}
-	strcpy(FileName,fname);
+	strcpy(FileName, fname);
 	return true;
 }
 
 bool Tokenizer::close() {
-	if(File) fclose((FILE*)File);
+	if (File) fclose((FILE *) File);
 	else return false;
 
-	File=0;
+	File = 0;
 	return true;
 }
 
-bool Tokenizer::abort(char *error) {
-	printf("ERROR '%s' line %d: %s\n",FileName,LineNum,error);
+bool Tokenizer::abort(char * error) {
+	printf("ERROR '%s' line %d: %s\n", FileName, LineNum, error);
 	close();
 	return false;
 }
 
 char Tokenizer::getChar() {
-	char c=char(getc((FILE*)File));
-	if(c=='\n') LineNum++;
+	char c = char(getc((FILE *) File));
+	if (c == '\n') LineNum++;
 	return c;
 }
 
 char Tokenizer::checkChar() {
-	int c=getc((FILE*)File);
-	ungetc(c,(FILE*)File);
+	int c = getc((FILE *) File);
+	ungetc(c, (FILE *) File);
 	return char(c);
 }
 
 int Tokenizer::getInt() {
 	skipWhitespace();
-	int pos=0;
+	int pos = 0;
 	char temp[256];
 
 	// Get first character ('-' or digit)
-	char c=checkChar();
-	if(c=='-') {
-		temp[pos++]=getChar();
-		c=checkChar();
+	char c = checkChar();
+	if (c == '-') {
+		temp[pos++] = getChar();
+		c = checkChar();
 	}
 	if(!isdigit(c)) {
 		printf("ERROR: Tokenizer::getInt()- Expecting int on line %d of '%s'\n",LineNum,FileName);
