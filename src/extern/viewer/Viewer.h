@@ -22,9 +22,7 @@ namespace rotamina {
             rotamina::Camera camera;
             std::vector<rotamina::Object *> objects;
             
-            float prevTime = 0.0f;
-            Eigen::Vector2i mousePos;
-            bool keyboard[128];
+            float prevTime = 0;
             
             Viewer(int width, int height, std::string name);
             ~Viewer();

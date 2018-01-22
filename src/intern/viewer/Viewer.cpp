@@ -3,26 +3,17 @@
 using namespace rotamina;
 
 Viewer::Viewer(int width, int height, std::string name) : nanogui::Screen(Eigen::Vector2i(width, height), name) {
-    
-    // Initiate camera
     camera = rotamina::Camera();
     camera.setAspect((float) width / (float) height);
-    
-    // Initiate keyboard array
-    for (int i = 0; i < 128; i++) {
-        keyboard[i] = false;
-    }
 }
 
 Viewer::~Viewer() {
-    for (rotamina::Object * obj : objects) {
-        delete obj;
-    }
+    
 }
 
 bool Viewer::keyboardEvent(int key, int scancode, int action, int modifiers) {
     // keyboard[key] = (action == GLFW_PRESS);
-    // return true;
+    return true;
 }
 
 bool Viewer::resizeEvent(const Eigen::Vector2i & size) {
