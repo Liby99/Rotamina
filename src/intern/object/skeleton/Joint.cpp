@@ -24,8 +24,8 @@ std::vector<std::pair<std::string, DOF *>> Joint::getDOFs() {
     return ret;
 }
 
-void Joint::addChildren(Joint * j) {
-    this->children.push_back(j);
+void Joint::addChildren(Joint & j) {
+    this->children.push_back(&j);
 }
 
 void Joint::draw() {

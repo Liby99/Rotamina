@@ -12,6 +12,10 @@ Skeleton::~Skeleton() {
     }
 }
 
+void Skeleton::setRoot(Joint & joint) {
+    this->root = &joint;
+}
+
 void Skeleton::update() {
     root->update(transform.getTransform());
 }

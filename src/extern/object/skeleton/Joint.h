@@ -31,7 +31,7 @@ namespace rotamina {
             std::string getName();
             void setName(std::string name);
             std::vector<std::pair<std::string, DOF *>> getDOFs();
-            void addChildren(rotamina::Joint * j);
+            void addChildren(rotamina::Joint & j);
             
             virtual void draw();
             virtual void update(const Eigen::Matrix4f & parentTransf);

@@ -5,7 +5,7 @@ using namespace rotamina;
 Skeleton SkeletonParser::loadSkeleton(std::string filename) {
     
     Tokenizer tokenizer;
-    tokenizer.open(filename, "skel");
+    tokenizer.open(filename.c_str());
     
     Joint * root = new Joint();
     
@@ -18,13 +18,15 @@ Skeleton SkeletonParser::loadSkeleton(std::string filename) {
     skel.setRoot(*root);
     
     tokenizer.close();
+    
+    return skel;
 }
 
 bool SkeletonParser::loadChildren(Joint & joint, Tokenizer & tokenizer, std::string type) {
     char temp[BUF_SIZE];
     if (type == "balljoint") {
         BallJoint * bj = loadBallJoint(tokenizer);
-        joint.addChildren(*bj);
+        joint.addChildren(*((Joint *)bj));
         return true;
     }
     else {
@@ -80,5 +82,5 @@ Eigen::Vector3f SkeletonParser::loadVector(Tokenizer & tokenizer) {
 }
 
 std::pair<float, float> SkeletonParser::loadMinMax(Tokenizer & tokenizer) {
-    return std::pair<float, float>(tokenizer.getFloat(), tokenizer.getFloat());
+    return std::make_pair(tokenizer.getFloat(), tokenizer.getFloat());
 }

@@ -14,6 +14,7 @@ namespace rotamina {
         public:
             Skeleton();
             ~Skeleton();
+            void setRoot(Joint & root);
             virtual void update();
             virtual void draw();
     };
