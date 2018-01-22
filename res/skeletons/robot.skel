@@ -1,0 +1,35 @@
+balljoint root {
+	offset 0 0 0
+	boxmin -0.2 -0.3 -0.15
+	boxmax 0.2 0.3 0.15
+	pose 0 0.1 0
+	balljoint head {
+		offset 0 0.3 0
+		boxmin -0.1 0 -0.1
+		boxmax 0.1 0.2 0.1
+	}
+	balljoint hip_l {
+		offset -0.1 -0.3 0
+		boxmin -0.05 -0.3 -0.05
+		boxmax 0.05 0 0.05
+		balljoint knee_l {
+			offset 0 -0.3 0
+			boxmin -0.05 -0.3 -0.05
+			boxmax 0.05 0 0.05
+		}
+	}
+	balljoint hip_r {
+		offset 0.1 -0.3 0
+		boxmin -0.05 -0.3 -0.05
+		boxmax 0.05 0 0.05
+		balljoint knee_r {
+			offset 0 -0.3 0
+			boxmin -0.05 -0.3 -0.05
+			boxmax 0.05 0 0.05
+			rotxlimit -2 0
+			rotylimit 0 0
+			rotzlimit 0 0
+			pose -3 1 2
+		}
+	}
+}
