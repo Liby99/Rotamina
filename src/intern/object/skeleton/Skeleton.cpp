@@ -16,6 +16,10 @@ void Skeleton::setRoot(Joint & joint) {
     this->root = &joint;
 }
 
+Joint * Skeleton::getRoot() {
+    return root;
+}
+
 void Skeleton::update() {
     Eigen::Matrix4f mat;
     mat.setIdentity();
