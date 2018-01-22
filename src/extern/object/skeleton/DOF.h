@@ -8,6 +8,7 @@ namespace rotamina {
             float maxValue;
             float value;
         public:
+            DOF();
             DOF(float minValue, float maxValue);
             float getValue();
             float getMin();

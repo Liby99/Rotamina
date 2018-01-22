@@ -1,7 +1,8 @@
 #ifndef BALL_JOINT_H
 #define BALL_JOINT_H
 
-#include "object/skeleton/Joint.h"
+#include "Box.h"
+#include "Joint.h"
 
 namespace rotamina {
     
@@ -9,8 +10,7 @@ namespace rotamina {
         protected:
             
             Eigen::Vector3f offset;
-            Eigen::Vector3f boxMin;
-            Eigen::Vector3f boxMax;
+            Box box;
             
         public:
             
@@ -19,6 +19,7 @@ namespace rotamina {
             Eigen::Vector3f getOffset();
             Eigen::Vector3f getBoxMin();
             Eigen::Vector3f getBoxMax();
+            Eigen::Vector3f getPose();
             DOF & getX();
             DOF & getY();
             DOF & getZ();
@@ -28,7 +29,8 @@ namespace rotamina {
             void setBoxMax(const Eigen::Vector3f & bm);
             void setPose(const Eigen::Vector3f & pose);
             
-            virtual void draw();
+            virtual void update(const Eigen::Matrix4f & parentTransf);
+            virtual void draw(Shader & shader);
     };
 }
 

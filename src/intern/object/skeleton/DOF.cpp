@@ -2,6 +2,8 @@
 
 using namespace rotamina;
 
+DOF::DOF() : DOF(-100000, 100000) {}
+
 DOF::DOF(float minValue, float maxValue) : value(0) {
     setMinMax(minValue, maxValue);
 }

@@ -7,7 +7,7 @@ Skeleton SkeletonParser::loadSkeleton(std::string filename) {
     Tokenizer tokenizer;
     tokenizer.open(filename.c_str());
     
-    Joint * root = new Joint();
+    Joint * root = new Joint("Root");
     
     char temp[BUF_SIZE];
     tokenizer.getToken(temp);

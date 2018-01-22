@@ -38,6 +38,7 @@ Shader::Shader() : nanogui::GLShader() {
         "    vec3 irradiance=AmbientColor + LightColor * max(0,dot(LightDirection,fragNormal));\n"
         "    vec3 reflectance=irradiance * DiffuseColor;\n"
         "    finalColor=sqrt(reflectance);\n"
+        // "    finalColor=vec3(1);"
         "}"
     );
 }

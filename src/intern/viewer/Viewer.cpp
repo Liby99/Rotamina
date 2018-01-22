@@ -21,8 +21,8 @@ Viewer::~Viewer() {
 }
 
 bool Viewer::keyboardEvent(int key, int scancode, int action, int modifiers) {
-    keyboard[key] = (action == GLFW_PRESS);
-    return true;
+    // keyboard[key] = (action == GLFW_PRESS);
+    // return true;
 }
 
 bool Viewer::resizeEvent(const Eigen::Vector2i & size) {

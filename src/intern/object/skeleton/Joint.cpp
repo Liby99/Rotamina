@@ -25,13 +25,25 @@ std::vector<std::pair<std::string, DOF *>> Joint::getDOFs() {
 }
 
 void Joint::addChildren(Joint & j) {
-    this->children.push_back(&j);
+    children.push_back(&j);
 }
 
-void Joint::draw() {
-    // Do Nothing
+std::vector<rotamina::Joint *> Joint::getChildren() {
+    return children;
 }
 
-void Joint::update(const Eigen::Matrix4f & parentTransf) {
-    // Do Nothing
+int Joint::childrenCount() {
+    return children.size();
+}
+
+void Joint::update(const Eigen::Matrix4f & currTransf) {
+    for (rotamina::Joint * j : children) {
+        j->update(currTransf);
+    }
+}
+
+void Joint::draw(Shader & shader) {
+    for (rotamina::Joint * j : children) {
+        j->draw(shader);
+    }
 }

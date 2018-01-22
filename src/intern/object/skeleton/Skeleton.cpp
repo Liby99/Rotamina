@@ -17,9 +17,11 @@ void Skeleton::setRoot(Joint & joint) {
 }
 
 void Skeleton::update() {
-    root->update(transform.getTransform());
+    Eigen::Matrix4f mat;
+    mat.setIdentity();
+    root->update(mat);
 }
 
 void Skeleton::draw() {
-    root->draw();
+    root->draw(*shader);
 }
