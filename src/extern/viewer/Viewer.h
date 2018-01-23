@@ -19,6 +19,9 @@ namespace rotamina {
     class Viewer : public nanogui::Screen {
         protected:
             
+            int width;
+            int height;
+            
             rotamina::Camera camera;
             std::vector<rotamina::Object *> objects;
             

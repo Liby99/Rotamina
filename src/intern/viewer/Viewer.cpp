@@ -3,7 +3,10 @@
 using namespace rotamina;
 
 Viewer::Viewer(int width, int height, std::string name) : nanogui::Screen(Eigen::Vector2i(width, height), name) {
-    camera = rotamina::Camera();
+    
+    this->width = width;
+    this->height = height;
+    
     camera.setAspect((float) width / (float) height);
 }
 
@@ -17,6 +20,8 @@ bool Viewer::keyboardEvent(int key, int scancode, int action, int modifiers) {
 }
 
 bool Viewer::resizeEvent(const Eigen::Vector2i & size) {
+    this->width = size[0];
+    this->height = size[1];
     camera.setAspect((float) size[0] / (float) size[1]);
     return true;
 }

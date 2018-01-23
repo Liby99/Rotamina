@@ -4,48 +4,44 @@
 
 using namespace rotamina;
 
-bool bvar = true;
-int ivar = 12345678;
-double dvar = 3.1415926;
-float fvar = (float)dvar;
-std::string strval = "A string";
-nanogui::Color colval(0.5f, 0.5f, 0.7f, 1.f);
+float a = 3;
 
 SkeletonViewer::SkeletonViewer(int width, int height, std::string name, Skeleton & skel) : Viewer::Viewer(width, height, name) {
+    
+    joints = nullptr;
+    jointData = nullptr;
+    form = nullptr;
     
     this->skel = &skel;
     this->skel->shader = new Shader();
     
     using namespace nanogui;
     
-    FormHelper *gui = new FormHelper(this);
+    // Joint List Window
+    joints = new Window(this, "Skeleton Joint List");
+    joints->setPosition(Vector2i(15, 15));
+    joints->setFixedSize(nanogui::Vector2i(250, height - 30));
+    joints->setLayout(new GroupLayout(0));
     
-    ref<Window> window = gui->addWindow(Eigen::Vector2i(10, 10), "Form helper example");
-    gui->addGroup("Basic types");
-    gui->addVariable("bool", bvar);
-    gui->addVariable("string", strval);
-
-    gui->addGroup("Validating fields");
-    gui->addVariable("int", ivar)->setSpinnable(true);
-    gui->addVariable("float", fvar);
-    gui->addVariable("double", dvar)->setSpinnable(true);
-
-    gui->addVariable("Color", colval)
-       ->setFinalCallback([](const Color &c) {
-             std::cout << "ColorPicker Final Callback: ["
-                       << c.r() << ", "
-                       << c.g() << ", "
-                       << c.b() << ", "
-                       << c.w() << "]" << std::endl;
-         });
-
-    gui->addGroup("Other widgets");
-    gui->addButton("A button", []() { std::cout << "Button pressed." << std::endl; });
+    VScrollPanel * scrollPanel = new VScrollPanel(joints);
+    scrollPanel->setFixedSize(nanogui::Vector2i(250, height - 50));
+    
+    Widget * jointButtons = new Widget(scrollPanel);
+    jointButtons->setLayout(new GroupLayout());
+    
+    Joint * root = this->skel->getRoot();
+    addButton(root, jointButtons, 0);
+    
+    // Joint Data Window
+    form = new FormHelper(this);
+    jointData = form->addWindow(Eigen::Vector2i(width - 215, 15), "Joint Data");
+    jointData->setFixedWidth(200);
     
     performLayout();
 }
 
 void SkeletonViewer::draw(NVGcontext * ctx) {
+    form->refresh();
     Screen::draw(ctx);
 }
 
@@ -82,5 +78,47 @@ void SkeletonViewer::createViewer(int width, int height, std::string name, Skele
     catch (const std::runtime_error &e) {
         std::string error_msg = std::string("Caught a fatal error: ") + std::string(e.what());
         std::cerr << error_msg << std::endl;
+    }
+}
+
+void SkeletonViewer::clearJointData() {
+    
+    jointData->setVisible(false);
+    
+    jointData = form->addWindow(Eigen::Vector2i(width - 215, 15), "Joint Data");
+    jointData->setFixedWidth(200);
+    
+    performLayout();
+}
+
+void SkeletonViewer::showJoint(Joint * joint) {
+    
+    clearJointData();
+    
+    form->addGroup(joint->getName());
+    auto dofs = joint->getDOFs();
+    for (auto dp : dofs) {
+        DOF * dof = dp.second;
+        form->addVariable<float>(dp.first, [dof] (const float & value) {
+            dof->setValue(value);
+        }, [dof] () {
+            return dof->getValue();
+        })->setSpinnable(true);
+    }
+    
+    performLayout();
+}
+
+void SkeletonViewer::addButton(Joint * joint, nanogui::Widget * parent, int margin) {
+    
+    using namespace nanogui;
+    
+    Button * btn = new Button(parent, joint->getName());
+    btn->setFontSize(14);
+    btn->setCallback([this, joint]() {
+        this->showJoint(joint);
+    });
+    for (Joint * j : joint->getChildren()) {
+        addButton(j, parent, margin + 3);
     }
 }
