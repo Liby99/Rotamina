@@ -15,18 +15,20 @@ namespace rotamina {
             
             rotamina::Skeleton * skel;
             
+            bool drawGui;
+            
             nanogui::Window * joints;
             nanogui::Window * jointData;
             nanogui::FormHelper * form;
             
-            SkeletonViewer(int width, int height, std::string name, Skeleton & skel);
+            SkeletonViewer(int width, int height, std::string name, Skeleton & skel, bool drawGui);
             
             virtual void draw(NVGcontext * ctx);
             virtual void drawContents();
             
         public:
             
-            static void createViewer(int width, int height, std::string name, Skeleton & skel, std::function<void(Viewer &)> f);
+            static void createViewer(int width, int height, std::string name, Skeleton & skel, std::function<void(Viewer &)> f, bool drawGui = true);
             
         private:
             

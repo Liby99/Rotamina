@@ -4,45 +4,49 @@
 
 using namespace rotamina;
 
-float a = 3;
-
-SkeletonViewer::SkeletonViewer(int width, int height, std::string name, Skeleton & skel) : Viewer::Viewer(width, height, name) {
+SkeletonViewer::SkeletonViewer(int width, int height, std::string name, Skeleton & skel, bool drawGui = true) : Viewer::Viewer(width, height, name) {
     
-    joints = nullptr;
-    jointData = nullptr;
-    form = nullptr;
+    this->drawGui = drawGui;
+    this->joints = nullptr;
+    this->jointData = nullptr;
+    this->form = nullptr;
     
     this->skel = &skel;
     this->skel->shader = new Shader();
     
-    using namespace nanogui;
-    
-    // Joint List Window
-    joints = new Window(this, "Skeleton Joint List");
-    joints->setPosition(Vector2i(15, 15));
-    joints->setFixedSize(nanogui::Vector2i(250, height - 30));
-    joints->setLayout(new GroupLayout(0));
-    
-    VScrollPanel * scrollPanel = new VScrollPanel(joints);
-    scrollPanel->setFixedSize(nanogui::Vector2i(250, height - 50));
-    
-    Widget * jointButtons = new Widget(scrollPanel);
-    jointButtons->setLayout(new GroupLayout());
-    
-    Joint * root = this->skel->getRoot();
-    addButton(root, jointButtons, 0);
-    
-    // Joint Data Window
-    form = new FormHelper(this);
-    jointData = form->addWindow(Eigen::Vector2i(280, 15), "Joint Data");
-    jointData->setFixedWidth(250);
-    showJoint(root);
-    
-    performLayout();
+    if (drawGui) {
+        
+        using namespace nanogui;
+        
+        // Joint List Window
+        joints = new Window(this, "Skeleton Joint List");
+        joints->setPosition(Vector2i(15, 15));
+        joints->setFixedSize(nanogui::Vector2i(250, height - 30));
+        joints->setLayout(new GroupLayout(0));
+        
+        VScrollPanel * scrollPanel = new VScrollPanel(joints);
+        scrollPanel->setFixedSize(nanogui::Vector2i(250, height - 50));
+        
+        Widget * jointButtons = new Widget(scrollPanel);
+        jointButtons->setLayout(new GroupLayout());
+        
+        Joint * root = this->skel->getRoot();
+        addButton(root, jointButtons, 0);
+        
+        // Joint Data Window
+        form = new FormHelper(this);
+        jointData = form->addWindow(Eigen::Vector2i(280, 15), "Joint Data");
+        jointData->setFixedWidth(250);
+        showJoint(root);
+        
+        performLayout();
+    }
 }
 
 void SkeletonViewer::draw(NVGcontext * ctx) {
-    form->refresh();
+    if (drawGui) {
+        form->refresh();
+    }
     Screen::draw(ctx);
 }
 
@@ -60,12 +64,12 @@ void SkeletonViewer::drawContents() {
     skel->draw();
 }
 
-void SkeletonViewer::createViewer(int width, int height, std::string name, Skeleton & skel, std::function<void(Viewer &)> init) {
+void SkeletonViewer::createViewer(int width, int height, std::string name, Skeleton & skel, std::function<void(Viewer &)> init, bool drawGui) {
     try {
         nanogui::init();
         
         // Initiate the viewer
-        SkeletonViewer viewer(width, height, name, skel);
+        SkeletonViewer viewer(width, height, name, skel, drawGui);
         init(viewer);
         viewer.drawAll();
         viewer.setVisible(true);
@@ -123,10 +127,11 @@ void SkeletonViewer::addButton(Joint * joint, nanogui::Widget * parent, int marg
     using namespace nanogui;
     
     Button * btn = new Button(parent, joint->getName());
-    btn->setFontSize(14);
+    btn->setFontSize(16);
     btn->setCallback([this, joint]() {
         this->showJoint(joint);
     });
+    btn->setFlags(Button::RadioButton);
     for (Joint * j : joint->getChildren()) {
         addButton(j, parent, margin + 3);
     }

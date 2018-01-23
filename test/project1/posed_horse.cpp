@@ -13,5 +13,5 @@ int main() {
     SkeletonViewer::createViewer(1440, 960, "CSE 169 - Project 1 - Horse", skel, [&](Viewer & v) {
         // v.setCameraRotate(false);
         v.getCamera().setPosition(Eigen::Vector3f(3, 0, 0));
-    });
+    }, false);
 }
