@@ -21,6 +21,7 @@ namespace rotamina {
             
             int width;
             int height;
+            bool cameraRotate;
             
             rotamina::Camera camera;
             std::vector<rotamina::Object *> objects;
@@ -38,6 +39,7 @@ namespace rotamina {
             
         public:
             
+            void setCameraRotate(bool flag);
             Camera & getCamera();
             void addObject(rotamina::Object & obj);
             

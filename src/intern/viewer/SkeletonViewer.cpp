@@ -36,6 +36,7 @@ SkeletonViewer::SkeletonViewer(int width, int height, std::string name, Skeleton
     form = new FormHelper(this);
     jointData = form->addWindow(Eigen::Vector2i(width - 215, 15), "Joint Data");
     jointData->setFixedWidth(200);
+    showJoint(root);
     
     performLayout();
 }

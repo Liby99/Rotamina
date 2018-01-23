@@ -6,12 +6,17 @@ Viewer::Viewer(int width, int height, std::string name) : nanogui::Screen(Eigen:
     
     this->width = width;
     this->height = height;
+    this->cameraRotate = true;
     
     camera.setAspect((float) width / (float) height);
 }
 
 Viewer::~Viewer() {
     
+}
+
+void Viewer::setCameraRotate(bool flag) {
+    this->cameraRotate = flag;
 }
 
 bool Viewer::keyboardEvent(int key, int scancode, int action, int modifiers) {
@@ -32,14 +37,17 @@ void Viewer::draw(NVGcontext * ctx) {
 
 void Viewer::drawContents() {
     
-    // Refresh camera position and get view perspective
-    Eigen::Vector3f pos = camera.getPosition();
-    pos = Eigen::AngleAxisf((float) glfwGetTime() - prevTime, Eigen::Vector3f(0, 1, 0)) * pos;
-    camera.setPosition(pos);
-    prevTime = (float) glfwGetTime();
-    Eigen::Matrix4f vp = camera.getViewPerspective();
+    if (cameraRotate) {
+        
+        // Refresh camera position and get view perspective
+        Eigen::Vector3f pos = camera.getPosition();
+        pos = Eigen::AngleAxisf((float) glfwGetTime() - prevTime, Eigen::Vector3f(0, 1, 0)) * pos;
+        camera.setPosition(pos);
+    }
     
     // Draw every object
+    Eigen::Matrix4f vp = camera.getViewPerspective();
+    prevTime = (float) glfwGetTime();
     for (rotamina::Object * obj : objects) {
         
         obj->shader->bind();

@@ -1,0 +1,188 @@
+balljoint body {
+
+	offset 0 0 0
+	boxmin -0.2 -0.2 -0.4
+	boxmax 0.2 0.2 0.4
+	
+	balljoint neck_1 {
+
+		offset 0 0.1 0.3
+		boxmin -0.08 -0.15 -0.1
+		boxmax 0.08 0.15 0.3
+		pose -1 0 0
+		rotxlimit -1.5 0.5
+		rotylimit 0 0
+		rotzlimit 0 0
+		
+		balljoint neck_2 {
+			
+		
+			offset 0 0 0.3
+			boxmin -0.08 -0.15 0
+			boxmax 0.08 0.15 0.3
+			rotxlimit 0 0.6
+			rotylimit 0 0
+			rotzlimit 0 0
+			
+			balljoint head {
+				
+				offset 0 0.1 0.25
+				boxmin -0.08 -0.1 -0.0
+				boxmax 0.08 0.1 0.35
+				pose 1.7 0 0
+				rotxlimit 0.6 1.7
+				rotylimit 0 0
+				rotzlimit 0 0
+				
+				balljoint ear_l {
+					offset -0.04 0.1 0.05
+					boxmin -0.02 0 -0.01
+					boxmax 0.02 0.1 0.01
+					rotxlimit 0 0
+					rotylimit 0 0
+					rotzlimit 0 0
+				}
+				
+				balljoint ear_r {
+					offset 0.04 0.1 0.05
+					boxmin -0.02 0 -0.01
+					boxmax 0.02 0.1 0.01
+					rotxlimit 0 0
+					rotylimit 0 0
+					rotzlimit 0 0
+				}
+				
+				balljoint mouse_upper {
+					offset 0 0.05 0.35
+					boxmin -0.07 -0.05 0
+					boxmax 0.07 0.05 0.15
+					pose 0 0 0
+					rotxlimit -0.1 0
+					rotylimit 0 0
+					rotzlimit 0 0
+				}
+				
+				balljoint mouse_lower {
+					offset 0 -0.05 0.35
+					boxmin -0.07 -0.05 0
+					boxmax 0.07 0.05 0.15
+					pose 0.1 0 0
+					rotxlimit 0 0.3
+					rotylimit 0 0
+					rotzlimit 0 0
+				}
+			}
+		}
+	}
+	
+	balljoint tail {
+		
+		offset 0 0.2 -0.4
+		boxmin -0.01 -0.01 -0.3
+		boxmax 0.01 0.01 0
+		pose -1 0 0
+		
+		balljoint tail_2 {
+			offset 0 0 -0.3
+			boxmin -0.01 -0.01 -0.3
+			boxmax 0.01 0.01 0
+			pose -0.3 0 0
+		}
+	}
+	
+	balljoint leg_b_l {
+	
+		offset -0.12 -0.2 -0.32
+		boxmin -0.07 -0.2 -0.07
+		boxmax 0.07 0 0.07
+		
+		balljoint knee_b_l {
+		
+			offset 0 -0.2 0
+			boxmin -0.06 -0.2 -0.06
+			boxmax 0.06 0 0.06
+			rotxlimit -2 0
+			rotylimit 0 0
+			rotzlimit 0 0
+			
+			balljoint foot_b_l {
+			
+				offset 0 -0.2 0
+				boxmin -0.07 -0.08 -0.07
+				boxmax 0.07 0 0.07
+			}
+		}
+	}
+	
+	balljoint leg_b_r {
+	
+		offset 0.12 -0.2 -0.32
+		boxmin -0.07 -0.2 -0.07
+		boxmax 0.07 0 0.07
+		
+		balljoint knee_b_r {
+		
+			offset 0 -0.2 0
+			boxmin -0.06 -0.2 -0.06
+			boxmax 0.06 0 0.06
+			rotxlimit -2 0
+			rotylimit 0 0
+			rotzlimit 0 0
+			
+			balljoint foot_b_r {
+			
+				offset 0 -0.2 0
+				boxmin -0.07 -0.08 -0.07
+				boxmax 0.07 0 0.07
+			}
+		}
+	}
+	
+	balljoint leg_f_l {
+	
+		offset -0.12 -0.2 0.32
+		boxmin -0.07 -0.2 -0.07
+		boxmax 0.07 0 0.07
+		
+		balljoint knee_f_l {
+		
+			offset 0 -0.2 0
+			boxmin -0.06 -0.2 -0.06
+			boxmax 0.06 0 0.06
+			rotxlimit -2 0
+			rotylimit 0 0
+			rotzlimit 0 0
+			
+			balljoint foot_f_l {
+			
+				offset 0 -0.2 0
+				boxmin -0.07 -0.08 -0.07
+				boxmax 0.07 0 0.07
+			}
+		}
+	}
+	
+	balljoint leg_f_r {
+	
+		offset 0.12 -0.2 0.32
+		boxmin -0.07 -0.2 -0.07
+		boxmax 0.07 0 0.07
+		
+		balljoint knee_f_r {
+		
+			offset 0 -0.2 0
+			boxmin -0.06 -0.2 -0.06
+			boxmax 0.06 0 0.06
+			rotxlimit -2 0
+			rotylimit 0 0
+			rotzlimit 0 0
+			
+			balljoint foot_f_r {
+			
+				offset 0 -0.2 0
+				boxmin -0.07 -0.08 -0.07
+				boxmax 0.07 0 0.07
+			}
+		}
+	}
+}
