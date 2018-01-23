@@ -8,15 +8,15 @@ DOF::DOF(float minValue, float maxValue) : value(0) {
     setMinMax(minValue, maxValue);
 }
 
-float DOF::getValue() {
+float DOF::getValue() const {
     return value > maxValue ? maxValue : value < minValue ? minValue : value;
 }
 
-float DOF::getMin() {
+float DOF::getMin() const {
     return minValue;
 }
 
-float DOF::getMax() {
+float DOF::getMax() const {
     return maxValue;
 }
 

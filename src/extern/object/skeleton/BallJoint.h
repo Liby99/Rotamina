@@ -29,6 +29,9 @@ namespace rotamina {
             void setBoxMax(const Eigen::Vector3f & bm);
             void setPose(const Eigen::Vector3f & pose);
             
+            virtual std::vector<std::pair<std::string, std::string>> getVars();
+            virtual std::string getJointType();
+            
             virtual void update(const Eigen::Matrix4f & parentTransf);
             virtual void draw(Shader & shader);
     };

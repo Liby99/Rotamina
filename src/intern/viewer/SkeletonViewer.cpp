@@ -34,8 +34,8 @@ SkeletonViewer::SkeletonViewer(int width, int height, std::string name, Skeleton
     
     // Joint Data Window
     form = new FormHelper(this);
-    jointData = form->addWindow(Eigen::Vector2i(width - 215, 15), "Joint Data");
-    jointData->setFixedWidth(200);
+    jointData = form->addWindow(Eigen::Vector2i(280, 15), "Joint Data");
+    jointData->setFixedWidth(250);
     showJoint(root);
     
     performLayout();
@@ -86,8 +86,8 @@ void SkeletonViewer::clearJointData() {
     
     jointData->setVisible(false);
     
-    jointData = form->addWindow(Eigen::Vector2i(width - 215, 15), "Joint Data");
-    jointData->setFixedWidth(200);
+    jointData = form->addWindow(Eigen::Vector2i(280, 15), "Joint Data");
+    jointData->setFixedWidth(250);
     
     performLayout();
 }
@@ -96,7 +96,9 @@ void SkeletonViewer::showJoint(Joint * joint) {
     
     clearJointData();
     
-    form->addGroup(joint->getName());
+    form->addGroup(joint->getName() + " - " + joint->getJointType());
+    
+    form->addGroup("Degrees of Freedom")->setFontSize(18);
     auto dofs = joint->getDOFs();
     for (auto dp : dofs) {
         DOF * dof = dp.second;
@@ -105,6 +107,12 @@ void SkeletonViewer::showJoint(Joint * joint) {
         }, [dof] () {
             return dof->getValue();
         })->setSpinnable(true);
+    }
+    
+    form->addGroup("Variables")->setFontSize(18);
+    auto vars = joint->getVars();
+    for (auto vp : vars) {
+        form->addWidget(vp.first, new nanogui::Label(jointData, vp.second));
     }
     
     performLayout();

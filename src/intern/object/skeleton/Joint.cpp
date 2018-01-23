@@ -36,6 +36,14 @@ int Joint::childrenCount() {
     return children.size();
 }
 
+std::vector<std::pair<std::string, std::string>> Joint::getVars() {
+    return std::vector<std::pair<std::string, std::string>>();
+}
+
+std::string Joint::getJointType() {
+    return "Joint";
+}
+
 void Joint::update(const Eigen::Matrix4f & currTransf) {
     for (rotamina::Joint * j : children) {
         j->update(currTransf);

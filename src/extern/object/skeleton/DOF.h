@@ -10,9 +10,9 @@ namespace rotamina {
         public:
             DOF();
             DOF(float minValue, float maxValue);
-            float getValue();
-            float getMin();
-            float getMax();
+            float getValue() const;
+            float getMin() const;
+            float getMax() const;
             void setValue(float value);
             void setMin(float minValue);
             void setMax(float maxValue);
