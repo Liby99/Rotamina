@@ -63,7 +63,7 @@ std::string vector3fToString(const Eigen::Vector3f & vec) {
 
 std::string limitToString(const DOF & dof) {
     std::ostringstream os;
-    os << "[" << dof.getMax() << ", " << dof.getMax() << "]";
+    os << "[" << dof.getMin() << ", " << dof.getMax() << "]";
     return os.str();
 }
 
