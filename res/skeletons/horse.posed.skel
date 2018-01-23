@@ -1,8 +1,10 @@
 balljoint body {
 
 	offset 0 0 0
-	boxmin -0.2 -0.2 -0.4
-	boxmax 0.2 0.2 0.4
+	boxmin -0.18 -0.2 -0.4
+	boxmax 0.18 0.2 0.4
+	
+	pose -0.8 0 0
 	
 	balljoint neck_1 {
 
@@ -22,6 +24,8 @@ balljoint body {
 			rotxlimit 0 0.6
 			rotylimit 0 0
 			rotzlimit 0 0
+			
+			pose 0.4 0 0
 			
 			balljoint head {
 				
@@ -95,6 +99,8 @@ balljoint body {
 		boxmin -0.07 -0.2 -0.07
 		boxmax 0.07 0 0.07
 		
+		pose 0.8 0 0
+		
 		balljoint knee_b_l {
 		
 			offset 0 -0.2 0
@@ -104,11 +110,15 @@ balljoint body {
 			rotylimit 0 0
 			rotzlimit 0 0
 			
+			pose -0.4 0 0
+			
 			balljoint foot_b_l {
 			
 				offset 0 -0.2 0
 				boxmin -0.07 -0.08 -0.07
 				boxmax 0.07 0 0.07
+				
+				pose 0.3 0 0
 			}
 		}
 	}
@@ -119,6 +129,8 @@ balljoint body {
 		boxmin -0.07 -0.2 -0.07
 		boxmax 0.07 0 0.07
 		
+		pose 1.3 0 0
+		
 		balljoint knee_b_r {
 		
 			offset 0 -0.2 0
@@ -128,11 +140,15 @@ balljoint body {
 			rotylimit 0 0
 			rotzlimit 0 0
 			
+			pose -1.3 0 0
+			
 			balljoint foot_b_r {
 			
 				offset 0 -0.2 0
 				boxmin -0.07 -0.08 -0.07
 				boxmax 0.07 0 0.07
+				
+				pose 0.8 0 0
 			}
 		}
 	}
@@ -143,6 +159,8 @@ balljoint body {
 		boxmin -0.07 -0.2 -0.07
 		boxmax 0.07 0 0.07
 		
+		pose -1.3 0 0
+		
 		balljoint knee_f_l {
 		
 			offset 0 -0.2 0
@@ -152,11 +170,15 @@ balljoint body {
 			rotylimit 0 0
 			rotzlimit 0 0
 			
+			pose 2 0 0
+			
 			balljoint foot_f_l {
 			
 				offset 0 -0.2 0
 				boxmin -0.07 -0.08 -0.07
 				boxmax 0.07 0 0.07
+				
+				pose 0.9 0 0
 			}
 		}
 	}
@@ -167,6 +189,8 @@ balljoint body {
 		boxmin -0.07 -0.2 -0.07
 		boxmax 0.07 0 0.07
 		
+		pose -0.8 0 0
+		
 		balljoint knee_f_r {
 		
 			offset 0 -0.2 0
@@ -176,11 +200,15 @@ balljoint body {
 			rotylimit 0 0
 			rotzlimit 0 0
 			
+			pose 1.1 0 0
+			
 			balljoint foot_f_r {
 			
 				offset 0 -0.2 0
 				boxmin -0.07 -0.08 -0.07
 				boxmax 0.07 0 0.07
+				
+				pose 0.5 0 0
 			}
 		}
 	}
