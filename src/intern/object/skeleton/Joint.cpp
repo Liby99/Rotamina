@@ -50,6 +50,10 @@ std::string Joint::getJointType() {
     return "Joint";
 }
 
+Eigen::Matrix4f Joint::getWorldTransform() {
+    return worldTransf;
+}
+
 void Joint::update(const Eigen::Matrix4f & currTransf) {
     for (rotamina::Joint * j : children) {
         j->update(currTransf);

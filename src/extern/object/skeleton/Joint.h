@@ -42,8 +42,9 @@ namespace rotamina {
             virtual std::vector<std::pair<std::string, std::string>> getVars();
             virtual std::string getJointType();
             
-            virtual void draw(Shader & shader);
+            virtual Eigen::Matrix4f getWorldTransform();
             virtual void update(const Eigen::Matrix4f & parentTransf);
+            virtual void draw(Shader & shader);
     };
 }
 
