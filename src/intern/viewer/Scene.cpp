@@ -46,6 +46,7 @@ void Scene::drawGL() {
     shader.bind();
     shader.setUniform("viewPersp", camera.getViewPerspective());
     for (rotamina::Object * obj : objects) {
+        obj->update();
         obj->draw(shader);
     }
     glDisable(GL_DEPTH_TEST);

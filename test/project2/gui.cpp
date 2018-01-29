@@ -5,9 +5,8 @@
 using namespace rotamina;
 
 int main () {
-    Skeleton skel = SkeletonParser::loadSkeleton("../res/skeletons/horse.skel");
-    Cube cube;
+    Skeleton skel = SkeletonParser::loadSkeleton("../res/skeletons/dragon.skel");
     SkeletonViewer::createViewer(1600, 960, "CSE 169 Project 2", skel, [&] (SkeletonViewer & viewer) {
-        viewer.getScene().addObject(cube);
+        viewer.getCamera().setPosition(Eigen::Vector3f(20, 3, 20));
     });
 }

@@ -15,6 +15,8 @@ namespace rotamina {
         public:
             SkeletonViewer(int, int, std::string, Skeleton & skel);
             static void createViewer(int, int, std::string, Skeleton & skel, std::function<void(SkeletonViewer &)>);
+        private:
+            void addJointButton(rotamina::Joint *, nanogui::Widget *);
     };
 }
 

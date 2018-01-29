@@ -15,6 +15,12 @@ SkeletonViewer::SkeletonViewer(int w, int h, std::string name, Skeleton & skel) 
     jointsViewer = new Window(this, "Skeleton Structure");
     jointsViewer->setPosition({ 0, 0 });
     jointsViewer->setSize({ JOINTS_VIEWER_WIDTH, h });
+    jointsViewer->setLayout(new GroupLayout(0));
+    VScrollPanel * scrollPanel = new VScrollPanel(jointsViewer);
+    scrollPanel->setFixedSize(nanogui::Vector2i(JOINTS_VIEWER_WIDTH, h - HEADER_HEIGHT));
+    Widget * jointsHolder = new Widget(scrollPanel);
+    jointsHolder->setLayout(new GroupLayout());
+    addJointButton(skel.getRoot(), jointsHolder);
     
     jointInfoViewer = new Window(this, "Joint Info");
     jointInfoViewer->setPosition({ w - JOINT_INFO_VIEWER_WIDTH, 0 });
@@ -36,5 +42,18 @@ void SkeletonViewer::createViewer(int w, int h, std::string name, Skeleton & ske
     catch (const std::runtime_error &e) {
         std::string error_msg = std::string("Caught a fatal error: ") + std::string(e.what());
         std::cerr << error_msg << std::endl;
+    }
+}
+
+void SkeletonViewer::addJointButton(rotamina::Joint * joint, nanogui::Widget * parent) {
+    using namespace nanogui;
+    Button * btn = new Button(parent, joint->getName());
+    btn->setFontSize(16);
+    btn->setCallback([this, joint]() {
+        // this->showJoint(joint);
+    });
+    btn->setFlags(Button::RadioButton);
+    for (Joint * j : joint->getChildren()) {
+        addJointButton(j, parent);
     }
 }

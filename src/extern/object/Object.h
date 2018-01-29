@@ -11,6 +11,7 @@ namespace rotamina {
         public:
             Transform transform;
             Object();
+            virtual void update();
             virtual void draw(rotamina::Shader &);
     };
 }

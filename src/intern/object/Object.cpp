@@ -7,6 +7,10 @@ Object::Object() {
     
 }
 
+void Object::update() {
+    // Do Nothing
+}
+
 void Object::draw(Shader & shader) {
     // Do Nothing
 }
