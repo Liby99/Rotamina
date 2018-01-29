@@ -73,7 +73,6 @@ void Box::draw(Shader & shader, Eigen::Matrix4f & transform) {
     vertices.col(21) << boxMin[0], boxMin[1], boxMax[2], 1;
     vertices.col(22) << boxMax[0], boxMin[1], boxMax[2], 1;
     vertices.col(23) << boxMax[0], boxMin[1], boxMin[2], 1;
-    vertices = transform * vertices; // Transform all points by the transform
     
     MatrixXf normals(4, 24);
     normals.col(0) << 0, 0, -1, 1;
@@ -105,13 +104,12 @@ void Box::draw(Shader & shader, Eigen::Matrix4f & transform) {
     normals.col(21) << 0, -1, 0, 1;
     normals.col(22) << 0, -1, 0, 1;
     normals.col(23) << 0, -1, 0, 1;
-    normals = transform.inverse().transpose() * normals; // Transform all points by the transform
+    
+    shader.setUniform("model", transform);
     
     shader.uploadIndices(indices);
-    shader.uploadAttrib("Position", vertices);
-    shader.uploadAttrib("Normal", normals);
+    shader.uploadAttrib("position", vertices);
+    shader.uploadAttrib("normal", normals);
     
-    glEnable(GL_DEPTH_TEST);
     shader.drawIndexed(GL_TRIANGLES, 0, 12);
-    glDisable(GL_DEPTH_TEST);
 }

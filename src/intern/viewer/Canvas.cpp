@@ -14,7 +14,7 @@ void Canvas::drawGL() {
     glEnable(GL_DEPTH_TEST);
     shader.bind();
     shader.setUniform("viewPersp", camera.getViewPerspective());
-    for (Object * obj : objects) {
+    for (rotamina::Object * obj : objects) {
         obj->draw(shader);
     }
     glDisable(GL_DEPTH_TEST);

@@ -7,17 +7,11 @@
 #include "utility/Transform.h"
 
 namespace rotamina {
-    
     class Object {
         public:
-            
             Transform transform;
-            Shader * shader;
-            
             Object();
-            
-            virtual void draw();
-            virtual void setShader(Shader & shader);
+            virtual void draw(rotamina::Shader &);
     };
 }
 

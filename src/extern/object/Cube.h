@@ -6,18 +6,14 @@
 namespace rotamina {
     
     class Cube : public Object {
-        private:
-            
+        protected:
             float width;
             float height;
             float length;
-            
         public:
-            
             Cube();
             Cube(float width, float height, float length);
-            
-            virtual void draw();
+            virtual void draw(rotamina::Shader &);
     };
 }
 

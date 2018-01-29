@@ -2,7 +2,7 @@
 #define CANVAS_H
 
 #include <nanogui/nanogui.h>
-
+#include <camera/Camera.h>
 #include <object/Object.h>
 
 namespace rotamina {

@@ -26,6 +26,6 @@ void Skeleton::update() {
     root->update(mat);
 }
 
-void Skeleton::draw() {
-    root->draw(*shader);
+void Skeleton::draw(Shader & shader) {
+    root->draw(shader);
 }

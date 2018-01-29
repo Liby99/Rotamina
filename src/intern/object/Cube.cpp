@@ -11,7 +11,7 @@ Cube::Cube(float width, float height, float length) : Object::Object() {
     this->length = length;
 }
 
-void Cube::draw() {
+void Cube::draw(Shader & shader) {
     
     using namespace nanogui;
     
@@ -91,9 +91,9 @@ void Cube::draw() {
     normals.col(22) << 0, -1, 0;
     normals.col(23) << 0, -1, 0;
     
-    shader->uploadIndices(indices);
-    shader->uploadAttrib("Position", positions);
-    shader->uploadAttrib("Normal", normals);
-    
-    shader->drawIndexed(GL_TRIANGLES, 0, 12);
+    shader.setUniform("model", transform.getTransform());
+    shader.uploadIndices(indices);
+    shader.uploadAttrib("position", positions);
+    shader.uploadAttrib("normal", normals);
+    shader.drawIndexed(GL_TRIANGLES, 0, 12);
 }

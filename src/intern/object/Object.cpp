@@ -7,10 +7,6 @@ Object::Object() {
     
 }
 
-void Object::draw() {
-    
-}
-
-void Object::setShader(Shader & shader) {
-    this->shader = &shader;
+void Object::draw(Shader & shader) {
+    // Do Nothing
 }

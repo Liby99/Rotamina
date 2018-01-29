@@ -7,7 +7,6 @@
 #include "object/skeleton/Joint.h"
 
 namespace rotamina {
-    
     class Skeleton : public Object {
         protected:
             Joint * root;
@@ -17,7 +16,7 @@ namespace rotamina {
             void setRoot(Joint & root);
             Joint * getRoot();
             virtual void update();
-            virtual void draw();
+            virtual void draw(rotamina::Shader &);
     };
 }
 
