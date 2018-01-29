@@ -9,19 +9,38 @@
 
 namespace rotamina {
     class Viewer : public nanogui::Screen {
+        private:
+            
+            // Singleton viewer
+            static Viewer * currentViewer;
+            
         protected:
-            nanogui::Color BACKGROUND = { 30, 30, 30, 255 };
-            int HEADER_HEIGHT = 28;
-            int PADDING = 5;
+            
+            // Basic constants
+            static const nanogui::Color BACKGROUND;
+            static const int HEADER_HEIGHT;
+            static const int PADDING;
+            
+            // Variables
             nanogui::Window * sceneViewer;
             rotamina::Scene * scene;
+            
         public:
+            
+            // Constructor
             Viewer(int, int, std::string);
             ~Viewer();
+            
+            // Basic getter setters
+            bool isSceneFocusing();
             rotamina::Scene & getScene();
             rotamina::Camera & getCamera();
+            
+            // Event Handling
             virtual bool keyboardEvent(int, int, int, int);
             virtual void draw(NVGcontext *);
+            
+            // Static Singleton Methods
             static void createViewer(int, int, std::string, std::function<void(Viewer &)>);
     };
 }

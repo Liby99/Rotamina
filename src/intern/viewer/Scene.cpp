@@ -41,6 +41,16 @@ Camera & Scene::getCamera() {
     return camera;
 }
 
+bool Scene::mouseMotionEvent(const Eigen::Vector2i & p, const Eigen::Vector2i & rel, int button, int modifiers) {
+    std::cout << "mouse move" << std::endl;
+    return true;
+}
+
+bool Scene::scrollEvent(const Eigen::Vector2i & p, const Eigen::Vector2f & rel) {
+    std::cout << "scroll" << std::endl;
+    return true;
+}
+
 void Scene::drawGL() {
     glEnable(GL_DEPTH_TEST);
     shader.bind();

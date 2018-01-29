@@ -2,6 +2,10 @@
 
 using namespace rotamina;
 
+const nanogui::Color Viewer::BACKGROUND = { 30, 30, 30, 255 };
+const int Viewer::HEADER_HEIGHT = 28;
+const int Viewer::PADDING = 5;
+
 Viewer::Viewer(int w, int h, std::string name) : nanogui::Screen(Eigen::Vector2i(w, h), name, false) {
     
     using namespace nanogui;
@@ -50,10 +54,13 @@ void Viewer::draw(NVGcontext * ctx) {
 void Viewer::createViewer(int w, int h, std::string name, std::function<void(Viewer &)> init) {
     try {
         nanogui::init();
+        
+        // Initiate Viewer
         Viewer viewer = Viewer(w, h, name);
         init(viewer);
         viewer.drawAll();
         viewer.setVisible(true);
+        
         nanogui::mainloop();
         nanogui::shutdown();
     }

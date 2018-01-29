@@ -2,6 +2,9 @@
 
 using namespace rotamina;
 
+const int SkeletonViewer::JOINTS_VIEWER_WIDTH = 280;
+const int SkeletonViewer::JOINT_INFO_VIEWER_WIDTH = 280;
+
 SkeletonViewer::SkeletonViewer(int w, int h, std::string name, Skeleton & skel) : Viewer::Viewer(w, h, name) {
     
     skeleton = &skel;

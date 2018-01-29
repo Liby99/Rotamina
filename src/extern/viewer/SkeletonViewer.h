@@ -7,8 +7,10 @@
 namespace rotamina {
     class SkeletonViewer : public Viewer {
         protected:
-            int JOINTS_VIEWER_WIDTH = 280;
-            int JOINT_INFO_VIEWER_WIDTH = 280;
+            
+            static const int JOINTS_VIEWER_WIDTH;
+            static const int JOINT_INFO_VIEWER_WIDTH;
+            
             rotamina::Skeleton * skeleton;
             nanogui::Window * jointsViewer;
             nanogui::Window * jointInfoViewer;
