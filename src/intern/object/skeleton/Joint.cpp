@@ -8,6 +8,12 @@ Joint::Joint(std::string name) {
     setName(name);
 }
 
+Joint::~Joint() {
+    for (Joint * j : children) {
+        delete j;
+    }
+}
+
 std::string Joint::getName() {
     return name;
 }

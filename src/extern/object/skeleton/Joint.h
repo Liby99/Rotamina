@@ -30,6 +30,7 @@ namespace rotamina {
             
             Joint();
             Joint(std::string name);
+            ~Joint();
             
             std::string getName();
             void setName(std::string name);
