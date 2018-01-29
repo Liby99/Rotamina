@@ -15,30 +15,30 @@ SkeletonViewer::SkeletonViewer(int width, int height, std::string name, Skeleton
     this->skel->shader = new Shader();
     
     if (drawGui) {
-        
+    
         using namespace nanogui;
-        
+    
         // Joint List Window
         joints = new Window(this, "Skeleton Joint List");
         joints->setPosition(Vector2i(15, 15));
         joints->setFixedSize(nanogui::Vector2i(250, height - 30));
         joints->setLayout(new GroupLayout(0));
-        
+    
         VScrollPanel * scrollPanel = new VScrollPanel(joints);
         scrollPanel->setFixedSize(nanogui::Vector2i(250, height - 50));
-        
+    
         Widget * jointButtons = new Widget(scrollPanel);
         jointButtons->setLayout(new GroupLayout());
-        
+    
         Joint * root = this->skel->getRoot();
         addButton(root, jointButtons, 0);
-        
+    
         // Joint Data Window
         form = new FormHelper(this);
         jointData = form->addWindow(Eigen::Vector2i(280, 15), "Joint Data");
         jointData->setFixedWidth(250);
         showJoint(root);
-        
+    
         performLayout();
     }
 }
@@ -75,7 +75,7 @@ void SkeletonViewer::createViewer(int width, int height, std::string name, Skele
         viewer.setVisible(true);
         
         // Hack TODO: Find a decent way to enable depth test
-        glEnable(GL_DEPTH_TEST);
+        // glEnable(GL_DEPTH_TEST);
         
         nanogui::mainloop();
         nanogui::shutdown();

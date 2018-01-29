@@ -111,5 +111,7 @@ void Box::draw(Shader & shader, Eigen::Matrix4f & transform) {
     shader.uploadAttrib("Position", vertices);
     shader.uploadAttrib("Normal", normals);
     
+    glEnable(GL_DEPTH_TEST);
     shader.drawIndexed(GL_TRIANGLES, 0, 12);
+    glDisable(GL_DEPTH_TEST);
 }
