@@ -69,12 +69,12 @@ std::string limitToString(const DOF & dof) {
 
 std::vector<std::pair<std::string, std::string>> BallJoint::getVars() {
     std::vector<std::pair<std::string, std::string>> vect;
-    vect.push_back(std::make_pair("Offset:", vector3fToString(offset)));
-    vect.push_back(std::make_pair("Box Min:", vector3fToString(getBoxMin())));
-    vect.push_back(std::make_pair("Box Max:", vector3fToString(getBoxMax())));
-    vect.push_back(std::make_pair("X Limit:", limitToString(*dofs["x"])));
-    vect.push_back(std::make_pair("Y Limit:", limitToString(*dofs["y"])));
-    vect.push_back(std::make_pair("Z Limit:", limitToString(*dofs["z"])));
+    vect.push_back(std::make_pair("Offset", vector3fToString(offset)));
+    vect.push_back(std::make_pair("Box Min", vector3fToString(getBoxMin())));
+    vect.push_back(std::make_pair("Box Max", vector3fToString(getBoxMax())));
+    vect.push_back(std::make_pair("X Limit", limitToString(*dofs["x"])));
+    vect.push_back(std::make_pair("Y Limit", limitToString(*dofs["y"])));
+    vect.push_back(std::make_pair("Z Limit", limitToString(*dofs["z"])));
     return vect;
 }
 
