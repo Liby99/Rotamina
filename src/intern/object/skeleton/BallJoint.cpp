@@ -57,13 +57,13 @@ void BallJoint::setPose(const Eigen::Vector3f & pose) {
 
 std::string vector3fToString(const Eigen::Vector3f & vec) {
     std::ostringstream os;
-    os << "<" << vec[0] << ", " << vec[1] << ", " << vec[2] << ">";
+    os << "< " << vec[0] << ", " << vec[1] << ", " << vec[2] << " >";
     return os.str();
 }
 
 std::string limitToString(const DOF & dof) {
     std::ostringstream os;
-    os << "[" << dof.getMin() << ", " << dof.getMax() << "]";
+    os << "[ " << dof.getMin() << ", " << dof.getMax() << " ]";
     return os.str();
 }
 

@@ -105,8 +105,9 @@ void SkeletonViewer::showJointInfo(rotamina::Joint * joint) {
             fb->setFixedSize(Vector2i(200, 24));
             fb->setFontSize(16);
             fb->setSpinnable(true);
-            fb->setCallback([dof] (const float & value) {
+            fb->setCallback([fb, dof] (const float & value) {
                 dof->setValue(value);
+                fb->setValue(dof->getValue());
             });
         }
     }
