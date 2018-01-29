@@ -3,16 +3,18 @@
 
 #include <nanogui/nanogui.h>
 
+#include <object/Object.h>
+
 namespace rotamina {
     class Canvas : public nanogui::GLCanvas {
+        protected:
+            rotamina::Shader shader;
+            rotamina::Camera camera;
+            std::vector<rotamina::Object *> objects;
         public:
             Canvas(Widget *);
             ~Canvas();
-            void setRotation(nanogui::Vector3f);
             virtual void drawGL() override;
-        protected:
-            nanogui::GLShader mShader;
-            Eigen::Vector3f mRotation;
     };
 }
 

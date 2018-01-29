@@ -2,11 +2,15 @@
 
 using namespace rotamina;
 
-Camera::Camera() : Camera(Eigen::Vector3f(0, 0, 1), Eigen::Vector3f(0, 0, 0), Eigen::Vector3f(0, 1, 0)) {}
+Camera::Camera() : Camera(960, 540) {}
 
-Camera::Camera(Eigen::Vector3f position, Eigen::Vector3f target, Eigen::Vector3f up) {
+Camera::Camera(int w, int h) : Camera(w, h, Eigen::Vector3f(0, 0, 1), Eigen::Vector3f(0, 0, 0), Eigen::Vector3f(0, 1, 0)) {}
+
+Camera::Camera(int w, int h, Eigen::Vector3f position, Eigen::Vector3f target, Eigen::Vector3f up) {
     
     // Initiate transforms
+    this->width = w;
+    this->height = h;
     this->position = position;
     this->target = target;
     this->up = up;
@@ -15,8 +19,15 @@ Camera::Camera(Eigen::Vector3f position, Eigen::Vector3f target, Eigen::Vector3f
     this->orientation = Eigen::Vector3f(0, 0, 0);
     this->zNear = 0.1f;
     this->zFar = 100.0f;
-    this->aspect = (float) 960 / (float) 540;
     this->fovy = M_PI / 3.0f;
+}
+
+int Camera::getWidth() const {
+    return width;
+}
+
+int Camera::getHeight() const {
+    return height;
 }
 
 Eigen::Matrix4f Camera::getViewPerspective() const {
@@ -28,7 +39,7 @@ Eigen::Matrix4f Camera::getView() const {
 }
 
 Eigen::Matrix4f Camera::getPerspective() const {
-    return Transform::perspective(fovy, aspect, zNear, zFar);
+    return Transform::perspective(fovy, getAspect(), zNear, zFar);
 }
 
 Eigen::Vector3f Camera::getPosition() const {
@@ -52,11 +63,19 @@ float Camera::getZFar() const {
 }
 
 float Camera::getAspect() const {
-    return aspect;
+    return (float) width / (float) height;
 }
 
 float Camera::getFovy() const {
     return fovy;
+}
+
+void Camera::setWidth(int w) {
+    this->width = w;
+}
+
+void Camera::setHeight(int h) {
+    this->height = h;
 }
 
 void Camera::setPosition(Eigen::Vector3f position) {
@@ -77,10 +96,6 @@ void Camera::setZNear(float zNear) {
 
 void Camera::setZFar(float zFar) {
     this->zFar = zFar;
-}
-
-void Camera::setAspect(float aspect) {
-    this->aspect = aspect;
 }
 
 void Camera::setFovy(float fovy) {

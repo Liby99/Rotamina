@@ -11,6 +11,9 @@ namespace rotamina {
     class Camera {
         private:
             
+            int width;
+            int height;
+            
             Eigen::Vector3f position;
             Eigen::Vector3f target;
             Eigen::Vector3f up;
@@ -18,13 +21,16 @@ namespace rotamina {
             
             float zNear;
             float zFar;
-            float aspect;
             float fovy;
             
         public:
             
             Camera();
-            Camera(Eigen::Vector3f position, Eigen::Vector3f target, Eigen::Vector3f up);
+            Camera(int, int);
+            Camera(int, int, Eigen::Vector3f, Eigen::Vector3f, Eigen::Vector3f);
+            
+            int getWidth() const;
+            int getHeight() const;
             
             Eigen::Matrix4f getViewPerspective() const;
             Eigen::Matrix4f getView() const;
@@ -39,14 +45,17 @@ namespace rotamina {
             float getAspect() const;
             float getFovy() const;
             
-            void setPosition(Eigen::Vector3f position);
-            void setTarget(Eigen::Vector3f target);
-            void setUp(Eigen::Vector3f up);
+            void setWidth(int);
+            void setHeight(int);
             
-            void setZNear(float zNear);
-            void setZFar(float zFar);
-            void setAspect(float aspect);
-            void setFovy(float fovy);
+            void setPosition(Eigen::Vector3f);
+            void setTarget(Eigen::Vector3f);
+            void setUp(Eigen::Vector3f);
+            
+            void setZNear(float);
+            void setZFar(float);
+            void setAspect(float);
+            void setFovy(float);
     };
 }
 
