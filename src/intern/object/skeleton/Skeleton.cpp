@@ -16,14 +16,20 @@ void Skeleton::setRoot(Joint & joint) {
     this->root = &joint;
 }
 
-Joint * Skeleton::getRoot() {
-    return root;
+Joint & Skeleton::getRoot() {
+    return *root;
+}
+
+void Skeleton::addJoint(Joint & j) {
+    joints.push_back(&j);
+}
+
+Joint & Skeleton::getJoint(int i) {
+    return *(joints[i]);
 }
 
 void Skeleton::update() {
-    Eigen::Matrix4f mat;
-    mat.setIdentity();
-    root->update(mat);
+    root->update(transform.getTransform());
 }
 
 void Skeleton::draw(Shader & shader) {

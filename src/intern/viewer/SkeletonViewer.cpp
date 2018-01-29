@@ -23,13 +23,13 @@ SkeletonViewer::SkeletonViewer(int w, int h, std::string name, Skeleton & skel) 
     scrollPanel->setFixedSize(nanogui::Vector2i(JOINTS_VIEWER_WIDTH, h - HEADER_HEIGHT));
     Widget * jointsHolder = new Widget(scrollPanel);
     jointsHolder->setLayout(new GroupLayout());
-    addJointButton(skel.getRoot(), jointsHolder);
+    addJointButton(&skel.getRoot(), jointsHolder);
     
     jointInfoViewer = new Window(this, "Joint Info");
     jointInfoViewer->setPosition({ w - JOINT_INFO_VIEWER_WIDTH, 0 });
     jointInfoViewer->setFixedSize({ JOINT_INFO_VIEWER_WIDTH, h });
     jointInfoViewer->setLayout(new GroupLayout());
-    showJointInfo(skel.getRoot());
+    showJointInfo(&skel.getRoot());
     
     performLayout();
 }

@@ -7,26 +7,29 @@ Skeleton SkeletonParser::loadSkeleton(std::string filename) {
     Tokenizer tokenizer;
     tokenizer.open(filename.c_str());
     
-    Joint * root = new Joint("Root");
+    // Create skeleton
+    Skeleton skel;
     
+    // Create joint
+    Joint * root = new Joint("Root");
+    skel.setRoot(*root);
+    skel.addJoint(*root);
+    
+    // DFS load joints
     char temp[BUF_SIZE];
     tokenizer.getToken(temp);
-    
-    loadChildren(*root, tokenizer, temp);
-    
-    Skeleton skel;
-    skel.setRoot(*root);
+    loadChildren(skel, *root, tokenizer, temp);
     
     tokenizer.close();
     
     return skel;
 }
 
-bool SkeletonParser::loadChildren(Joint & joint, Tokenizer & tokenizer, std::string type) {
+bool SkeletonParser::loadChildren(Skeleton & skel, Joint & joint, Tokenizer & tokenizer, std::string type) {
     char temp[BUF_SIZE];
     if (type == "balljoint") {
-        BallJoint * bj = loadBallJoint(tokenizer);
-        joint.addChildren(*((Joint *)bj));
+        BallJoint * bj = loadBallJoint(skel, tokenizer);
+        joint.addChildren(*(Joint *)bj);
         return true;
     }
     else {
@@ -34,14 +37,15 @@ bool SkeletonParser::loadChildren(Joint & joint, Tokenizer & tokenizer, std::str
     }
 }
 
-BallJoint * SkeletonParser::loadBallJoint(Tokenizer & tokenizer) {
+BallJoint * SkeletonParser::loadBallJoint(Skeleton & skel, Tokenizer & tokenizer) {
     char temp[BUF_SIZE];
     tokenizer.getToken(temp);
     BallJoint * bj = new BallJoint(std::string(temp));
+    skel.addJoint(*(Joint *)bj);
     tokenizer.findToken("{");
     while (true) {
         tokenizer.getToken(temp);
-        if (loadChildren(*bj, tokenizer, temp)) {
+        if (loadChildren(skel, *bj, tokenizer, temp)) {
             // DO NOTHING
         }
         else if (!strcmp(temp, "offset")) {
@@ -75,12 +79,4 @@ BallJoint * SkeletonParser::loadBallJoint(Tokenizer & tokenizer) {
             throw std::invalid_argument("Error parsing the file with token [" + std::string(temp) + "]");
         }
     }
-}
-
-Eigen::Vector3f SkeletonParser::loadVector(Tokenizer & tokenizer) {
-    return Eigen::Vector3f(tokenizer.getFloat(), tokenizer.getFloat(), tokenizer.getFloat());
-}
-
-std::pair<float, float> SkeletonParser::loadMinMax(Tokenizer & tokenizer) {
-    return std::make_pair(tokenizer.getFloat(), tokenizer.getFloat());
 }
