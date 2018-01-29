@@ -30,6 +30,8 @@ namespace rotamina {
             
             // Object and Camera
             void addObject(rotamina::Object &);
+            bool removeObject(int i);
+            unsigned int objectCount();
             rotamina::Camera & getCamera();
             void updateCamera();
             

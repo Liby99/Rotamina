@@ -43,6 +43,18 @@ void Scene::addObject(rotamina::Object & obj) {
     objects.push_back(&obj);
 }
 
+bool Scene::removeObject(int i) {
+    if (objects.size() <= i) {
+        return false;
+    }
+    objects.erase(objects.begin() + i);
+    return true;
+}
+
+unsigned int Scene::objectCount() {
+    return objects.size();
+}
+
 Camera & Scene::getCamera() {
     return camera;
 }
@@ -87,7 +99,9 @@ void Scene::drawGL() {
     // Draw all the objects
     for (rotamina::Object * obj : objects) {
         obj->update();
-        obj->draw(shader);
+        if (!obj->isHidden()) {
+            obj->draw(shader);
+        }
     }
     
     glDisable(GL_DEPTH_TEST);
