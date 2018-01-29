@@ -18,6 +18,7 @@ namespace rotamina {
         public:
             Viewer(int, int, std::string);
             ~Viewer();
+            rotamina::Camera & getCamera();
             virtual bool keyboardEvent(int, int, int, int);
             virtual void draw(NVGcontext *);
             static void createViewer(int, int, std::string, std::function<void(Viewer &)>);

@@ -10,6 +10,14 @@ Canvas::~Canvas() {
     shader.free();
 }
 
+void Canvas::addObject(rotamina::Object & obj) {
+    objects.push_back(&obj);
+}
+
+Camera & Canvas::getCamera() {
+    return camera;
+}
+
 void Canvas::drawGL() {
     glEnable(GL_DEPTH_TEST);
     shader.bind();

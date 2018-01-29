@@ -24,6 +24,10 @@ Viewer::Viewer(int w, int h, std::string name) : nanogui::Screen(Eigen::Vector2i
 
 Viewer::~Viewer() {}
 
+Camera & Viewer::getCamera() {
+    return scene->getCamera();
+}
+
 bool Viewer::keyboardEvent(int key, int scancode, int action, int modifiers) {
     if (Screen::keyboardEvent(key, scancode, action, modifiers)) {
         return true;

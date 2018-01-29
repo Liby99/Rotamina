@@ -14,6 +14,8 @@ namespace rotamina {
         public:
             Canvas(Widget *);
             ~Canvas();
+            void addObject(rotamina::Object & obj);
+            rotamina::Camera & getCamera();
             virtual void drawGL() override;
     };
 }

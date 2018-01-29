@@ -4,6 +4,9 @@ using namespace rotamina;
 
 SkeletonViewer::SkeletonViewer(int w, int h, std::string name, Skeleton & skel) : Viewer::Viewer(w, h, name) {
     
+    skeleton = &skel;
+    scene->addObject(skel);
+    
     using namespace nanogui;
     
     sceneViewer->setPosition({ JOINTS_VIEWER_WIDTH, 0 });
