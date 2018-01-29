@@ -2,17 +2,17 @@
 #define VIEWER_H
 
 #include <string>
+#include <functional>
 #include <nanogui/nanogui.h>
 
 #include "Canvas.h"
 
 namespace rotamina {
     class Viewer : public nanogui::Screen {
-        private:
+        protected:
             nanogui::Color BACKGROUND = { 30, 30, 30, 255 };
             int HEADER_HEIGHT = 28;
             int PADDING = 5;
-        protected:
             nanogui::Window * sceneViewer;
             rotamina::Canvas * scene;
         public:
@@ -20,7 +20,7 @@ namespace rotamina {
             ~Viewer();
             virtual bool keyboardEvent(int, int, int, int);
             virtual void draw(NVGcontext *);
-            static void createViewer();
+            static void createViewer(int, int, std::string, std::function<void(Viewer &)>);
     };
 }
 
