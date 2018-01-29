@@ -84,7 +84,7 @@ bool Scene::mouseMotionEvent(const Eigen::Vector2i & p, const Eigen::Vector2i & 
 }
 
 bool Scene::scrollEvent(const Eigen::Vector2i & p, const Eigen::Vector2f & rel) {
-    dist = fmaxf(0.01f, dist + rel[1] * SCROLL_SPEED);
+    dist = fmaxf(0.01f, dist - rel[1] * SCROLL_SPEED);
     return true;
 }
 
