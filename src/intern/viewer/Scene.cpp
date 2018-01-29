@@ -1,24 +1,24 @@
-#include "viewer/Canvas.h"
+#include "viewer/Scene.h"
 
 using namespace rotamina;
 
-Canvas::Canvas(Widget *parent) : nanogui::GLCanvas(parent) {
+Scene::Scene(Widget *parent) : nanogui::GLCanvas(parent) {
     shader.init();
 }
 
-Canvas::~Canvas() {
+Scene::~Scene() {
     shader.free();
 }
 
-void Canvas::addObject(rotamina::Object & obj) {
+void Scene::addObject(rotamina::Object & obj) {
     objects.push_back(&obj);
 }
 
-Camera & Canvas::getCamera() {
+Camera & Scene::getCamera() {
     return camera;
 }
 
-void Canvas::drawGL() {
+void Scene::drawGL() {
     glEnable(GL_DEPTH_TEST);
     shader.bind();
     shader.setUniform("viewPersp", camera.getViewPerspective());

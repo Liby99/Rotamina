@@ -5,7 +5,7 @@
 #include <functional>
 #include <nanogui/nanogui.h>
 
-#include "Canvas.h"
+#include "Scene.h"
 
 namespace rotamina {
     class Viewer : public nanogui::Screen {
@@ -14,10 +14,11 @@ namespace rotamina {
             int HEADER_HEIGHT = 28;
             int PADDING = 5;
             nanogui::Window * sceneViewer;
-            rotamina::Canvas * scene;
+            rotamina::Scene * scene;
         public:
             Viewer(int, int, std::string);
             ~Viewer();
+            rotamina::Scene & getScene();
             rotamina::Camera & getCamera();
             virtual bool keyboardEvent(int, int, int, int);
             virtual void draw(NVGcontext *);

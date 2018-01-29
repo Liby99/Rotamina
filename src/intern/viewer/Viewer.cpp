@@ -14,7 +14,7 @@ Viewer::Viewer(int w, int h, std::string name) : nanogui::Screen(Eigen::Vector2i
     sceneViewer->setLayout(new GroupLayout(PADDING));
     
     // Setup the canvas in the scene viewer
-    scene = new Canvas(sceneViewer);
+    scene = new Scene(sceneViewer);
     scene->setBackgroundColor(BACKGROUND);
     scene->setSize({ w - 2 * PADDING, h - HEADER_HEIGHT - 2 * PADDING });
     
@@ -23,6 +23,10 @@ Viewer::Viewer(int w, int h, std::string name) : nanogui::Screen(Eigen::Vector2i
 }
 
 Viewer::~Viewer() {}
+
+Scene & Viewer::getScene() {
+    return *scene;
+}
 
 Camera & Viewer::getCamera() {
     return scene->getCamera();
