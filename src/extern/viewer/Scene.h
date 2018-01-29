@@ -2,7 +2,7 @@
 #define SCENE_H
 
 #include <nanogui/nanogui.h>
-#include <camera/Camera.h>
+#include <viewer/Camera.h>
 #include <object/Object.h>
 
 namespace rotamina {
@@ -14,7 +14,12 @@ namespace rotamina {
         public:
             Scene(Widget *);
             ~Scene();
-            void addObject(rotamina::Object & obj);
+            void setSize(int, int);
+            void setWidth(int);
+            void setHeight(int);
+            int getWidth();
+            int getHeight();
+            void addObject(rotamina::Object &);
             rotamina::Camera & getCamera();
             virtual void drawGL() override;
     };

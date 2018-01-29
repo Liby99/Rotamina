@@ -10,6 +10,29 @@ Scene::~Scene() {
     shader.free();
 }
 
+void Scene::setSize(int width, int height) {
+    GLCanvas::setSize({ width, height });
+    camera.setSize(width, height);
+}
+
+void Scene::setWidth(int width) {
+    GLCanvas::setWidth(width);
+    camera.setWidth(width);
+}
+
+void Scene::setHeight(int height) {
+    GLCanvas::setHeight(height);
+    camera.setHeight(height);
+}
+
+int Scene::getWidth() {
+    return camera.getWidth();
+}
+
+int Scene::getHeight() {
+    return camera.getHeight();
+}
+
 void Scene::addObject(rotamina::Object & obj) {
     objects.push_back(&obj);
 }

@@ -16,7 +16,7 @@ Viewer::Viewer(int w, int h, std::string name) : nanogui::Screen(Eigen::Vector2i
     // Setup the canvas in the scene viewer
     scene = new Scene(sceneViewer);
     scene->setBackgroundColor(BACKGROUND);
-    scene->setSize({ w - 2 * PADDING, h - HEADER_HEIGHT - 2 * PADDING });
+    scene->setSize(w - 2 * PADDING, h - HEADER_HEIGHT - 2 * PADDING);
     
     // Render the UI
     performLayout();

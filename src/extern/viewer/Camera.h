@@ -45,6 +45,7 @@ namespace rotamina {
             float getAspect() const;
             float getFovy() const;
             
+            void setSize(int, int);
             void setWidth(int);
             void setHeight(int);
             

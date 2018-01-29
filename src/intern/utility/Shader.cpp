@@ -24,7 +24,7 @@ bool Shader::init() {
         "    mat4 mvp = viewPersp * model;\n"
         "    gl_Position = mvp * vec4(position, 1);\n"
         "    fragPosition = vec3(model * vec4(position, 1));\n"
-        "    fragNormal = vec3(model * vec4(normal, 0));\n"
+        "    fragNormal = vec3(transpose(inverse(model)) * vec4(normal, 0));\n"
         "}",
 
         /* Fragment shader */
@@ -35,11 +35,11 @@ bool Shader::init() {
         "uniform vec3 LightDirection = normalize(vec3(1, 5, 2));\n"
         "uniform vec3 LightColor = vec3(1);\n"
         "uniform vec3 DiffuseColor = vec3(0.5);\n"
-        "out vec3 finalColor;\n"
+        "out vec4 finalColor;\n"
         "void main() {\n"
         "    vec3 irradiance = AmbientColor + LightColor * max(0, dot(LightDirection, fragNormal));\n"
         "    vec3 reflectance = irradiance * DiffuseColor;\n"
-        "    finalColor = sqrt(reflectance);\n"
+        "    finalColor = vec4(sqrt(reflectance), 1);\n"
         "}"
     );
 }

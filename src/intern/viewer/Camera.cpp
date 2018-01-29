@@ -1,4 +1,4 @@
-#include "camera/Camera.h"
+#include "viewer/Camera.h"
 
 using namespace rotamina;
 
@@ -68,6 +68,11 @@ float Camera::getAspect() const {
 
 float Camera::getFovy() const {
     return fovy;
+}
+
+void Camera::setSize(int w, int h) {
+    setWidth(w);
+    setHeight(h);
 }
 
 void Camera::setWidth(int w) {
