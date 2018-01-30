@@ -28,12 +28,13 @@ namespace rotamina {
             int getWidth();
             int getHeight();
             
-            // Object and Camera
+            // Object, Camera and Shader
             void addObject(rotamina::Object &);
             bool removeObject(int i);
             unsigned int objectCount();
             rotamina::Camera & getCamera();
             void updateCamera();
+            rotamina::Shader & getShader();
             
             // Control
             virtual bool keyboardEvent(int key, int scancode, int action, int modifiers) override;

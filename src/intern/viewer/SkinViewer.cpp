@@ -4,8 +4,11 @@ using namespace rotamina;
 
 SkinViewer::SkinViewer(int w, int h, std::string name, Skin & skin) : SkeletonViewer(w, h, name, skin.getSkeleton()) {
     this->skin = &skin;
+    
     scene->removeObject(0);
     scene->addObject(skin);
+    
+    scene->getShader().initTwoLights();
 }
 
 void SkinViewer::createViewer(int w, int h, std::string name, Skin & skin, std::function<void(SkinViewer &)> init) {

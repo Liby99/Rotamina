@@ -69,6 +69,10 @@ void Scene::updateCamera() {
     camera.setPosition(m * pos);
 }
 
+Shader & Scene::getShader() {
+    return shader;
+}
+
 bool Scene::keyboardEvent(int key, int scancode, int action, int modifiers) {
     return true;
 }
