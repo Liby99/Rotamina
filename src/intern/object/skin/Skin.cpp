@@ -41,8 +41,7 @@ int Skin::bindingMatrixAmount() {
 }
 
 void Skin::addInvBinding(Eigen::Matrix4f binding) {
-    binding.inverse();
-    invBindings.push_back(binding);
+    invBindings.push_back(binding.inverse());
 }
 
 void Skin::update() {
@@ -74,17 +73,16 @@ void Skin::draw(Shader & shader) {
     }
     
     // Load Positions and Normals
-    MatrixXf positions(3, skinVertexAmount());
-    MatrixXf normals(3, skinVertexAmount());
+    MatrixXf positions(3, skinVertexAmount()), normals(3, skinVertexAmount());
     for (int i = 0; i < skinVertexAmount(); i++) {
-        Vector3f pos = vertices[i].getPosition(),
-                 norm = vertices[i].getNormal();
+        Vector3f pos = vertices[i].getPosition(), norm = vertices[i].getNormal();
         positions.col(i) << pos[0], pos[1], pos[2];
         normals.col(i) << norm[0], norm[1], norm[2];
     }
     
     // Finally draw the skin
-    Matrix4f mat; mat.setIdentity();
+    Matrix4f mat;
+    mat.setIdentity();
     shader.setUniform("model", mat);
     shader.uploadIndices(indices);
     shader.uploadAttrib("position", positions);

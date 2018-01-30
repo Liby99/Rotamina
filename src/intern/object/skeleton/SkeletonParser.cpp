@@ -3,12 +3,16 @@
 using namespace rotamina;
 
 Skeleton SkeletonParser::loadSkeleton(std::string filename) {
+    Skeleton skel;
+    loadSkeleton(skel, filename);
+    return skel;
+}
+
+void SkeletonParser::loadSkeleton(Skeleton & skel, std::string filename) {
     
+    // Open the file
     Tokenizer tokenizer;
     tokenizer.open(filename.c_str());
-    
-    // Create skeleton
-    Skeleton skel;
     
     // Create joint
     Joint * root = new Joint("Root");
@@ -20,9 +24,8 @@ Skeleton SkeletonParser::loadSkeleton(std::string filename) {
     tokenizer.getToken(temp);
     loadChildren(skel, *root, tokenizer, temp);
     
+    // Close the file
     tokenizer.close();
-    
-    return skel;
 }
 
 bool SkeletonParser::loadChildren(Skeleton & skel, Joint & joint, Tokenizer & tokenizer, std::string type) {
