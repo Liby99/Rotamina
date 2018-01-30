@@ -27,10 +27,10 @@ void SkinParser::loadSkin(Skin & skin, std::string filename) {
         else if (!strcmp(temp, "bindings")) {
             loadBindings(skin, tokenizer);
         }
-        else {
-            throw std::invalid_argument("Error parsing the file with token [" + std::string(temp) + "]");
-        }
     }
+    
+    // Close the file
+    tokenizer.close();
 }
 
 void SkinParser::loadPositions(Skin & skin, Tokenizer & tokenizer) {

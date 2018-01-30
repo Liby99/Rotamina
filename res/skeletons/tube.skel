@@ -1,0 +1,12 @@
+balljoint shoulder {
+	offset 0 0.5 0
+	boxmin -0.05 -0.5 -0.05
+	boxmax 0.05 0.0 0.05
+	pose 0 0 0
+	balljoint elbow {
+		offset 0 -0.5 0
+		boxmin -0.05 -0.5 -0.05
+		boxmax 0.05 0.0 0.05
+		pose 0 0 1
+	}
+}
