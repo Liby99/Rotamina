@@ -52,5 +52,5 @@ void SkinVertex::update(std::vector<Eigen::Matrix4f> & matrices) {
         m += weights[i].second * matrices[weights[i].first];
     }
     currPos = (m * Vector4f(position[0], position[1], position[2], 1)).head<3>();
-    currNorm = (m * Vector4f(normal[0], normal[1], normal[2], 0)).head<3>();
+    currNorm = (m.inverse().transpose() * Vector4f(normal[0], normal[1], normal[2], 0)).head<3>();
 }
