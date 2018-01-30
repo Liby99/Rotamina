@@ -16,5 +16,5 @@ int main () {
     SkeletonParser::loadSkeleton(tubeSkel, "../res/skeletons/tube.skel");
     SkinParser::loadSkin(tubeSkin, "../res/skins/tube_smooth.skin");
     
-    
+    tubeSkin.update();
 }

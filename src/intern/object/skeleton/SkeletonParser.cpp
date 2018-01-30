@@ -17,7 +17,6 @@ void SkeletonParser::loadSkeleton(Skeleton & skel, std::string filename) {
     // Create joint
     Joint * root = new Joint("Root");
     skel.setRoot(*root);
-    skel.addJoint(*root);
     
     // DFS load joints
     char temp[BUF_SIZE];

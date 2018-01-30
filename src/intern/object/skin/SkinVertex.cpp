@@ -46,13 +46,11 @@ std::vector<std::pair<int, float>> & SkinVertex::getWeights() {
 
 void SkinVertex::update(std::vector<Eigen::Matrix4f> & matrices) {
     using namespace Eigen;
-    Vector4f p = Vector4f(position[0], position[1], position[2], 1);
-    Vector4f n = Vector4f(normal[0], normal[1], normal[2], 0);
-    Vector4f _p, _n;
+    Matrix4f m, itm;
+    m << 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
     for (int i = 0; i < weights.size(); i++) {
-        _p += weights[i].second * matrices[weights[i].first] * p;
-        _n += weights[i].second * matrices[weights[i].first] * n;
+        m += weights[i].second * matrices[weights[i].first];
     }
-    currPos = Vector3f(_p[0], _p[1], _p[2]);
-    currNorm = Vector3f(_n[0], _n[1], _n[2]);
+    currPos = (m * Vector4f(position[0], position[1], position[2], 1)).head<3>();
+    currNorm = (m * Vector4f(normal[0], normal[1], normal[2], 0)).head<3>();
 }
