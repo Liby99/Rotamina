@@ -64,7 +64,9 @@ void SkinParser::loadNormals(Skin & skin, Tokenizer & tokenizer) {
     // Load all normals
     tokenizer.findToken("{");
     for (int i = 0; i < normAmount; i++) {
-        skin.getSkinVertex(i).setNormal(loadVector(tokenizer));
+        Eigen::Vector3f norm = loadVector(tokenizer);
+        norm.normalize();
+        skin.getSkinVertex(i).setNormal(norm);
     }
     tokenizer.findToken("}");
 }
