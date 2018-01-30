@@ -31,7 +31,11 @@ class Tokenizer {
         bool skipWhitespace();
         bool skipLine();
         bool reset();
-
+        
+        bool isEOF() {
+            return feof((FILE *) File);
+        }
+        
         // Access functions
         char * getFileName() {
             return FileName;
