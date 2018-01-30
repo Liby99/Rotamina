@@ -10,6 +10,7 @@ namespace rotamina {
             Shader();
             bool init();
             bool initTwoLights();
+            bool initTwoLightsTexture();
     };
 }
 
