@@ -17,6 +17,7 @@ namespace rotamina {
             ~Skeleton();
             void setRoot(Joint & root);
             Joint & getRoot();
+            int jointAmount();
             void addJoint(Joint & j);
             Joint & getJoint(int i);
             virtual void update();

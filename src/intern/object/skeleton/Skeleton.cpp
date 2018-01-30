@@ -20,6 +20,10 @@ Joint & Skeleton::getRoot() {
     return *root;
 }
 
+int Skeleton::jointAmount() {
+    return joints.size();
+}
+
 void Skeleton::addJoint(Joint & j) {
     joints.push_back(&j);
 }
