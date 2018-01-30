@@ -7,6 +7,10 @@ Skin::Skin(Skeleton & skeleton) {
     this->verticesInitiated = false;
 }
 
+Skeleton & Skin::getSkeleton() {
+    return *skeleton;
+}
+
 void Skin::initiateVertices(int size) {
     if (!verticesInitiated) {
         for (int i = 0; i < size; i++) {

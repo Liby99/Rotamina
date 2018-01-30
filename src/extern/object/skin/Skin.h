@@ -20,6 +20,8 @@ namespace rotamina {
             
             Skin(rotamina::Skeleton &);
             
+            Skeleton & getSkeleton();
+            
             void initiateVertices(int);
             int skinVertexAmount();
             SkinVertex & getSkinVertex(int);
