@@ -27,6 +27,9 @@ void SkinParser::loadSkin(Skin & skin, std::string filename) {
         else if (!strcmp(temp, "bindings")) {
             loadBindings(skin, tokenizer);
         }
+        else if (!strcmp(temp, "texcoords")) {
+            loadTexCoords(skin, tokenizer);
+        }
     }
     
     // Close the file
@@ -35,12 +38,8 @@ void SkinParser::loadSkin(Skin & skin, std::string filename) {
 
 void SkinParser::loadPositions(Skin & skin, Tokenizer & tokenizer) {
     
-    // Setup temp
-    char temp[BUF_SIZE];
-    
     // Get position amount
-    tokenizer.getToken(temp);
-    int posAmount = atoi(temp);
+    int posAmount = tokenizer.getInt();
     skin.initiateVertices(posAmount);
     
     // Load all the positions
@@ -53,12 +52,8 @@ void SkinParser::loadPositions(Skin & skin, Tokenizer & tokenizer) {
 
 void SkinParser::loadNormals(Skin & skin, Tokenizer & tokenizer) {
     
-    // Setup temp
-    char temp[BUF_SIZE];
-    
     // Get normal amount
-    tokenizer.getToken(temp);
-    int normAmount = atoi(temp);
+    int normAmount = tokenizer.getInt();
     skin.initiateVertices(normAmount);
     
     // Load all normals
@@ -73,12 +68,8 @@ void SkinParser::loadNormals(Skin & skin, Tokenizer & tokenizer) {
 
 void SkinParser::loadSkinWeights(Skin & skin, Tokenizer & tokenizer) {
     
-    // Setup temp
-    char temp[BUF_SIZE];
-    
     // Get vertex amount
-    tokenizer.getToken(temp);
-    int vertAmount = atoi(temp);
+    int vertAmount = tokenizer.getInt();
     skin.initiateVertices(vertAmount);
     
     // Load all skin weights
@@ -86,8 +77,7 @@ void SkinParser::loadSkinWeights(Skin & skin, Tokenizer & tokenizer) {
     for (int i = 0; i < vertAmount; i++) {
         
         // Get the attach amount for the current vertex
-        tokenizer.getToken(temp);
-        int attachAmount = atoi(temp);
+        int attachAmount = tokenizer.getInt();
         for (int j = 0; j < attachAmount; j++) {
             
             // Add the weight to the vertex
@@ -98,15 +88,7 @@ void SkinParser::loadSkinWeights(Skin & skin, Tokenizer & tokenizer) {
 }
 
 void SkinParser::loadTriangles(Skin & skin, Tokenizer & tokenizer) {
-    
-    // Setup temp
-    char temp[BUF_SIZE];
-    
-    // Get triangle amount
-    tokenizer.getToken(temp);
-    int triAmount = atoi(temp);
-    
-    // Load the triangles
+    int triAmount = tokenizer.getInt();
     tokenizer.findToken("{");
     for (int i = 0; i < triAmount; i++) {
         skin.addTriangle(loadIndices(tokenizer));
@@ -115,18 +97,19 @@ void SkinParser::loadTriangles(Skin & skin, Tokenizer & tokenizer) {
 }
 
 void SkinParser::loadBindings(Skin & skin, Tokenizer & tokenizer) {
-    
-    // Setup temp
-    char temp[BUF_SIZE];
-    
-    // Get binding matrix amount
-    tokenizer.getToken(temp);
-    int bindingAmount = atoi(temp);
-    
-    // Load all binding matrices
+    int bindingAmount = tokenizer.getInt();
     tokenizer.findToken("{");
     for (int i = 0; i < bindingAmount; i++) {
         skin.addInvBinding(loadMatrix34(tokenizer));
+    }
+    tokenizer.findToken("}");
+}
+
+void SkinParser::loadTexCoords(Skin & skin, Tokenizer & tokenizer) {
+    int texAmount = tokenizer.getInt();
+    tokenizer.findToken("{");
+    for (int i = 0; i < texAmount; i++) {
+        skin.getSkinVertex(i).setTexCoord(loadVector2f(tokenizer));
     }
     tokenizer.findToken("}");
 }

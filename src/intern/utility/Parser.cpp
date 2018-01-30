@@ -6,6 +6,10 @@ Eigen::Vector3i Parser::loadIndices(Tokenizer & tokenizer) {
     return Eigen::Vector3i(tokenizer.getInt(), tokenizer.getInt(), tokenizer.getInt());
 }
 
+Eigen::Vector2f Parser::loadVector2f(Tokenizer & tokenizer) {
+    return Eigen::Vector2f(tokenizer.getFloat(), tokenizer.getFloat());
+}
+
 Eigen::Vector3f Parser::loadVector(Tokenizer & tokenizer) {
     return Eigen::Vector3f(tokenizer.getFloat(), tokenizer.getFloat(), tokenizer.getFloat());
 }

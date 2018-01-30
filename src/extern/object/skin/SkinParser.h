@@ -14,6 +14,7 @@ namespace rotamina {
             static void loadSkinWeights(Skin & skin, Tokenizer & tokenizer);
             static void loadTriangles(Skin & skin, Tokenizer & tokenizer);
             static void loadBindings(Skin & skin, Tokenizer & tokenizer);
+            static void loadTexCoords(Skin & skin, Tokenizer & tokenizer);
     };
 }
 
