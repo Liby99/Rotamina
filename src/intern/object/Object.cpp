@@ -5,6 +5,7 @@ using namespace rotamina;
 
 Object::Object() {
     hidden = false;
+    texture = false;
 }
 
 bool Object::isHidden() {
@@ -13,6 +14,14 @@ bool Object::isHidden() {
 
 void Object::setHidden(bool hidden) {
     this->hidden = hidden;
+}
+
+bool Object::hasTexture() {
+    return texture;
+}
+
+void Object::setHasTexture(bool texture) {
+    this->texture = texture;
 }
 
 void Object::update() {
