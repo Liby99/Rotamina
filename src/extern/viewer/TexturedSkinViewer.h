@@ -7,6 +7,7 @@
 namespace rotamina {
     class TexturedSkinViewer : public SkinViewer {
         protected:
+            rotamina::TexturedSkin * texturedSkin;
             rotamina::Shader * origShader;
             rotamina::Shader * textureShader;
         public:
@@ -16,6 +17,7 @@ namespace rotamina {
         protected:
             virtual void showSkeleton();
             virtual void showSkin();
+            virtual void showSkinWithoutTexture();
     };
 }
 

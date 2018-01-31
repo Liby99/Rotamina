@@ -7,11 +7,14 @@
 namespace rotamina {
     class TexturedSkin : public Skin {
         protected:
+            bool renderTexture;
             Texture texture;
         public:
-            TexturedSkin(Skeleton & skel);
-            void loadTexture(const char * filename);
-            virtual void draw(rotamina::Shader & shader);
+            TexturedSkin(Skeleton &);
+            void loadTexture(const char *);
+            void setRenderTexture(bool);
+            bool isRenderingTexture();
+            virtual void draw(rotamina::Shader &);
     };
 }
 

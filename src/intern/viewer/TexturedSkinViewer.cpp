@@ -4,13 +4,35 @@ using namespace rotamina;
 
 TexturedSkinViewer::TexturedSkinViewer(int w, int h, std::string name, TexturedSkin & skin) : SkinViewer(w, h, name, skin) {
     
-    // First setup shaders
+    // Setup skin
+    this->texturedSkin = &skin;
+    
+    // Then setup shaders
     this->origShader = &scene->getShader();
     this->textureShader = new Shader();
     this->textureShader->initTwoLightsTexture();
     
     // Then show the skin
     showSkin();
+    
+    // Modify the skin control
+    using namespace nanogui;
+    
+    ((GridLayout *) skinControlPanel->layout())->setResolution(3);
+    
+    ((Button *) skinControlPanel->childAt(0))->setCaption("Show Skin with Texture");
+    
+    skinControlPanel->removeChild(1);
+    
+    Button * showSkinWithoutTextureBtn = new Button(skinControlPanel, "Show Skin without Texture");
+    showSkinWithoutTextureBtn->setFlags(Button::RadioButton);
+    showSkinWithoutTextureBtn->setCallback([this] () { this->showSkinWithoutTexture(); });
+    
+    Button * showSkeletonBtn = new Button(skinControlPanel, "Show Skeleton");
+    showSkeletonBtn->setFlags(Button::RadioButton);
+    showSkeletonBtn->setCallback([this] () { this->showSkeleton(); });
+    
+    performLayout();
 }
 
 TexturedSkinViewer::~TexturedSkinViewer() {
@@ -47,4 +69,11 @@ void TexturedSkinViewer::showSkeleton() {
 void TexturedSkinViewer::showSkin() {
     scene->setShader(*textureShader);
     SkinViewer::showSkin();
+    texturedSkin->setRenderTexture(true);
+}
+
+void TexturedSkinViewer::showSkinWithoutTexture() {
+    scene->setShader(*origShader);
+    SkinViewer::showSkin();
+    texturedSkin->setRenderTexture(false);
 }
