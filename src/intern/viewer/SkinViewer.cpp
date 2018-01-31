@@ -11,9 +11,8 @@ SkinViewer::SkinViewer(int w, int h, std::string name, Skin & skin) : SkeletonVi
     scene->addObject(skin);
     scene->getShader().initTwoLights();
     
-    // Initiate visibility
-    this->skin->setHidden(false);
-    this->skin->getSkeleton().setHidden(true);
+    // Initiate visibility. Show the skin and hide the skeleton
+    showSkin();
     
     // Initiate
     using namespace nanogui;
@@ -30,16 +29,10 @@ SkinViewer::SkinViewer(int w, int h, std::string name, Skin & skin) : SkeletonVi
     Button * showSkinBtn = new Button(skinControlPanel, "Show Skin");
     showSkinBtn->setFlags(Button::RadioButton);
     showSkinBtn->setPushed(true);
-    showSkinBtn->setCallback([this] () {
-        this->skin->setHidden(false);
-        this->skin->getSkeleton().setHidden(true);
-    });
+    showSkinBtn->setCallback([this] () { this->showSkin(); });
     Button * showSkelBtn = new Button(skinControlPanel, "Show Skeleton");
     showSkelBtn->setFlags(Button::RadioButton);
-    showSkelBtn->setCallback([this] () {
-        this->skin->setHidden(true);
-        this->skin->getSkeleton().setHidden(false);
-    });
+    showSkelBtn->setCallback([this] () { this->showSkeleton(); });
     
     // Reset focus
     sceneViewer->requestFocus();
@@ -62,4 +55,14 @@ void SkinViewer::createViewer(int w, int h, std::string name, Skin & skin, std::
         std::string error_msg = std::string("Caught a fatal error: ") + std::string(e.what());
         std::cerr << error_msg << std::endl;
     }
+}
+
+void SkinViewer::showSkeleton() {
+    this->skin->setHidden(true);
+    this->skeleton->setHidden(false);
+}
+
+void SkinViewer::showSkin() {
+    this->skin->setHidden(false);
+    this->skeleton->setHidden(true);
 }

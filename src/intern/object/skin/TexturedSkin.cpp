@@ -15,7 +15,8 @@ void TexturedSkin::draw(rotamina::Shader & shader) {
     using namespace nanogui;
     
     // First input the texture
-    shader.setUniform("texture", texture);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
     
     // Then update the tex coordinates
     MatrixXf texCoords(2, skinVertexAmount());
