@@ -6,11 +6,13 @@
 namespace rotamina {
     class MorphSkin : public TexturedSkin {
         protected:
-            float perc;
+            std::vector<float> weights;
         public:
             MorphSkin(Skeleton & skel);
-            void setPercentage(float);
-            float getPercentage();
+            void addWeight();
+            void setWeight(int, float);
+            std::vector<float> & getWeights();
+            float getWeight(int);
         protected:
             virtual void loadPosNorm(Eigen::MatrixXf &, Eigen::MatrixXf &);
     };

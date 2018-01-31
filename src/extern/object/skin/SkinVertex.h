@@ -11,16 +11,16 @@ namespace rotamina {
             
             Eigen::Vector3f currPos;
             Eigen::Vector3f currNorm;
-            Eigen::Vector3f currMorphPos;
-            Eigen::Vector3f currMorphNorm;
+            std::vector<Eigen::Vector3f> currMorphPos;
+            std::vector<Eigen::Vector3f> currMorphNorm;
             
             Eigen::Vector3f position;
             Eigen::Vector3f normal;
             Eigen::Vector2f texCoord;
             std::vector<std::pair<int, float>> weights;
             
-            Eigen::Vector3f morphPosition;
-            Eigen::Vector3f morphNormal;
+            std::vector<Eigen::Vector3f> morphPositions;
+            std::vector<Eigen::Vector3f> morphNormals;
             
         public:
             
@@ -31,13 +31,17 @@ namespace rotamina {
             void setTexCoord(Eigen::Vector2f);
             void addWeight(int, float);
             
-            void setMorphPosition(Eigen::Vector3f);
-            void setMorphNormal(Eigen::Vector3f);
+            void addMorphPosition();
+            void addMorphPosition(Eigen::Vector3f);
+            void addMorphNormal();
+            void addMorphNormal(Eigen::Vector3f);
             
-            Eigen::Vector3f getPosition(float);
+            Eigen::Vector3f getPosition(std::vector<float> &);
             Eigen::Vector3f getPosition();
-            Eigen::Vector3f getNormal(float);
+            Eigen::Vector3f getOriginalPosition();
+            Eigen::Vector3f getNormal(std::vector<float> &);
             Eigen::Vector3f getNormal();
+            Eigen::Vector3f getOriginalNormal();
             Eigen::Vector2f getTexCoord();
             std::pair<int, float> & getWeight(int i);
             std::vector<std::pair<int, float>> & getWeights();

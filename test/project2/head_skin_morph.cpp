@@ -15,6 +15,7 @@ int main () {
     
     // Load the morph of the skin
     MorphParser::loadMorph(headSkin, "../res/morph/head1.morph");
+    MorphParser::loadMorph(headSkin, "../res/morph/head2.morph");
     
     // Create the viewer
     // TexturedSkinViewer::createViewer(1600, 960, "CSE 169 Project 2 - Head - Textured", headSkin, [&] (TexturedSkinViewer & v) {
