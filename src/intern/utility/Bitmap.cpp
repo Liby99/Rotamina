@@ -1,12 +1,12 @@
-#include "utility/BMPImage.h"
+#include "utility/Bitmap.h"
 
 using namespace rotamina;
 
-BMPImage::~BMPImage() {
+Bitmap::~Bitmap() {
     delete [] data;
 }
 
-bool BMPImage::load(const char * filename) {
+bool Bitmap::load(const char * filename) {
     
     FILE *fp;
     unsigned long size;           // size of the image in bytes.
@@ -29,7 +29,7 @@ bool BMPImage::load(const char * filename) {
         fclose (fp);
         return false;
     }
-    printf ("Width of %s: %lu\n", filename, sizeX);
+    // printf ("Width of %s: %lu\n", filename, sizeX);
 
     // read the height
     if (fread (&sizeY, 4, 1, fp) != 1) {
@@ -37,7 +37,7 @@ bool BMPImage::load(const char * filename) {
         fclose (fp);
         return false;
     }
-    printf ("Height of %s: %lu\n", filename, sizeY);
+    // printf ("Height of %s: %lu\n", filename, sizeY);
 
     // calculate the size (assuming 24 bits or 3 bytes per pixel).
     size = sizeX * sizeY * 3;
@@ -72,7 +72,7 @@ bool BMPImage::load(const char * filename) {
     fseek (fp, 24, SEEK_CUR);
 
     // read the data.
-    data = new char [size];
+    data = new unsigned char[size];
     if (data == 0) {
         printf ("Error allocating memory for image data");
         fclose (fp);
@@ -84,21 +84,25 @@ bool BMPImage::load(const char * filename) {
         fclose (fp);
         return false;
     }
+    
+    for (int i = 0; i < size; i += 3) {
+        std::swap(data[i], data[i + 2]);
+    }
 
     fclose (fp);
     return true;
 }
 
-Eigen::Vector3f BMPImage::getColor(Eigen::Vector2f coord) {
+Eigen::Vector3f Bitmap::getColor(Eigen::Vector2f coord) {
     return getColor(coord[0], coord[1]);
 }
 
-Eigen::Vector3f BMPImage::getColor(float nx, float ny) {
+Eigen::Vector3f Bitmap::getColor(float nx, float ny) {
     int x = nx * sizeX, y = ny * sizeY;
     int id = y * sizeX + x;
     return Eigen::Vector3f(nc(data[id * 3 + 2]), nc(data[id * 3 + 1]), nc(data[id * 3]));
 }
 
-float BMPImage::nc(char c) {
+float Bitmap::nc(char c) {
     return (float) c / 255.0f;
 }

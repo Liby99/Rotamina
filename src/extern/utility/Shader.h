@@ -10,6 +10,7 @@ namespace rotamina {
     class Shader : public nanogui::GLShader {
         public:
             Shader();
+            GLuint getProgramId();
             bool init();
             bool initTwoLights();
             bool initTwoLightsTexture();

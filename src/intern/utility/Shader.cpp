@@ -6,6 +6,10 @@ using namespace rotamina;
 
 Shader::Shader() : nanogui::GLShader() {}
 
+GLuint Shader::getProgramId() {
+    return mProgramShader;
+}
+
 bool Shader::init() {
     return nanogui::GLShader::init(
         
@@ -116,6 +120,7 @@ bool Shader::initTwoLightsTexture() {
         "    vec3 irradiance = AmbientColor + LightColor1 * max(0, dot(LightDirection1, fragNormal)) + LightColor2 * max(0, dot(LightDirection2, fragNormal));\n"
         "    vec3 reflectance = irradiance * DiffuseColor;\n"
         "    finalColor = vec4(sqrt(reflectance), 1) * texture(skinTexture, fragTexCoord);\n"
+        // "    finalColor = vec4(fragTexCoord, 0, 1);\n"
         "}"
     );
 }
@@ -123,5 +128,5 @@ bool Shader::initTwoLightsTexture() {
 void Shader::setTexture(const std::string & name, const Texture & texture) {
     glActiveTexture(GL_TEXTURE0 + texture.getPosition());
     glBindTexture(GL_TEXTURE_2D, texture.getTextureId());
-    GLShader::setUniform(name, texture.getPosition());
+    glUniform1i(glGetUniformLocation(getProgramId(), "skinTexture"), texture.getPosition());
 }

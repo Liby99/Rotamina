@@ -1,8 +1,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <nanogui/glutil.h>
-
 #include "utility/Shader.h"
 #include "utility/Transform.h"
 

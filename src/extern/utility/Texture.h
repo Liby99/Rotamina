@@ -3,14 +3,14 @@
 
 #include <nanogui/opengl.h>
 
-#include "utility/BMPImage.h"
+#include "utility/Bitmap.h"
 
 namespace rotamina {
     class Texture {
         protected:
             static int globalPosition;
             int position;
-            BMPImage image;
+            Bitmap image;
             GLuint textureId;
         public:
             Texture();
@@ -18,7 +18,7 @@ namespace rotamina {
             GLuint getTextureId() const;
             void setPosition(int pos);
             int getPosition() const;
-            const BMPImage & getImage() const;
+            const Bitmap & getImage() const;
             void load(const char *);
     };
 }
