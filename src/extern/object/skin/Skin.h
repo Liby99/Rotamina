@@ -7,7 +7,7 @@
 
 namespace rotamina {
     class Skin : public Object {
-        private:
+        protected:
             
             bool verticesInitiated;
             

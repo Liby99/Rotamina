@@ -10,14 +10,11 @@ namespace rotamina {
     class Object {
         private:
             bool hidden;
-            bool texture;
         public:
             Transform transform;
             Object();
             bool isHidden();
             void setHidden(bool);
-            bool hasTexture();
-            void setHasTexture(bool);
             virtual void update();
             virtual void draw(rotamina::Shader &);
     };
