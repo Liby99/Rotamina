@@ -7,9 +7,12 @@
 namespace rotamina {
     class Bitmap {
         public:
-            unsigned long sizeX = 0;
-            unsigned long sizeY = 0;
+            
+            unsigned long sizeX;
+            unsigned long sizeY;
             unsigned char * data;
+            
+            Bitmap();
             ~Bitmap();
             bool load(const char * filename);
             Eigen::Vector3f getColor(Eigen::Vector2f coord);

@@ -2,8 +2,16 @@
 
 using namespace rotamina;
 
+Bitmap::Bitmap() {
+    this->data = nullptr;
+    this->sizeX = 0;
+    this->sizeY = 0;
+}
+
 Bitmap::~Bitmap() {
-    delete [] data;
+    if (data) {
+        delete [] data;
+    }
 }
 
 bool Bitmap::load(const char * filename) {
