@@ -34,6 +34,9 @@ namespace rotamina {
             
             virtual void update();
             virtual void draw(rotamina::Shader &);
+        
+        protected:
+            virtual void loadPosNorm(Eigen::MatrixXf &, Eigen::MatrixXf &);
     };
 }
 
