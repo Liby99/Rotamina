@@ -93,12 +93,12 @@ Eigen::Vector3f BMPImage::getColor(Eigen::Vector2f coord) {
     return getColor(coord[0], coord[1]);
 }
 
-float BMPImage::nc(char c) {
-    return (float) c / 255.0f;
-}
-
 Eigen::Vector3f BMPImage::getColor(float nx, float ny) {
     int x = nx * sizeX, y = ny * sizeY;
     int id = y * sizeX + x;
     return Eigen::Vector3f(nc(data[id * 3 + 2]), nc(data[id * 3 + 1]), nc(data[id * 3]));
+}
+
+float BMPImage::nc(char c) {
+    return (float) c / 255.0f;
 }

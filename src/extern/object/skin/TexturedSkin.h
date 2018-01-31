@@ -7,7 +7,7 @@
 namespace rotamina {
     class TexturedSkin : public Skin {
         protected:
-            BMPImage texture;
+            Texture texture;
         public:
             TexturedSkin(Skeleton & skel);
             void loadTexture(const char * filename);

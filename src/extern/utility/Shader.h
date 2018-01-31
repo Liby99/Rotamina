@@ -4,6 +4,8 @@
 #include <string>
 #include <nanogui/glutil.h>
 
+#include "utility/Texture.h"
+
 namespace rotamina {
     class Shader : public nanogui::GLShader {
         public:
@@ -11,6 +13,7 @@ namespace rotamina {
             bool init();
             bool initTwoLights();
             bool initTwoLightsTexture();
+            void setTexture(const std::string &, const Texture &);
     };
 }
 
