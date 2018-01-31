@@ -37,8 +37,8 @@ $ ./test/project1/dragon_skel
 
 ### Skeleton
 
-![Skeleton](https://github.com/Liby99/Rotamina/blob/master/web/public/image/skel.png, "Dragon")
+![Skeleton](https://github.com/Liby99/Rotamina/blob/master/web/public/image/skel.png?raw=true)
 
 ### Texture & Morphing
 
-![Texture & Morphing](https://github.com/Liby99/Rotamina/blob/master/web/public/image/tex_morph.png, "Head")
+![Texture & Morphing](https://github.com/Liby99/Rotamina/blob/master/web/public/image/tex_morph.png?raw=true)
