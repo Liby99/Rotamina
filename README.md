@@ -34,3 +34,11 @@ $ ./test/project1/dragon_skel
 ```
 
 ## Example
+
+### Skeleton
+
+![Skeleton](https://github.com/Liby99/Rotamina/blob/master/web/public/image/skel.png, "Dragon")
+
+### Texture & Morphing
+
+![Texture & Morphing](https://github.com/Liby99/Rotamina/blob/master/web/public/image/tex_morph.png, "Head")
