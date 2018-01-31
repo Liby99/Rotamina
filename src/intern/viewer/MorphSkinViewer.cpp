@@ -2,7 +2,7 @@
 
 using namespace rotamina;
 
-const int MorphSkinViewer::MORPH_CONTROL_HEIGHT = 500;
+const int MorphSkinViewer::MORPH_CONTROL_HEIGHT = 400;
 
 MorphSkinViewer::MorphSkinViewer(int w, int h, std::string name, MorphSkin & skin) : TexturedSkinViewer(w, h, name, skin) {
     

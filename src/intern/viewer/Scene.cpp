@@ -9,11 +9,14 @@ Scene::Scene(Widget *parent) : nanogui::GLCanvas(parent) {
     azimuth = 0;
     incline = 0;
     dist = 3;
-    shader.init();
+    
+    shader = new Shader();
+    shader->init();
 }
 
 Scene::~Scene() {
-    shader.free();
+    shader->free();
+    delete shader;
 }
 
 void Scene::setSize(int width, int height) {
@@ -70,7 +73,11 @@ void Scene::updateCamera() {
 }
 
 Shader & Scene::getShader() {
-    return shader;
+    return *shader;
+}
+
+void Scene::setShader(Shader & shader) {
+    this->shader = &shader;
 }
 
 bool Scene::keyboardEvent(int key, int scancode, int action, int modifiers) {
@@ -97,14 +104,14 @@ void Scene::drawGL() {
     
     // Update camera related info
     updateCamera();
-    shader.bind();
-    shader.setUniform("viewPersp", camera.getViewPerspective());
+    shader->bind();
+    shader->setUniform("viewPersp", camera.getViewPerspective());
     
     // Draw all the objects
     for (rotamina::Object * obj : objects) {
         obj->update();
         if (!obj->isHidden()) {
-            obj->draw(shader);
+            obj->draw(*shader);
         }
     }
     

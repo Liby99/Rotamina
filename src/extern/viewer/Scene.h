@@ -12,7 +12,7 @@ namespace rotamina {
             static const float SCROLL_SPEED, MOVE_SPEED;
             float azimuth, incline, dist;
             
-            rotamina::Shader shader;
+            rotamina::Shader * shader;
             rotamina::Camera camera;
             std::vector<rotamina::Object *> objects;
             
@@ -35,6 +35,7 @@ namespace rotamina {
             rotamina::Camera & getCamera();
             void updateCamera();
             rotamina::Shader & getShader();
+            void setShader(rotamina::Shader &);
             
             // Control
             virtual bool keyboardEvent(int key, int scancode, int action, int modifiers) override;
