@@ -4,33 +4,34 @@
 
 using namespace rotamina;
 
-int TexturedSkin::globalTexturePos = 0;
-
 TexturedSkin::TexturedSkin(Skeleton & skel) : Skin(skel) {
-    texture = 0;
-    texturePos = globalTexturePos++;
+    
 }
 
 void TexturedSkin::loadTexture(const char * filename) {
-    Texture::load(texture, filename);
+    texture.load(filename);
 }
 
 void TexturedSkin::draw(rotamina::Shader & shader) {
     
     using namespace nanogui;
     
-    // First input the texture
-    glActiveTexture(GL_TEXTURE0 + texturePos);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    shader.setUniform("skinTexture", texturePos);
-    
     // Then update the tex coordinates
+    MatrixXf colors(3, skinVertexAmount());
     MatrixXf texCoords(2, skinVertexAmount());
     for (int i = 0; i < skinVertexAmount(); i++) {
+        
+        // Load texture coords
         Vector2f tc = vertices[i].getTexCoord();
         texCoords.col(i) << tc[0], tc[1];
+        
+        // Load color from texture
+        Vector3f color = texture.getColor(tc);
+        colors.col(i) << color[0], color[1], color[2];
     }
-    shader.uploadAttrib("texCoord", texCoords);
+    
+    // shader.uploadAttrib("texCoord", texCoords);
+    shader.uploadAttrib("color", colors);
     
     // Let the skin to draw the rest
     Skin::draw(shader);
