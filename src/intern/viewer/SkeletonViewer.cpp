@@ -20,7 +20,7 @@ SkeletonViewer::SkeletonViewer(int w, int h, std::string name, Skeleton & skel) 
     jointsViewer->setFixedSize({ JOINTS_VIEWER_WIDTH, h });
     jointsViewer->setLayout(new GroupLayout(0));
     VScrollPanel * scrollPanel = new VScrollPanel(jointsViewer);
-    scrollPanel->setFixedSize(nanogui::Vector2i(JOINTS_VIEWER_WIDTH, h - HEADER_HEIGHT));
+    scrollPanel->setFixedSize({ JOINTS_VIEWER_WIDTH, h - HEADER_HEIGHT });
     Widget * jointsHolder = new Widget(scrollPanel);
     jointsHolder->setLayout(new GroupLayout());
     addJointButton(&skel.getRoot(), jointsHolder);

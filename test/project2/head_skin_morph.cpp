@@ -1,4 +1,4 @@
-// #include "viewer/MorphSkinViewer.h"
+#include "viewer/MorphSkinViewer.h"
 #include "object/skeleton/SkeletonParser.h"
 #include "object/skin/SkinParser.h"
 #include "object/skin/MorphParser.h"
@@ -18,7 +18,7 @@ int main () {
     MorphParser::loadMorph(headSkin, "../res/morph/head2.morph");
     
     // Create the viewer
-    // TexturedSkinViewer::createViewer(1600, 960, "CSE 169 Project 2 - Head - Textured", headSkin, [&] (TexturedSkinViewer & v) {
-    //     headSkin.loadTexture("../res/textures/head.bmp");
-    // });
+    MorphSkinViewer::createViewer(1600, 960, "CSE 169 Project 2 - Head - Morph & Textured", headSkin, [&] (MorphSkinViewer & v) {
+        headSkin.loadTexture("../res/textures/head.bmp");
+    });
 }

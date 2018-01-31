@@ -61,7 +61,7 @@ Eigen::Vector3f SkinVertex::getOriginalPosition() {
 Eigen::Vector3f SkinVertex::getNormal(std::vector<float> & weights) {
     Eigen::Vector3f v = currNorm;
     for (int i = 0; i < weights.size(); i++) {
-        v += weights[i] * currMorphNorm[i];
+        v += weights[i] * (currMorphNorm[i] - currNorm);
     }
     return v;
 }
