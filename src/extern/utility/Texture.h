@@ -8,7 +8,7 @@
 namespace rotamina {
     class Texture {
         public:
-            static GLuint load(const char *);
+            static void load(GLuint & t, const char *);
     };
 }
 

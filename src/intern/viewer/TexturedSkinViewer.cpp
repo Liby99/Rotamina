@@ -23,11 +23,11 @@ void TexturedSkinViewer::createViewer(int w, int h, std::string name, TexturedSk
 }
 
 void TexturedSkinViewer::showSkeleton() {
-    scene->getShader().initTwoLightsTexture();
+    scene->getShader().initTwoLights();
     SkinViewer::showSkeleton();
 }
 
 void TexturedSkinViewer::showSkin() {
-    scene->getShader().initTwoLights();
+    scene->getShader().initTwoLightsTexture();
     SkinViewer::showSkin();
 }

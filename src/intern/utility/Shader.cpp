@@ -83,10 +83,10 @@ bool Shader::initTwoLightsTexture() {
         
         "TWO_LIGHT_TEXTURE_SHADER",
         
-        "#version 400\n"
+        "#version 410\n"
         "layout(location=0) in vec3 position;\n"
         "layout(location=1) in vec3 normal;\n"
-        "layout(location=2) in vec2 texCoord;"
+        "layout(location=2) in vec2 texCoord;\n"
         "out vec3 fragPosition;\n"
         "out vec3 fragNormal;\n"
         "out vec2 fragTexCoord;\n"
@@ -97,13 +97,14 @@ bool Shader::initTwoLightsTexture() {
         "    gl_Position = mvp * vec4(position, 1);\n"
         "    fragPosition = vec3(model * vec4(position, 1));\n"
         "    fragNormal = vec3(transpose(inverse(model)) * vec4(normal, 0));\n"
+        "    fragTexCoord = texCoord;\n"
         "}",
         
-        "#version 400\n"
+        "#version 410\n"
         "in vec3 fragPosition;\n"
         "in vec3 fragNormal;\n"
         "in vec2 fragTexCoord;\n"
-        "uniform sampler2D tex;\n"
+        "uniform sampler2D skinTexture;\n"
         "uniform vec3 AmbientColor = vec3(0.3, 0.2, 0.2);\n"
         "uniform vec3 LightDirection1 = normalize(vec3(2, 1, 5));\n"
         "uniform vec3 LightColor1 = vec3(0.1, 0.1, 0.6);\n"
@@ -113,8 +114,8 @@ bool Shader::initTwoLightsTexture() {
         "out vec4 finalColor;\n"
         "void main() {\n"
         "    vec3 irradiance = AmbientColor + LightColor1 * max(0, dot(LightDirection1, fragNormal)) + LightColor2 * max(0, dot(LightDirection2, fragNormal));\n"
-        "    vec3 reflectance = irradiance * DiffuseColor * texture(tex, fragTexCoord);\n"
-        "    finalColor = vec4(sqrt(reflectance), 1);\n"
+        "    vec3 reflectance = irradiance * DiffuseColor;\n"
+        "    finalColor = vec4(sqrt(reflectance), 1) * texture(skinTexture, fragTexCoord);\n"
         "}"
     );
 }

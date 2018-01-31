@@ -6,8 +6,8 @@
 namespace rotamina {
     class BMPImage {
         public:
-            unsigned long sizeX;
-            unsigned long sizeY;
+            unsigned long sizeX = 0;
+            unsigned long sizeY = 0;
             char * data;
             ~BMPImage();
             bool load(const char * filename);

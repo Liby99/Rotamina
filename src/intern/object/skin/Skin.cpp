@@ -80,9 +80,11 @@ void Skin::draw(Shader & shader) {
         normals.col(i) << norm[0], norm[1], norm[2];
     }
     
-    // Finally draw the skin
+    // Reset matrix
     Matrix4f mat;
     mat.setIdentity();
+    
+    // Finally draw the skin
     shader.setUniform("model", mat);
     shader.uploadIndices(indices);
     shader.uploadAttrib("position", positions);
