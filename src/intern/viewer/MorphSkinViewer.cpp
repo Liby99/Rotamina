@@ -2,7 +2,7 @@
 
 using namespace rotamina;
 
-const int MorphSkinViewer::MORPH_CONTROL_HEIGHT = 300;
+const int MorphSkinViewer::MORPH_CONTROL_HEIGHT = 500;
 
 MorphSkinViewer::MorphSkinViewer(int w, int h, std::string name, MorphSkin & skin) : TexturedSkinViewer(w, h, name, skin) {
     
@@ -20,22 +20,19 @@ MorphSkinViewer::MorphSkinViewer(int w, int h, std::string name, MorphSkin & ski
     morphControlWindow = new Window(this, "Morph Control");
     morphControlWindow->setPosition({ 0, h - MORPH_CONTROL_HEIGHT });
     morphControlWindow->setFixedSize({ JOINTS_VIEWER_WIDTH, MORPH_CONTROL_HEIGHT });
-    morphControlWindow->setLayout(new GroupLayout(15));
+    morphControlWindow->setLayout(new GroupLayout(0));
+    VScrollPanel * scrollPanel = new VScrollPanel(morphControlWindow);
+    scrollPanel->setFixedSize({ JOINTS_VIEWER_WIDTH, MORPH_CONTROL_HEIGHT - HEADER_HEIGHT });
+    Widget * weightsHolder = new Widget(scrollPanel);
+    weightsHolder->setLayout(new GroupLayout());
     
     // For each weight add slider to it
     std::vector<float> & weights = this->morphSkin->getWeights();
     for (int i = 0; i < weights.size(); i++) {
         
-        // Initiate layout
-        Widget * morphWidget = new Widget(morphControlWindow);
-        GridLayout * layout = new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 15, 5);
-        morphWidget->setLayout(layout);
-        
         // Add label and slider
-        new Label(morphControlWindow, "Morph " + std::to_string(i) + ": ");
-        Slider * slider = new Slider(morphControlWindow);
-        
-        // Setup callback
+        new Label(weightsHolder, "Morph " + std::to_string(i + 1) + ": ");
+        Slider * slider = new Slider(weightsHolder);
         slider->setCallback([this, i] (float p) {
             this->morphSkin->setWeight(i, p);
         });
