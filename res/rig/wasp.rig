@@ -1,0 +1,6 @@
+rig wasp {
+	skeleton wasp.skel
+	skin wasp.skin
+	morphs 0 {
+	}
+}

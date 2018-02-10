@@ -1,0 +1,603 @@
+animation {
+  range 0.000000 4.000000
+  numchannels 72
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.950000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate cycle_offset cycle_offset
+    keys 2 {
+      0.000000 0.450000 smooth smooth
+      2.000000 -0.450000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      -0.166667 -0.052360 flat flat
+      0.333333 0.052360 flat flat
+      0.833333 -0.052360 flat flat
+      1.333333 0.052360 flat flat
+      1.833333 -0.052360 flat flat
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 5 {
+      0.000000 0.000000 smooth smooth
+      0.500000 0.000000 smooth smooth
+      1.000000 0.000000 smooth smooth
+      1.500000 0.000000 smooth smooth
+      2.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 5 {
+      0.000000 0.000000 smooth smooth
+      0.500000 0.000000 smooth smooth
+      1.000000 0.000000 smooth smooth
+      1.500000 0.000000 smooth smooth
+      2.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.000000 0.000000 smooth smooth
+      0.500000 0.000000 smooth smooth
+      1.000000 0.000000 smooth smooth
+      1.500000 0.000000 smooth smooth
+      2.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 3 {
+      -1.000000 0.087266 flat flat
+      0.000000 -0.087266 flat flat
+      1.000000 0.087266 flat flat
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.000000 0.000000 smooth smooth
+      0.500000 0.000000 smooth smooth
+      1.000000 0.000000 smooth smooth
+      1.500000 0.000000 smooth smooth
+      2.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.000000 -0.541324 linear linear
+      0.333333 0.072210 smooth smooth
+      0.666667 0.212521 linear linear
+      1.333333 -0.044630 smooth smooth
+      2.000000 -0.536567 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.000000 0.718820 linear linear
+      0.333333 0.763906 smooth smooth
+      0.666667 0.476630 linear linear
+      1.333333 0.720817 smooth smooth
+      2.000000 0.724400 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.000000 1.467731 linear linear
+      0.333333 2.258883 smooth smooth
+      0.666667 2.484656 linear linear
+      1.333333 2.068993 smooth smooth
+      2.000000 1.463294 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.000000 -0.008901 linear linear
+      0.333333 0.000000 smooth smooth
+      0.666667 0.000000 linear linear
+      1.333333 0.000000 smooth smooth
+      2.000000 -0.008901 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.000000 0.003529 linear linear
+      0.333333 0.000000 smooth smooth
+      0.666667 0.000000 linear linear
+      1.333333 0.000000 smooth smooth
+      2.000000 0.003529 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.000000 -1.193145 linear linear
+      0.333333 -1.770028 smooth smooth
+      0.666667 -2.016670 linear linear
+      1.333333 -1.677247 smooth smooth
+      2.000000 -1.193148 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.500000 -0.118208 linear linear
+      0.833333 0.039367 smooth smooth
+      1.166667 0.079465 linear linear
+      1.833333 0.012885 smooth smooth
+      2.500000 -0.118208 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.500000 0.363893 linear linear
+      0.833333 0.109059 smooth smooth
+      1.166667 -0.183584 linear linear
+      1.833333 0.104769 smooth smooth
+      2.500000 0.363893 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.500000 2.089619 linear linear
+      0.833333 2.503471 smooth smooth
+      1.166667 2.246226 linear linear
+      1.833333 2.283978 smooth smooth
+      2.500000 2.089619 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.500000 -0.009783 linear linear
+      0.833333 0.000000 smooth smooth
+      1.166667 -0.004110 linear linear
+      1.833333 -0.002686 smooth smooth
+      2.500000 -0.009783 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.500000 -0.000001 linear linear
+      0.833333 0.000000 smooth smooth
+      1.166667 -0.000624 linear linear
+      1.833333 -0.000513 smooth smooth
+      2.500000 -0.000001 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      0.500000 -1.570796 linear linear
+      0.833333 -1.901808 smooth smooth
+      1.166667 -1.721364 linear linear
+      1.833333 -1.759412 smooth smooth
+      2.500000 -1.570796 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 -0.090361 linear linear
+      1.333333 -0.007620 smooth smooth
+      1.666667 0.659806 linear linear
+      2.333333 0.133201 smooth smooth
+      3.000000 -0.090361 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 -0.192868 linear linear
+      1.333333 -0.563758 smooth smooth
+      1.666667 -0.390411 linear linear
+      2.333333 -0.499286 smooth smooth
+      3.000000 -0.192868 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 2.205473 linear linear
+      1.333333 2.125534 smooth smooth
+      1.666667 1.030814 linear linear
+      2.333333 1.821344 smooth smooth
+      3.000000 2.205473 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 0.000000 linear linear
+      1.333333 0.000000 smooth smooth
+      1.666667 0.010527 linear linear
+      2.333333 0.001944 smooth smooth
+      3.000000 0.000000 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 0.000000 linear linear
+      1.333333 0.000000 smooth smooth
+      1.666667 -0.014420 linear linear
+      2.333333 -0.000197 smooth smooth
+      3.000000 0.000000 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 -1.823475 linear linear
+      1.333333 -1.683782 smooth smooth
+      1.666667 -0.628724 linear linear
+      2.333333 -1.467672 smooth smooth
+      3.000000 -1.823475 linear linear
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.349066 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.349066 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 -0.087266 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.436332 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.436332 smooth smooth
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 -0.541828 linear linear
+      1.333333 0.059140 smooth smooth
+      1.666667 0.213691 linear linear
+      2.333333 -0.058246 smooth smooth
+      3.000000 -0.541828 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 -0.718233 linear linear
+      1.333333 -0.761036 smooth smooth
+      1.666667 -0.476612 linear linear
+      2.333333 -0.716511 smooth smooth
+      3.000000 -0.718233 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 -1.468208 linear linear
+      1.333333 -2.258622 smooth smooth
+      1.666667 -2.484659 linear linear
+      2.333333 -2.069287 smooth smooth
+      3.000000 -1.468208 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 -0.008901 linear linear
+      1.333333 0.000000 smooth smooth
+      1.666667 0.000000 linear linear
+      2.333333 0.000000 smooth smooth
+      3.000000 -0.008901 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 -0.003529 linear linear
+      1.333333 0.000000 smooth smooth
+      1.666667 0.000000 linear linear
+      2.333333 0.000000 smooth smooth
+      3.000000 -0.003529 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.000000 1.193148 linear linear
+      1.333333 1.770028 smooth smooth
+      1.666667 2.016674 linear linear
+      2.333333 1.677247 smooth smooth
+      3.000000 1.193148 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.500000 -0.118208 linear linear
+      1.833333 0.039367 smooth smooth
+      2.166667 0.079465 linear linear
+      2.833333 0.012885 smooth smooth
+      3.500000 -0.118208 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.500000 -0.363893 linear linear
+      1.833333 -0.109059 smooth smooth
+      2.166667 0.183584 linear linear
+      2.833333 -0.104769 smooth smooth
+      3.500000 -0.363893 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.500000 -2.089619 linear linear
+      1.833333 -2.503471 smooth smooth
+      2.166667 -2.246226 linear linear
+      2.833333 -2.283978 smooth smooth
+      3.500000 -2.089619 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.500000 -0.009783 linear linear
+      1.833333 0.000000 smooth smooth
+      2.166667 -0.004110 linear linear
+      2.833333 -0.002686 smooth smooth
+      3.500000 -0.009783 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.500000 0.000001 linear linear
+      1.833333 0.000000 smooth smooth
+      2.166667 0.000624 linear linear
+      2.833333 0.000513 smooth smooth
+      3.500000 0.000001 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      1.500000 1.570796 linear linear
+      1.833333 1.901808 smooth smooth
+      2.166667 1.721364 linear linear
+      2.833333 1.759412 smooth smooth
+      3.500000 1.570796 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      2.000000 -0.090361 linear linear
+      2.333333 -0.007620 smooth smooth
+      2.666667 0.664097 linear linear
+      3.333333 0.134932 smooth smooth
+      4.000000 -0.090361 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      2.000000 0.192868 linear linear
+      2.333333 0.563758 smooth smooth
+      2.666667 0.377354 linear linear
+      3.333333 0.498475 smooth smooth
+      4.000000 0.192868 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      2.000000 -2.205473 linear linear
+      2.333333 -2.125534 smooth smooth
+      2.666667 -1.041789 linear linear
+      3.333333 -1.821467 smooth smooth
+      4.000000 -2.205473 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      2.000000 0.000000 linear linear
+      2.333333 0.000000 smooth smooth
+      2.666667 0.021724 linear linear
+      3.333333 0.004020 smooth smooth
+      4.000000 0.000000 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      2.000000 0.000000 linear linear
+      2.333333 0.000000 smooth smooth
+      2.666667 0.029855 linear linear
+      3.333333 0.000415 smooth smooth
+      4.000000 0.000000 linear linear
+    }
+  }
+  channel {
+    extrapolate cycle cycle
+    keys 5 {
+      2.000000 1.823475 linear linear
+      2.333333 1.683782 smooth smooth
+      2.666667 0.628972 linear linear
+      3.333333 1.467673 smooth smooth
+      4.000000 1.823475 linear linear
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 -0.087266 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 -0.436332 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 -0.436332 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 0.000000 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 -0.349066 smooth smooth
+    }
+  }
+  channel {
+    extrapolate constant constant
+    keys 1 {
+      0.000000 -0.349066 smooth smooth
+    }
+  }
+}

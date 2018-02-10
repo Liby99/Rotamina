@@ -1,0 +1,31 @@
+animation {
+  range 0.0 2.0
+  numchannels 3
+  channel {
+    extrapolate constant linear
+    keys 4 {
+	0.0	0.1	smooth	smooth
+	0.5	-0.3	flat		flat
+	0.75	0.25	linear	linear
+	1.1	0.4	13.7		-0.22
+    }
+  }
+  channel {
+    extrapolate cycle cycle_offset
+    keys 4 {
+	0.0	0.1	smooth	smooth
+	0.2	0.5	smooth	smooth
+	0.4	-0.2	smooth	smooth
+	0.6	0.3	smooth	smooth
+    }
+  }
+  channel {
+    extrapolate bounce constant
+    keys 4 {
+	0.0	0.0	flat		flat
+	0.5	1.0	flat		flat
+	1.0	0.0	flat		flat
+	2.0	0.0	flat		flat
+    }
+  }
+}
