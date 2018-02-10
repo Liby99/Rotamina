@@ -11,16 +11,13 @@ namespace rotamina {
             
             bool verticesInitiated;
             
-            rotamina::Skeleton * skeleton;
             std::vector<rotamina::SkinVertex> vertices;
             std::vector<Eigen::Vector3i> triangles;
             std::vector<Eigen::Matrix4f> invBindings;
             
         public:
             
-            Skin(rotamina::Skeleton &);
-            
-            Skeleton & getSkeleton();
+            Skin();
             
             void initiateVertices(int);
             int skinVertexAmount();
@@ -32,7 +29,7 @@ namespace rotamina {
             int bindingMatrixAmount();
             void addInvBinding(Eigen::Matrix4f);
             
-            virtual void update();
+            virtual void update(Skeleton & skeleton);
             virtual void draw(rotamina::Shader &);
         
         protected:

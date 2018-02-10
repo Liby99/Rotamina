@@ -2,13 +2,8 @@
 
 using namespace rotamina;
 
-Skin::Skin(Skeleton & skeleton) {
-    this->skeleton = &skeleton;
+Skin::Skin() {
     this->verticesInitiated = false;
-}
-
-Skeleton & Skin::getSkeleton() {
-    return *skeleton;
 }
 
 void Skin::initiateVertices(int size) {
@@ -44,16 +39,16 @@ void Skin::addInvBinding(Eigen::Matrix4f binding) {
     invBindings.push_back(binding.inverse());
 }
 
-void Skin::update() {
+void Skin::update(Skeleton & skeleton) {
     
     // First update the skeleton
-    skeleton->update();
+    skeleton.update();
     
     // Then calculate joint matrices
     std::vector<Eigen::Matrix4f> jointMatrices;
-    int jointAmount = skeleton->jointAmount();
+    int jointAmount = skeleton.jointAmount();
     for (int i = 0; i < jointAmount; i++) {
-        jointMatrices.push_back(skeleton->getJoint(i).getWorldTransform() * invBindings[i]);
+        jointMatrices.push_back(skeleton.getJoint(i).getWorldTransform() * invBindings[i]);
     }
     
     // Finally use these matrices to update the vertices
