@@ -6,7 +6,7 @@
 
 namespace rotamina {
     class Character : public Object {
-        private:
+        protected:
             bool showSkinFlag;
             Skeleton skeleton;
             Skin skin;
