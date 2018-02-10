@@ -20,6 +20,7 @@ namespace rotamina {
             int jointAmount();
             void addJoint(Joint & j);
             Joint & getJoint(int i);
+            std::vector<Eigen::Matrix4f> getJointTransforms();
             virtual void update();
             virtual void draw(rotamina::Shader &);
     };

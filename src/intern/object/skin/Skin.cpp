@@ -39,16 +39,12 @@ void Skin::addInvBinding(Eigen::Matrix4f binding) {
     invBindings.push_back(binding.inverse());
 }
 
-void Skin::update(Skeleton & skeleton) {
-    
-    // First update the skeleton
-    skeleton.update();
+void Skin::update(std::vector<Eigen::Matrix4f> transfs) {
     
     // Then calculate joint matrices
     std::vector<Eigen::Matrix4f> jointMatrices;
-    int jointAmount = skeleton.jointAmount();
-    for (int i = 0; i < jointAmount; i++) {
-        jointMatrices.push_back(skeleton.getJoint(i).getWorldTransform() * invBindings[i]);
+    for (int i = 0; i < transfs.size(); i++) {
+        jointMatrices.push_back(transfs[i] * invBindings[i]);
     }
     
     // Finally use these matrices to update the vertices

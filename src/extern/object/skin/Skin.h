@@ -29,7 +29,7 @@ namespace rotamina {
             int bindingMatrixAmount();
             void addInvBinding(Eigen::Matrix4f);
             
-            virtual void update(Skeleton & skeleton);
+            virtual void update(std::vector<Eigen::Matrix4f>);
             virtual void draw(rotamina::Shader &);
         
         protected:

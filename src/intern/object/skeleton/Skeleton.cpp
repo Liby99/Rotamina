@@ -32,6 +32,14 @@ Joint & Skeleton::getJoint(int i) {
     return *(joints[i]);
 }
 
+std::vector<Eigen::Matrix4f> Skeleton::getJointTransforms() {
+    std::vector<Eigen::Matrix4f> transfs;
+    for (int i = 0; i < jointAmount(); i++) {
+        transfs.push_back(getJoint(i).getWorldTransform());
+    }
+    return transfs;
+}
+
 void Skeleton::update() {
     root->update(transform.getTransform());
 }
