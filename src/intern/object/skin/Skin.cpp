@@ -80,12 +80,16 @@ void Skin::draw(Shader & shader) {
     Matrix4f mat;
     mat.setIdentity();
     
+    glEnable(GL_CULL_FACE);
+    
     // Finally draw the skin
     shader.setUniform("model", mat);
     shader.uploadIndices(indices);
     shader.uploadAttrib("position", positions);
     shader.uploadAttrib("normal", normals);
     shader.drawIndexed(GL_TRIANGLES, 0, triangleAmount());
+    
+    glDisable(GL_CULL_FACE);
 }
 
 void Skin::loadPosNorm(Eigen::MatrixXf & positions, Eigen::MatrixXf & normals) {

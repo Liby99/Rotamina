@@ -13,7 +13,7 @@ int main () {
     Skeleton tubeSkel;
     Skin tubeSkin = Skin(tubeSkel);
     SkeletonParser::loadSkeleton(tubeSkel, "../res/skeletons/tube.skel");
-    SkinParser::loadSkin(tubeSkin, "../res/skins/tube_smooth.skin");
+    SkinParser::loadSkin(tubeSkin, "../res/skins/tube.skin");
     
     // Create the viewer
     SkinViewer::createViewer(1600, 960, "CSE 169 Project 2 - Tube", tubeSkin, [&] (SkinViewer & v) {
