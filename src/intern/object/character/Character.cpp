@@ -31,11 +31,19 @@ void Character::update() {
     skin.update(skeleton.getJointTransforms());
 }
 
+void Character::drawSkin(Shader & shader) {
+    skin.draw(shader);
+}
+
+void Character::drawSkeleton(Shader & shader) {
+    skeleton.draw(shader);
+}
+
 void Character::draw(Shader & shader) {
     if (showSkinFlag) {
-        skin.draw(shader);
+        drawSkin(shader);
     }
     else {
-        skeleton.draw(shader);
+        drawSkeleton(shader);
     }
 }

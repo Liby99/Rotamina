@@ -21,8 +21,10 @@ namespace rotamina {
             void setShowSkin();
             void setShowSkeleton();
             
-            void update();
-            void draw(Shader &);
+            virtual void update();
+            virtual void drawSkin(Shader &);
+            virtual void drawSkeleton(Shader &);
+            virtual void draw(Shader &);
     };
 }
 
