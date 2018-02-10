@@ -2,7 +2,7 @@
 
 using namespace rotamina;
 
-void SkinParser::loadSkin(Skin & skin, std::string filename) {
+void SkinParser::load(Skin & skin, std::string filename) {
     
     // Load the file
     Tokenizer tokenizer;

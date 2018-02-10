@@ -2,13 +2,13 @@
 
 using namespace rotamina;
 
-Skeleton SkeletonParser::loadSkeleton(std::string filename) {
+Skeleton SkeletonParser::load(std::string filename) {
     Skeleton skel;
-    loadSkeleton(skel, filename);
+    load(skel, filename);
     return skel;
 }
 
-void SkeletonParser::loadSkeleton(Skeleton & skel, std::string filename) {
+void SkeletonParser::load(Skeleton & skel, std::string filename) {
     
     // Open the file
     Tokenizer tokenizer;

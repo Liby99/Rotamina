@@ -9,7 +9,7 @@
 using namespace rotamina;
 
 int main() {
-    Skeleton skel = SkeletonParser::loadSkeleton("../res/skeletons/robot.skel");
+    Skeleton skel = SkeletonParser::load("../res/skeletons/robot.skel");
     SkeletonViewer::createViewer(1440, 960, "CSE 169 - Project 1 - Robot", skel, [&](Viewer & v) {
         v.getCamera().setPosition(Eigen::Vector3f(0, 0.4, 5));
     });

@@ -7,7 +7,7 @@
 namespace rotamina {
     class SkinParser : public Parser {
         public:
-            static void loadSkin(Skin & skin, std::string filename);
+            static void load(Skin & skin, std::string filename);
         private:
             static void loadPositions(Skin & skin, Tokenizer & tokenizer);
             static void loadNormals(Skin & skin, Tokenizer & tokenizer);
