@@ -1,24 +1,17 @@
-// #include <iostream>
-// #include <vector>
-//
-// #include "viewer/SkinViewer.h"
-// #include "object/skin/SkinParser.h"
-// #include "object/skeleton/SkeletonParser.h"
-//
-// using namespace rotamina;
-//
-// int main () {
-//     //
-//     // // Initiate skel and skin
-//     // Skeleton waspSkel;
-//     // Skin waspSkin = Skin(waspSkel);
-//     // SkeletonParser::loadSkeleton(waspSkel, "../res/skeletons/wasp.skel");
-//     // SkinParser::loadSkin(waspSkin, "../res/skins/wasp.skin");
-//     //
-//     // // Create the viewer
-//     // SkinViewer::createViewer(1600, 960, "CSE 169 Project 2 - Wasp", waspSkin, [&] (SkinViewer & v) {
-//     //
-//     // });
-// }
+#include <iostream>
+#include <vector>
 
-int main () {}
+#include "viewer/CharacterViewer.h"
+#include "object/character/CharacterParser.h"
+
+using namespace rotamina;
+
+int main () {
+    
+    // Initiate skel and skin
+    Character c;
+    CharacterParser::load(c, "../res/skeletons/wasp.skel", "../res/skins/wasp.skin");
+    
+    // Create the viewer
+    CharacterViewer::create(1600, 960, "CSE 169 Project 2 - Wasp", c, [&] (CharacterViewer & v) {});
+}
