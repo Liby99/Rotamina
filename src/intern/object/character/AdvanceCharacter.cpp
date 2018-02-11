@@ -11,7 +11,3 @@ Skin & AdvanceCharacter::getSkin() {
 AdvanceSkin & AdvanceCharacter::getAdvanceSkin() {
     return skin;
 }
-
-void AdvanceCharacter::drawSkin(Shader & shader) {
-    skin.draw(shader);
-}

@@ -27,23 +27,15 @@ Skin & Character::getSkin() {
 }
 
 void Character::update() {
-    skeleton.update();
-    skin.update(skeleton.getJointTransforms());
-}
-
-void Character::drawSkin(Shader & shader) {
-    skin.draw(shader);
-}
-
-void Character::drawSkeleton(Shader & shader) {
-    skeleton.draw(shader);
+    getSkeleton().update();
+    getSkin().update(skeleton.getJointTransforms());
 }
 
 void Character::draw(Shader & shader) {
     if (showSkinFlag) {
-        drawSkin(shader);
+        getSkin().draw(shader);
     }
     else {
-        drawSkeleton(shader);
+        getSkeleton().draw(shader);
     }
 }

@@ -18,6 +18,9 @@ AdvanceCharacterViewer::AdvanceCharacterViewer(int w, int h, std::string name, A
     this->textureShader = new Shader();
     this->textureShader->initTwoLightsTexture();
     
+    // Set show textured skin
+    showSkin();
+    
     using namespace nanogui;
     
     // Initiate Texture GUI
