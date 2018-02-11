@@ -5,7 +5,7 @@
 #include "object/skin/Skin.h"
 
 namespace rotamina {
-    class TexturedSkin : public Skin {
+    class TexturedSkin : virtual public Skin {
         protected:
             bool renderTexture;
             Texture texture;

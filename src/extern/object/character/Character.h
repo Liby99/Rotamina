@@ -14,12 +14,12 @@ namespace rotamina {
             
             Character();
             
-            Skeleton & getSkeleton();
-            Skin & getSkin();
-            
             bool isShowingSkin();
             void setShowSkin();
             void setShowSkeleton();
+            
+            virtual Skeleton & getSkeleton();
+            virtual Skin & getSkin();
             
             virtual void update();
             virtual void drawSkin(Shader &);

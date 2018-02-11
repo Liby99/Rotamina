@@ -10,7 +10,8 @@ namespace rotamina {
             AdvanceSkin skin;
         public:
             AdvanceCharacter();
-            AdvanceSkin & getSkin();
+            virtual AdvanceSkin & getAdvanceSkin();
+            virtual Skin & getSkin();
             virtual void drawSkin(Shader &);
     };
 }

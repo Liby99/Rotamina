@@ -6,14 +6,6 @@ Character::Character() : Object() {
     showSkinFlag = true;
 }
 
-Skeleton & Character::getSkeleton() {
-    return skeleton;
-}
-
-Skin & Character::getSkin() {
-    return skin;
-}
-
 bool Character::isShowingSkin() {
     return showSkinFlag;
 }
@@ -24,6 +16,14 @@ void Character::setShowSkin() {
 
 void Character::setShowSkeleton() {
     showSkinFlag = false;
+}
+
+Skeleton & Character::getSkeleton() {
+    return skeleton;
+}
+
+Skin & Character::getSkin() {
+    return skin;
 }
 
 void Character::update() {

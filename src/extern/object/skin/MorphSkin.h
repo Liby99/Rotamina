@@ -4,7 +4,7 @@
 #include "object/skin/Skin.h"
 
 namespace rotamina {
-    class MorphSkin : public Skin {
+    class MorphSkin : virtual public Skin {
         protected:
             std::vector<float> weights;
         public:

@@ -4,7 +4,11 @@ using namespace rotamina;
 
 AdvanceCharacter::AdvanceCharacter() : Character() {};
 
-AdvanceSkin & AdvanceCharacter::getSkin() {
+Skin & AdvanceCharacter::getSkin() {
+    return skin;
+}
+
+AdvanceSkin & AdvanceCharacter::getAdvanceSkin() {
     return skin;
 }
 

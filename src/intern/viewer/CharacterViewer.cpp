@@ -2,29 +2,28 @@
 
 using namespace rotamina;
 
-CharacterViewer::CharacterViewer(int w, int h, std::string name, Character & character)
-    : SkeletonViewer(w, h, name, character.getSkeleton()) {
-
+CharacterViewer::CharacterViewer(int w, int h, std::string name, Character & c) : SkeletonViewer(w, h, name, c.getSkeleton()) {
+    
     // Initiate basic variables
-    this->character = &character;
-
+    this->character = &c;
+    
     // Load scene
     scene->removeObject(0);
-    scene->addObject(character);
+    scene->addObject(c);
     scene->getShader().initTwoLights();
-
+    
     // Initiate GUI
     using namespace nanogui;
-
+    
     scene->setHeight(h - CONTROL_PANEL_HEIGHT - 2 * HEADER_HEIGHT - 2 * PADDING);
     sceneViewer->setHeight(h - CONTROL_PANEL_HEIGHT - HEADER_HEIGHT);
-
+    
     skinControlPanel = new Window(this, "Character Render");
     skinControlPanel->setPosition({ JOINTS_VIEWER_WIDTH, h - CONTROL_PANEL_HEIGHT - HEADER_HEIGHT });
     skinControlPanel->setFixedSize({ w - JOINTS_VIEWER_WIDTH - JOINT_INFO_VIEWER_WIDTH, CONTROL_PANEL_HEIGHT + HEADER_HEIGHT });
     GridLayout * layout = new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 10, 5);
     skinControlPanel->setLayout(layout);
-
+    
     Button * showSkinBtn = new Button(skinControlPanel, "Show Skin");
     showSkinBtn->setFlags(Button::RadioButton);
     showSkinBtn->setPushed(true);
@@ -32,18 +31,18 @@ CharacterViewer::CharacterViewer(int w, int h, std::string name, Character & cha
     Button * showSkelBtn = new Button(skinControlPanel, "Show Skeleton");
     showSkelBtn->setFlags(Button::RadioButton);
     showSkelBtn->setCallback([this] () { this->showSkeleton(); });
-
+    
     // Reset focus
     sceneViewer->requestFocus();
-
+    
     // performLayout
     performLayout();
 }
 
-void CharacterViewer::create(int w, int h, std::string name, Character & character, std::function<void(CharacterViewer &)> init) {
+void CharacterViewer::create(int w, int h, std::string name, Character & c, std::function<void(CharacterViewer &)> init) {
     try {
         nanogui::init();
-        CharacterViewer viewer = CharacterViewer(w, h, name, character);
+        CharacterViewer viewer = CharacterViewer(w, h, name, c);
         init(viewer);
         viewer.drawAll();
         viewer.setVisible(true);
