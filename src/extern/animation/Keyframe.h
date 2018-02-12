@@ -17,6 +17,7 @@ namespace rotamina {
             const Keyframe * next;
         public:
             Keyframe();
+            Keyframe(const float &, const float &);
             void setTime(const float &);
             float getTime() const;
             void setValue(const float &);

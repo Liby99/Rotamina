@@ -2,7 +2,9 @@
 
 using namespace rotamina;
 
-Keyframe::Keyframe() : time(0), value(0), consistent(true),
+Keyframe::Keyframe() : Keyframe(0, 0) {}
+    
+Keyframe::Keyframe(const float & t, const float & value) : consistent(true),
     in(Tangent::Flat), out(Tangent::Flat), inSlope(0), outSlope(0),
     prev(nullptr), next(nullptr) {}
 
