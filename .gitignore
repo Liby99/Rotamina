@@ -7,6 +7,3 @@ deploy/
 xcode/
 
 *.gch
-
-lib/nanogui/*
-lib/glm/*
