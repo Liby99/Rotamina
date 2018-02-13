@@ -3,12 +3,19 @@
 
 #include <string>
 
+#include "utility/Parser.h"
 #include "animation/Animation.h"
 
 namespace rotamina {
-    class AnimationParser {
+    class AnimationParser : public Parser {
         public:
-            static void load(Animation &, const std::string & filename);
+            static void load(Animation &, const std::string &);
+        private:
+            static void loadAnimation(Animation &, Tokenizer &);
+            static void loadChannel(Channel &, Tokenizer &);
+            static void loadKeyframe(Keyframe &, Tokenizer &);
+            static bool getTangent(Tokenizer &, Keyframe::Tangent &, float &);
+            static Channel::Extrapolation getExtrapolation(Tokenizer &);
     };
 }
 
