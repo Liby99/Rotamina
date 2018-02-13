@@ -7,10 +7,20 @@ CharacterAnimator::CharacterAnimator(Animation & a, Character & c) : Animator(a)
 }
 
 void CharacterAnimator::updateAnimation(float t) {
+
+    // First update skeleton position
+    Skeleton & skel = character->getSkeleton();
+    skel.transform.setPositionX(animation->getChannel(0).evaluate(t));
+    skel.transform.setPositionY(animation->getChannel(1).evaluate(t));
+    skel.transform.setPositionZ(animation->getChannel(2).evaluate(t));
+
+    // Then update all the dof
     for (int i = 3; i < animation->getChannelAmount(); i++) {
         Channel & channel = animation->getChannel(i);
         cachedDOFs[i - 3]->setValue(channel.evaluate(t));
     }
+
+    // Finally update the character
     character->update();
 }
 
