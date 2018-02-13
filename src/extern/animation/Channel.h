@@ -15,14 +15,15 @@ namespace rotamina {
             bool initiated;
             Extrapolation in;
             Extrapolation out;
-            std::vector<Keyframe> keyframes;
+            std::vector<Keyframe *> keyframes;
         public:
             Channel();
+            ~Channel();
             void initiateKeyframes(const int &);
             bool addKeyframe(const float &, const float &);
             bool removeKeyframe(int i);
             bool removeKeyframe(Keyframe & k);
-            std::vector<Keyframe> & getKeyframes();
+            std::vector<Keyframe *> & getKeyframes();
             int getKeyframeAmount() const;
             Keyframe & getFirstKeyframe();
             Keyframe & getKeyframe(int);
@@ -51,8 +52,8 @@ namespace rotamina {
             float evaluateAfterEndBounce(float t) const;
             bool isBeforeStart(float f) const;
             bool isAfterEnd(float f) const;
-            static void setPrevNext(Keyframe &, Keyframe &);
-            static void setCurrPrevNext(Keyframe &, Keyframe &, Keyframe &);
+            static void setPrevNext(Keyframe *, Keyframe *);
+            static void setCurrPrevNext(Keyframe *, Keyframe *, Keyframe *);
     };
 }
 

@@ -10,11 +10,11 @@ void assert(float f1, float f2) { if (f1 != f2) { error("Assert Failed - Actual:
 void assert(int i1, int i2) { if (i1 != i2) { error("Assert Failed - Actual: " + std::to_string(i1) + ", Expected: " + std::to_string(i2)); }}
 
 void printChannel(Channel & t) {
-    std::vector<Keyframe> ks = t.getKeyframes();
+    std::vector<Keyframe *> ks = t.getKeyframes();
     std::cout << "[ ";
     for (int i = 0; i < ks.size(); i++) {
         if (i > 0) std::cout << ", ";
-        std::cout << "(" << ks[i].getTime() << ": " << ks[i].getValue() << ")";
+        std::cout << "(" << ks[i]->getTime() << ": " << ks[i]->getValue() << ")";
     }
     std::cout << " ]" << std::endl;
 }
@@ -24,22 +24,20 @@ void printChannelInLinkedList(Channel & t) {
         std::cout << "[]" << std::endl;
         return;
     }
-    Keyframe * k = &(t.getKeyframe(0));
+    Keyframe k = t.getFirstKeyframe();
     std::cout << "[ ";
     bool flag = false;
-    // while (true) {
-        // if (flag) std::cout << ", ";
-        std::cout << "(" << k->getTime() << ": " << k->getValue() << "), ";
-        std::cout << "(" << k->getNext().getTime() << ": " << k->getNext().getTime() << ")";
-        std::cout << "(" << k->getNext().getNext().getTime() << ": " << k->getNext().getNext().getTime() << ")";
-        // if (k->hasNext()) {
-        //     flag = true;
-        //     k = &(k->getNext());
-        // }
-        // else {
-            // break;
-        // }
-    // }
+    while (true) {
+        if (flag) std::cout << ", ";
+        std::cout << "(" << k.getTime() << ": " << k.getValue() << ")" << std::flush;
+        if (k.hasNext()) {
+            flag = true;
+            k = k.getNext();
+        }
+        else {
+            break;
+        }
+    }
     std::cout << " ]" << std::endl;
 }
 
@@ -48,20 +46,11 @@ void test1() {
     Channel t;
     
     assert(t.addKeyframe(0, 0));
-    
-    // printChannelInLinkedList(t);
-    
     assert(t.addKeyframe(1, 1));
-    
-    // printChannelInLinkedList(t);
-    
     assert(t.addKeyframe(-1, 1));
     
-    printChannel(t);
-    printChannelInLinkedList(t);
-    
-    // assert(t.getKeyframeAmount(), 1);
-    // assert(t.addKeyframe(1, 1));
+    assert(t.getKeyframeAmount(), 1);
+    assert(t.addKeyframe(1, 1));
     // assert(t.getKeyframeAmount(), 2);
     // assert(t.addKeyframe(3, -1));
     // assert(t.getKeyframeAmount(), 3);
