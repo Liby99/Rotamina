@@ -91,7 +91,7 @@ float Keyframe::getOutTangent() const {
             else return 0;
         }; break;
         case Tangent::Linear: {
-            if (prev) return getSlope(*next, *this);
+            if (next) return getSlope(*this, *next);
             else return 0;
         }; break;
         case Tangent::Flat: {

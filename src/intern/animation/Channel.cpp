@@ -302,11 +302,12 @@ bool Channel::isAfterEnd(float f) const {
     return f > getEndTime();
 }
 
-float Channel::interpolate(Keyframe * k0, Keyframe * k1, float t) {
+float Channel::interpolate(Keyframe * k0, Keyframe * k1, float gt) {
     float p0 = k0->getValue(), p1 = k1->getValue(),
           v0 = k0->getOutTangent(), v1 = k1->getInTangent(),
           a = 2 * p0 - 2 * p1 + v0 + v1,
           b = -3 * p0 + 3 * p1 - 2 * v0 - v1;
+    float t = (gt - k0->getTime()) / (k1->getTime() - k0->getTime());
     return a * t * t * t + b * t * t + v0 * t + p0;
 }
 
