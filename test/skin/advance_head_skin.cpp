@@ -12,8 +12,8 @@ int main() {
     CharacterParser::load(c, "./res/skeletons/head.skel", "./res/skins/head_tex.skin");
     
     // Then load morphs into the skin
-    MorphParser::loadMorph(c.getAdvanceSkin(), "./res/morph/head1.morph");
-    MorphParser::loadMorph(c.getAdvanceSkin(), "./res/morph/head2.morph");
+    MorphParser::loadMorph(c.getAdvanceSkin(), "./res/morphs/head1.morph");
+    MorphParser::loadMorph(c.getAdvanceSkin(), "./res/morphs/head2.morph");
     
     c.update();
     
