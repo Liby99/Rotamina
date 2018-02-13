@@ -15,6 +15,10 @@ namespace rotamina {
             bool consistent;
             Keyframe * prev;
             Keyframe * next;
+            bool inTangentCached;
+            float inTangentCache;
+            bool outTangentCached;
+            float outTangentCache;
         public:
             Keyframe();
             Keyframe(const float &, const float &);
@@ -26,10 +30,10 @@ namespace rotamina {
             bool isConsistent() const;
             void setInTangent(const Tangent &);
             void setInTangent(const float &);
-            float getInTangent() const;
+            float getInTangent();
             void setOutTangent(const Tangent &);
             void setOutTangent(const float &);
-            float getOutTangent() const;
+            float getOutTangent();
             bool hasPrev() const;
             void setPrev(Keyframe &);
             void removePrev();
@@ -39,6 +43,8 @@ namespace rotamina {
             void removeNext();
             Keyframe & getNext();
         private:
+            float calculateInTangent();
+            float calculateOutTangent();
             static float getSlope(const Keyframe &, const Keyframe &);
     };
 }

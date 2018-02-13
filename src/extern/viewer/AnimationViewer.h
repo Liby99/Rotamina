@@ -7,15 +7,20 @@
 namespace rotamina {
     class AnimationViewer : public Viewer {
         protected:
+            const static int ANIMATION_CONTROL_HEIGHT;
             Animator * animator;
             nanogui::Window * animationControlWindow;
+            nanogui::Button * playPauseBtn;
+            nanogui::Button * stopBtn;
         public:
             AnimationViewer(int, int, std::string, Animator &);
             static void create(int, int, std::string, Animator &, std::function<void(AnimationViewer &)>);
         protected:
-            // void play();
-            // void pause();
-            // void stop();
+            void togglePlay();
+            bool isPlaying();
+            void play();
+            void pause();
+            void stop();
     };
 }
 

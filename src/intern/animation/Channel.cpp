@@ -185,35 +185,45 @@ Channel::Extrapolation Channel::getOutExtrapolation() const {
 }
 
 float Channel::evaluate(float t) const {
-    if (isBeforeStart(t)) {
-        return evaluateBeforeStart(t);
-    }
-    else if (isAfterEnd(t)) {
-        return evaluateAfterEnd(t);
-    }
-    else {
-        int s = 0, e = keyframes.size(), m = 0;
-        while (s < e - 1) {
-            m = (s + e) / 2;
-            float kt = keyframes[m]->getTime();
-            if (t > kt) {
-                s = m;
+    switch (getKeyframeAmount()) {
+        case 0: {
+            return 0;
+        }
+        case 1: {
+            return keyframes[0]->getValue();
+        }
+        default: {
+            if (isBeforeStart(t)) {
+                return evaluateBeforeStart(t);
             }
-            else if (t == kt) {
-                return keyframes[m]->getValue();
+            else if (isAfterEnd(t)) {
+                return evaluateAfterEnd(t);
             }
             else {
-                e = m;
+                int s = 0, e = keyframes.size(), m = 0;
+                while (s < e - 1) {
+                    m = (s + e) / 2;
+                    float kt = keyframes[m]->getTime();
+                    if (t > kt) {
+                        s = m;
+                    }
+                    else if (t == kt) {
+                        return keyframes[m]->getValue();
+                    }
+                    else {
+                        e = m;
+                    }
+                }
+                if (keyframes[s]->getTime() == t) {
+                    return keyframes[s]->getValue();
+                }
+                else if (keyframes[e]->getTime() == t) {
+                    return keyframes[e]->getValue();
+                }
+                else {
+                    return interpolate(keyframes[s], keyframes[e], t);
+                }
             }
-        }
-        if (keyframes[s]->getTime() == t) {
-            return keyframes[s]->getValue();
-        }
-        else if (keyframes[e]->getTime() == t) {
-            return keyframes[e]->getValue();
-        }
-        else {
-            return interpolate(keyframes[s], keyframes[e], t);
         }
     }
 }
@@ -303,12 +313,13 @@ bool Channel::isAfterEnd(float f) const {
 }
 
 float Channel::interpolate(Keyframe * k0, Keyframe * k1, float gt) {
-    float p0 = k0->getValue(), p1 = k1->getValue(),
-          v0 = k0->getOutTangent(), v1 = k1->getInTangent(),
+    float dur = k1->getTime() - k0->getTime(),
+          p0 = k0->getValue(), p1 = k1->getValue(),
+          v0 = dur * k0->getOutTangent(), v1 = dur * k1->getInTangent(),
           a = 2 * p0 - 2 * p1 + v0 + v1,
           b = -3 * p0 + 3 * p1 - 2 * v0 - v1;
-    float t = (gt - k0->getTime()) / (k1->getTime() - k0->getTime());
-    return a * t * t * t + b * t * t + v0 * t + p0;
+    float t = (gt - k0->getTime()) / dur;
+    return ((a * t + b) * t + v0) * t + p0;
 }
 
 void Channel::setPrevNext(Keyframe * k1, Keyframe * k2) {

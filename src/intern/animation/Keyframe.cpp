@@ -36,6 +36,7 @@ void Keyframe::setInTangent(const Tangent & in) {
     if (isConsistent()) {
         this->out = in;
     }
+    inTangentCached = false;
 }
 
 void Keyframe::setInTangent(const float & s) {
@@ -45,26 +46,15 @@ void Keyframe::setInTangent(const float & s) {
         this->out = Tangent::Custom;
         this->outSlope = s;
     }
+    inTangentCached = false;
 }
 
-float Keyframe::getInTangent() const {
-    switch (in) {
-        case Tangent::Smooth: {
-            if (prev && next) return getSlope(*next, *prev);
-            else if (prev) return getSlope(*this, *prev);
-            else return 0;
-        }; break;
-        case Tangent::Linear: {
-            if (prev) return getSlope(*this, *prev);
-            else return 0;
-        }; break;
-        case Tangent::Flat: {
-            return 0;
-        }; break;
-        case Tangent::Custom: {
-            return inSlope;
-        }; break;
+float Keyframe::getInTangent() {
+    if (!inTangentCached) {
+        this->inTangentCache = calculateInTangent();
+        this->inTangentCached = true;
     }
+    return this->inTangentCache;
 }
 
 void Keyframe::setOutTangent(const Tangent & out) {
@@ -83,24 +73,12 @@ void Keyframe::setOutTangent(const float & s) {
     }
 }
 
-float Keyframe::getOutTangent() const {
-    switch (out) {
-        case Tangent::Smooth: {
-            if (prev && next) return getSlope(*next, *prev);
-            else if (next) return getSlope(*next, *this);
-            else return 0;
-        }; break;
-        case Tangent::Linear: {
-            if (next) return getSlope(*this, *next);
-            else return 0;
-        }; break;
-        case Tangent::Flat: {
-            return 0;
-        }; break;
-        case Tangent::Custom: {
-            return inSlope;
-        }; break;
+float Keyframe::getOutTangent() {
+    if (!outTangentCached) {
+        this->outTangentCache = calculateOutTangent();
+        this->outTangentCached = true;
     }
+    return this->outTangentCache;
 }
 
 bool Keyframe::hasPrev() const {
@@ -133,6 +111,38 @@ void Keyframe::removeNext() {
 
 Keyframe & Keyframe::getNext() {
     return *next;
+}
+
+float Keyframe::calculateInTangent() {
+    switch (in) {
+        case Tangent::Smooth:
+            if (prev && next) return getSlope(*prev, *next);
+            else if (prev) return getSlope(*prev, *this);
+            else return getSlope(*this, *next);
+        case Tangent::Linear:
+            if (prev) return getSlope(*prev, *this);
+            else return getSlope(*this, *next);
+        case Tangent::Flat:
+            return 0;
+        case Tangent::Custom:
+            return inSlope;
+    }
+}
+
+float Keyframe::calculateOutTangent() {
+    switch (out) {
+        case Tangent::Smooth:
+            if (prev && next) return getSlope(*prev, *next);
+            else if (next) return getSlope(*this, *next);
+            else return getSlope(*prev, *this);
+        case Tangent::Linear:
+            if (next) return getSlope(*this, *next);
+            else return getSlope(*prev, *this);
+        case Tangent::Flat:
+            return 0;
+        case Tangent::Custom:
+            return outSlope;
+    }
 }
 
 float Keyframe::getSlope(const Keyframe & k1, const Keyframe & k2) {

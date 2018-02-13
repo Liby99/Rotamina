@@ -26,7 +26,7 @@ include_directories(src/extern)
 
 # Compile all the cpp files and link to `animator` library along with NanoGui
 file(GLOB animator_sources src/intern/*.cpp src/intern/*/*.cpp src/intern/*/*/*.cpp src/extern/*.h src/extern/*/*.h src/extern/*/*/*.h)
-set(rotamina ${animator_sources})
+set(rotamina ${animator_sources} test/animation/channel_test_2.cpp)
 add_library(rotamina ${rotamina})
 target_link_libraries(rotamina nanogui ${NANOGUI_EXTRA_LIBS} glm)
 

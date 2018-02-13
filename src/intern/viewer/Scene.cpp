@@ -5,7 +5,7 @@ using namespace rotamina;
 const float Scene::SCROLL_SPEED = 0.1f;
 const float Scene::MOVE_SPEED = 0.004f;
 
-Scene::Scene(Widget *parent) : nanogui::GLCanvas(parent), azimuth(0), incline(0), dist(3), displayCallback(nullptr) {
+Scene::Scene(Widget *parent) : nanogui::GLCanvas(parent), azimuth(0), incline(0), dist(3), hasDisplayCallback(false) {
     shader = new Shader();
     shader->init();
 }
@@ -76,8 +76,9 @@ void Scene::setShader(Shader & shader) {
     this->shader = &shader;
 }
 
-void Scene::setDisplayCallback(std::function<void()> & cb) {
-    this->displayCallback = &cb;
+void Scene::setDisplayCallback(std::function<void()> cb) {
+    this->hasDisplayCallback = true;
+    this->displayCallback = cb;
 }
 
 bool Scene::keyboardEvent(int key, int scancode, int action, int modifiers) {
@@ -116,8 +117,8 @@ void Scene::drawGL() {
     }
     
     // Give Display Callback
-    if (displayCallback) {
-        (*displayCallback)();
+    if (hasDisplayCallback) {
+        displayCallback();
     }
     
     glDisable(GL_DEPTH_TEST);

@@ -28,9 +28,7 @@ void Animator::updateAnimation(float t) {
 }
 
 void Animator::update() {
-    if (isPlaying()) {
-        updateAnimation(watch.duration());
-    }
+    updateAnimation(watch.duration());
 }
 
 void Animator::draw(Shader & shader) {

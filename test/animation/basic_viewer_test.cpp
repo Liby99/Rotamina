@@ -10,7 +10,7 @@ int main () {
     // Initiate
     Animation a;
     Character c;
-    
+
     // Load
     AnimationParser::load(a, "./res/animations/wasp_walk.anim");
     CharacterParser::load(c, "./res/skeletons/wasp.skel", "./res/skins/wasp.skin");

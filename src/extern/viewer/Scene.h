@@ -12,8 +12,9 @@ namespace rotamina {
             
             static const float SCROLL_SPEED, MOVE_SPEED;
             float azimuth, incline, dist;
-            
-            const std::function<void()> * displayCallback;
+
+            bool hasDisplayCallback;
+            std::function<void()> displayCallback;
             
             rotamina::Shader * shader;
             rotamina::Camera camera;
@@ -41,7 +42,7 @@ namespace rotamina {
             void setShader(rotamina::Shader &);
             
             // Callback
-            void setDisplayCallback(std::function<void()> &);
+            void setDisplayCallback(std::function<void()>);
             
             // Control
             virtual bool keyboardEvent(int key, int scancode, int action, int modifiers) override;
