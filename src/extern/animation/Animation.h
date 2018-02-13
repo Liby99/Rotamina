@@ -6,19 +6,20 @@
 namespace rotamina {
     class Animation {
         protected:
-            bool channelsInitiated;
+            bool initiated;
             float start;
             float end;
-            std::vector<Channel> channels;
+            std::vector<Channel *> channels;
         public:
-            Animtaion();
+            Animation();
+            ~Animation();
             void initiateChannels(int);
-            int getChannelAmount();
+            int getChannelAmount() const;
             Channel & getChannel(int);
             void setStartTime(float);
             void setEndTime(float);
-            float getStartTime();
-            float getEndTime();
+            float getStartTime() const;
+            float getEndTime() const;
     };
 }
 
