@@ -1,6 +1,11 @@
+#include <iostream>
 #include "animation/Channel.h"
 
 using namespace rotamina;
+
+void print(int i) {
+    std::cout << i << std::endl;
+}
 
 Channel::Channel() : in(Extrapolation::Constant), out(Extrapolation::Constant), initiated(false) {}
 
@@ -18,72 +23,108 @@ void Channel::initiateKeyframes(const int & amount) {
 
 bool Channel::addKeyframe(const float & t, const float & v) {
     if (keyframes.size() == 0) {
+        print(1);
         keyframes.push_back(Keyframe(t, v));
     }
     else if (keyframes.size() == 1) {
         if (t == keyframes[0].getTime()) {
+            print(2);
             return false;
         }
         else if (t > keyframes[0].getTime()) {
+            print(3);
             keyframes.push_back(Keyframe(t, v));
         }
         else {
+            print(4);
             keyframes.insert(keyframes.begin(), Keyframe(t, v));
         }
         setPrevNext(keyframes[0], keyframes[1]);
     }
     else {
         if (t < keyframes[0].getTime()) {
+            print(5);
             keyframes.insert(keyframes.begin(), Keyframe(t, v));
             setPrevNext(keyframes[0], keyframes[1]);
         }
         else if (t > keyframes[keyframes.size() - 1].getTime()) {
+            print(6);
             keyframes.push_back(Keyframe(t, v));
             setPrevNext(keyframes[keyframes.size() - 2], keyframes[keyframes.size() - 1]);
         }
         else {
-            int start = 0, end = keyframes.size() - 1, mid = 0;
-            while (start < end - 1) {
-                mid = (end - start) / 2;
-                if (t == keyframes[start].getTime() ||
-                    t == keyframes[mid].getTime() ||
-                    t == keyframes[end].getTime()) {
+            int s = 0, e = keyframes.size(), m = 0;
+            while (s < e - 1) {
+                m = (s + e) / 2;
+                float kt = keyframes[m].getTime();
+                if (t > kt) {
+                    s = m;
+                }
+                else if (t == kt) {
                     return false;
                 }
-                else if (t > keyframes[mid].getTime()) {
-                    start = mid;
-                }
                 else {
-                    end = mid;
+                    e = m;
                 }
             }
-            keyframes.insert(keyframes.begin() + start, Keyframe(t, v));
-            setCurrPrevNext(keyframes[start], keyframes[start + 1], keyframes[start + 2]);
+            if (keyframes[s].getTime() == t || keyframes[e].getTime() == t) {
+                print(7);
+                return false;
+            }
+            print(8);
+            keyframes.insert(keyframes.begin() + s + 1, Keyframe(t, v));
+            setCurrPrevNext(keyframes[s], keyframes[s + 1], keyframes[s + 2]);
         }
     }
     return true;
 }
 
-void Channel::removeKeyframe(int i) {
-    removeKeyframe(keyframes[i]);
-}
-
-void Channel::removeKeyframe(Keyframe & k) {
-    int s = 0, e = keyframes.size() - 1, m = 0, tt = k.getTime();
-    while (s != e) {
-        m = (e - s) / 2;
-        float mt = keyframes[m].getTime();
-        if (mt == tt) {
-            break;
+bool Channel::removeKeyframe(int i) {
+    int l = keyframes.size();
+    if (i < 0 || i >= l) {
+        return false;
+    }
+    else if (l == 1) {
+        keyframes.erase(keyframes.begin());
+    }
+    else {
+        if (i == 0) {
+            keyframes.erase(keyframes.begin());
+            keyframes[0].removePrev();
         }
-        else if (mt > tt) {
-            s = m;
+        else if (i == l - 1) {
+            keyframes.erase(keyframes.end() - 1);
+            keyframes[keyframes.size() - 1].removeNext();
         }
         else {
-            e = m;
+            setPrevNext(keyframes[i - 1], keyframes[i + 1]);
+            keyframes.erase(keyframes.begin() + i);
         }
     }
-    
+    return true;
+}
+
+bool Channel::removeKeyframe(Keyframe & k) {
+    int s = 0, e = keyframes.size(), m = 0, tt = k.getTime();
+    while (s < e) {
+        m = (s + e) / 2;
+        float mt = keyframes[m].getTime();
+        if (mt == tt) {
+            return removeKeyframe(m);
+        }
+        else if (mt > tt) {
+            e = m - 1;
+        }
+        else {
+            s = m + 1;
+        }
+    }
+    if (keyframes[s].getTime() != tt) {
+        return false;
+    }
+    else {
+        return removeKeyframe(s);
+    }
 }
 
 std::vector<Keyframe> & Channel::getKeyframes() {
@@ -94,24 +135,24 @@ int Channel::getKeyframeAmount() const {
     return keyframes.size();
 }
 
-const Keyframe & Channel::getFirstKeyframe() const {
+Keyframe & Channel::getFirstKeyframe() {
     return keyframes[0];
 }
 
-const Keyframe & Channel::getKeyframe(int i) const {
+Keyframe & Channel::getKeyframe(int i) {
     return keyframes[i];
 }
 
-const Keyframe & Channel::getLastKeyframe() const {
+Keyframe & Channel::getLastKeyframe() {
     return keyframes[keyframes.size() - 1];
 }
 
 float Channel::getStartTime() const {
-    return getFirstKeyframe().getTime();
+    return keyframes[0].getTime();
 }
 
 float Channel::getEndTime() const {
-    return getLastKeyframe().getTime();
+    return keyframes[keyframes.size() - 1].getTime();
 }
 
 float Channel::getDuration() const {
@@ -119,15 +160,15 @@ float Channel::getDuration() const {
 }
 
 float Channel::getStartValue() const {
-    return getFirstKeyframe().getValue();
+    return keyframes[0].getValue();
 }
 
 float Channel::getEndValue() const {
-    return getLastKeyframe().getValue();
+    return keyframes[keyframes.size() - 1].getValue();
 }
 
 float Channel::getValueOffset() const {
-    return getLastKeyframe().getValue() - getFirstKeyframe().getValue();
+    return keyframes[keyframes.size() - 1].getValue() - keyframes[0].getValue();
 }
 
 void Channel::setInExtrapolation(const Channel::Extrapolation & in) {
@@ -181,7 +222,7 @@ float Channel::evaluateAfterEnd(float t) const {
 }
 
 float Channel::evaluateBeforeStartLinear(float t) const {
-    const Keyframe & f = getFirstKeyframe();
+    const Keyframe & f = keyframes[0];
     return f.getValue() + f.getInTangent() * (t - f.getTime());
 }
 
@@ -208,7 +249,7 @@ float Channel::evaluateBeforeStartBounce(float t) const {
 }
 
 float Channel::evaluateAfterEndLinear(float t) const {
-    const Keyframe & l = getLastKeyframe();
+    const Keyframe & l = keyframes[keyframes.size() - 1];
     return l.getValue() + l.getOutTangent() * (t - l.getTime());
 }
 

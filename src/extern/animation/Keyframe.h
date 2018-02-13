@@ -13,8 +13,8 @@ namespace rotamina {
             float inSlope;
             float outSlope;
             bool consistent;
-            const Keyframe * prev;
-            const Keyframe * next;
+            Keyframe * prev;
+            Keyframe * next;
         public:
             Keyframe();
             Keyframe(const float &, const float &);
@@ -31,11 +31,13 @@ namespace rotamina {
             void setOutTangent(const float &);
             float getOutTangent() const;
             bool hasPrev() const;
-            void setPrev(const Keyframe &);
-            const Keyframe & getPrev() const;
+            void setPrev(Keyframe &);
+            void removePrev();
+            Keyframe & getPrev();
             bool hasNext() const;
-            void setNext(const Keyframe &);
-            const Keyframe & getNext() const;
+            void setNext(Keyframe &);
+            void removeNext();
+            Keyframe & getNext();
         private:
             static float getSlope(const Keyframe &, const Keyframe &);
     };

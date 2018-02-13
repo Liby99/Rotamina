@@ -4,9 +4,8 @@ using namespace rotamina;
 
 Keyframe::Keyframe() : Keyframe(0, 0) {}
     
-Keyframe::Keyframe(const float & t, const float & value) : consistent(true),
-    in(Tangent::Flat), out(Tangent::Flat), inSlope(0), outSlope(0),
-    prev(nullptr), next(nullptr) {}
+Keyframe::Keyframe(const float & t, const float & v) : time(t), value(v), consistent(true),
+    in(Tangent::Linear), out(Tangent::Linear), inSlope(0), outSlope(0), prev(nullptr), next(nullptr) {}
 
 void Keyframe::setTime(const float & t) {
     this->time = t;
@@ -108,11 +107,15 @@ bool Keyframe::hasPrev() const {
     return prev != nullptr;
 }
 
-void Keyframe::setPrev(const Keyframe & k) {
+void Keyframe::setPrev(Keyframe & k) {
     this->prev = &k;
 }
 
-const Keyframe & Keyframe::getPrev() const {
+void Keyframe::removePrev() {
+    this->prev = nullptr;
+}
+
+Keyframe & Keyframe::getPrev() {
     return *prev;
 }
 
@@ -120,11 +123,15 @@ bool Keyframe::hasNext() const {
     return next != nullptr;
 }
 
-void Keyframe::setNext(const Keyframe & k) {
+void Keyframe::setNext(Keyframe & k) {
     this->next = &k;
 }
 
-const Keyframe & Keyframe::getNext() const {
+void Keyframe::removeNext() {
+    this->next = nullptr;
+}
+
+Keyframe & Keyframe::getNext() {
     return *next;
 }
 

@@ -20,13 +20,13 @@ namespace rotamina {
             Channel();
             void initiateKeyframes(const int &);
             bool addKeyframe(const float &, const float &);
-            void removeKeyframe(int i);
-            void removeKeyframe(Keyframe & k);
+            bool removeKeyframe(int i);
+            bool removeKeyframe(Keyframe & k);
             std::vector<Keyframe> & getKeyframes();
             int getKeyframeAmount() const;
-            const Keyframe & getFirstKeyframe() const;
-            const Keyframe & getKeyframe(int) const;
-            const Keyframe & getLastKeyframe() const;
+            Keyframe & getFirstKeyframe();
+            Keyframe & getKeyframe(int);
+            Keyframe & getLastKeyframe();
             float getStartTime() const;
             float getEndTime() const;
             float getDuration() const;
