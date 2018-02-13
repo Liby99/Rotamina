@@ -9,11 +9,6 @@
 
 namespace rotamina {
     class Viewer : public nanogui::Screen {
-        private:
-            
-            // Singleton viewer
-            static Viewer * currentViewer;
-            
         protected:
             
             // Basic constants

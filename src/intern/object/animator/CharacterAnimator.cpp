@@ -7,10 +7,11 @@ CharacterAnimator::CharacterAnimator(Animation & a, Character & c) : Animator(a)
 }
 
 void CharacterAnimator::updateAnimation(float t) {
-    for (int i = 0; i < animation->getChannelAmount(); i++) {
+    for (int i = 3; i < animation->getChannelAmount(); i++) {
         Channel & channel = animation->getChannel(i);
-        cachedDOFs[i]->setValue(channel.evaluate(t));
+        cachedDOFs[i - 3]->setValue(channel.evaluate(t));
     }
+    character->update();
 }
 
 void CharacterAnimator::draw(Shader & shader) {

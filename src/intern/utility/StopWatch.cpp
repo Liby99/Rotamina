@@ -31,5 +31,7 @@ float StopWatch::stop() {
 }
 
 float StopWatch::duration() {
-    return durationTime.count();
+    auto d = durationTime;
+    d += (std::chrono::system_clock::now() - startTime);
+    return d.count();
 }

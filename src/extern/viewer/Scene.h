@@ -1,6 +1,7 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <functional>
 #include <nanogui/nanogui.h>
 #include <viewer/Camera.h>
 #include <object/Object.h>
@@ -11,6 +12,8 @@ namespace rotamina {
             
             static const float SCROLL_SPEED, MOVE_SPEED;
             float azimuth, incline, dist;
+            
+            const std::function<void()> * displayCallback;
             
             rotamina::Shader * shader;
             rotamina::Camera camera;
@@ -36,6 +39,9 @@ namespace rotamina {
             void updateCamera();
             rotamina::Shader & getShader();
             void setShader(rotamina::Shader &);
+            
+            // Callback
+            void setDisplayCallback(std::function<void()> &);
             
             // Control
             virtual bool keyboardEvent(int key, int scancode, int action, int modifiers) override;
