@@ -1,31 +1,99 @@
+#include <string>
 #include <iostream>
 #include "animation/Channel.h"
 
 using namespace rotamina;
 
-void testExtrapolationConstant() {
+void error(std::string str) { throw std::runtime_error(str); }
+void assert(bool b) { if (!b) { error("Assert Boolean Error"); }}
+void assert(float f1, float f2) { if (f1 != f2) { error("Assert Failed - Actual: " + std::to_string(f1) + ", Expected: " + std::to_string(f2)); }}
+void assert(int i1, int i2) { if (i1 != i2) { error("Assert Failed - Actual: " + std::to_string(i1) + ", Expected: " + std::to_string(i2)); }}
+
+void printChannel(Channel & t) {
+    std::vector<Keyframe> ks = t.getKeyframes();
+    std::cout << "[ ";
+    for (int i = 0; i < ks.size(); i++) {
+        if (i > 0) std::cout << ", ";
+        std::cout << "(" << ks[i].getTime() << ": " << ks[i].getValue() << ")";
+    }
+    std::cout << " ]" << std::endl;
+}
+
+void printChannelInLinkedList(Channel & t) {
+    if (t.getKeyframeAmount() == 0) {
+        std::cout << "[]" << std::endl;
+        return;
+    }
+    Keyframe * k = &(t.getKeyframe(0));
+    std::cout << "[ ";
+    bool flag = false;
+    // while (true) {
+        // if (flag) std::cout << ", ";
+        std::cout << "(" << k->getTime() << ": " << k->getValue() << "), ";
+        std::cout << "(" << k->getNext().getTime() << ": " << k->getNext().getTime() << ")";
+        std::cout << "(" << k->getNext().getNext().getTime() << ": " << k->getNext().getNext().getTime() << ")";
+        // if (k->hasNext()) {
+        //     flag = true;
+        //     k = &(k->getNext());
+        // }
+        // else {
+            // break;
+        // }
+    // }
+    std::cout << " ]" << std::endl;
+}
+
+void test1() {
     
     Channel t;
-    t.addKeyframe(0, 0);
-    t.addKeyframe(1, 1);
-    t.addKeyframe(3, -1);
     
-    std::cout << "at -3: " << t.evaluate(-3) << std::endl;
-    std::cout << "at -2.5: " << t.evaluate(-2.5) << std::endl;
-    std::cout << "at -2: " << t.evaluate(-2) << std::endl;
-    std::cout << "at -1.5: " << t.evaluate(-1.5) << std::endl;
-    std::cout << "at -1: " << t.evaluate(-1) << std::endl;
-    std::cout << "at -0.5: " << t.evaluate(-0.5) << std::endl;
-    std::cout << "at 0: " << t.evaluate(0) << std::endl;
-    std::cout << "at 0.5: " << t.evaluate(0.5) << std::endl;
-    std::cout << "at 1: " << t.evaluate(1) << std::endl;
-    std::cout << "at 1.5: " << t.evaluate(1.5) << std::endl;
-    std::cout << "at 2: " << t.evaluate(2) << std::endl;
-    std::cout << "at 2.5: " << t.evaluate(2.5) << std::endl;
-    std::cout << "at 3: " << t.evaluate(3) << std::endl;
-    std::cout << "at 3.5: " << t.evaluate(3.5) << std::endl;
+    assert(t.addKeyframe(0, 0));
+    
+    // printChannelInLinkedList(t);
+    
+    assert(t.addKeyframe(1, 1));
+    
+    // printChannelInLinkedList(t);
+    
+    assert(t.addKeyframe(-1, 1));
+    
+    printChannel(t);
+    printChannelInLinkedList(t);
+    
+    // assert(t.getKeyframeAmount(), 1);
+    // assert(t.addKeyframe(1, 1));
+    // assert(t.getKeyframeAmount(), 2);
+    // assert(t.addKeyframe(3, -1));
+    // assert(t.getKeyframeAmount(), 3);
+    // assert(t.addKeyframe(2, -2));
+    // assert(t.getKeyframeAmount(), 4);
+    //
+    // printChannel(t);
+    //
+    // assert(t.getKeyframe(0).getTime(), 0.0f);
+    // assert(t.getKeyframe(1).getTime(), 1.0f);
+    // assert(t.getKeyframe(2).getTime(), 2.0f);
+    // assert(t.getKeyframe(3).getTime(), 3.0f);
+    // assert(t.getKeyframeAmount(), 4);
+    // assert(!t.addKeyframe(0, 0));
+    // assert(!t.addKeyframe(1, 0));
+    // assert(!t.addKeyframe(2, 0));
+    // assert(!t.addKeyframe(3, 0));
+    // assert(t.getKeyframeAmount(), 4);
+    // assert(t.addKeyframe(0.5, 1.5));
+    // assert(t.getKeyframeAmount() == 5);
+    // assert(t.getKeyframe(1).getTime() == 0.5);
+    // assert(t.getKeyframe(2).getTime() == 1);
+    // assert(t.getKeyframe(3).getTime() == 2);
+    // assert(t.addKeyframe(-1, -10));
+    // assert(t.getKeyframeAmount() == 6);
+    // assert(t.getKeyframe(0).getTime() == -1);
+    //
+    // printChannel(t);
+    //
+    // printChannelInLinkedList(t);
 }
 
 int main() {
-    testExtrapolationConstant();
+    test1();
 }
