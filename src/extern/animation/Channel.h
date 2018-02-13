@@ -52,6 +52,7 @@ namespace rotamina {
             float evaluateAfterEndBounce(float t) const;
             bool isBeforeStart(float f) const;
             bool isAfterEnd(float f) const;
+            static float interpolate(Keyframe *, Keyframe *, float);
             static void setPrevNext(Keyframe *, Keyframe *);
             static void setCurrPrevNext(Keyframe *, Keyframe *, Keyframe *);
     };

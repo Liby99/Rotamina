@@ -79,9 +79,11 @@ bool Channel::removeKeyframe(int i) {
         return false;
     }
     else if (l == 1) {
+        delete keyframes[0];
         keyframes.erase(keyframes.begin());
     }
     else {
+        delete keyframes[i];
         if (i == 0) {
             keyframes.erase(keyframes.begin());
             keyframes[0]->removePrev();
@@ -99,7 +101,8 @@ bool Channel::removeKeyframe(int i) {
 }
 
 bool Channel::removeKeyframe(Keyframe & k) {
-    int s = 0, e = keyframes.size(), m = 0, tt = k.getTime();
+    int s = 0, e = keyframes.size(), m = 0;
+    float tt = k.getTime();
     while (s < e) {
         m = (s + e) / 2;
         float mt = keyframes[m]->getTime();
@@ -189,7 +192,29 @@ float Channel::evaluate(float t) const {
         return evaluateAfterEnd(t);
     }
     else {
-        return 0;
+        int s = 0, e = keyframes.size(), m = 0;
+        while (s < e - 1) {
+            m = (s + e) / 2;
+            float kt = keyframes[m]->getTime();
+            if (t > kt) {
+                s = m;
+            }
+            else if (t == kt) {
+                return keyframes[m]->getValue();
+            }
+            else {
+                e = m;
+            }
+        }
+        if (keyframes[s]->getTime() == t) {
+            return keyframes[s]->getValue();
+        }
+        else if (keyframes[e]->getTime() == t) {
+            return keyframes[e]->getValue();
+        }
+        else {
+            return interpolate(keyframes[s], keyframes[e], t);
+        }
     }
 }
 
@@ -275,6 +300,14 @@ bool Channel::isBeforeStart(float f) const {
 
 bool Channel::isAfterEnd(float f) const {
     return f > getEndTime();
+}
+
+float Channel::interpolate(Keyframe * k0, Keyframe * k1, float t) {
+    float p0 = k0->getValue(), p1 = k1->getValue(),
+          v0 = k0->getOutTangent(), v1 = k1->getInTangent(),
+          a = 2 * p0 - 2 * p1 + v0 + v1,
+          b = -3 * p0 + 3 * p1 - 2 * v0 - v1;
+    return a * t * t * t + b * t * t + v0 * t + p0;
 }
 
 void Channel::setPrevNext(Keyframe * k1, Keyframe * k2) {
