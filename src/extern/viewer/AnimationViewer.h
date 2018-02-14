@@ -12,6 +12,7 @@ namespace rotamina {
             nanogui::Window * animationControlWindow;
             nanogui::Button * playPauseBtn;
             nanogui::Button * stopBtn;
+            nanogui::Label * timeText;
         public:
             AnimationViewer(int, int, std::string, Animator &);
             static void create(int, int, std::string, Animator &, std::function<void(AnimationViewer &)>);

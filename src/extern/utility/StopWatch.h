@@ -2,6 +2,8 @@
 #define STOP_WATCH_H
 
 #include <chrono>
+#include <string>
+#include <cmath>
 
 namespace rotamina {
     class StopWatch {
@@ -16,6 +18,9 @@ namespace rotamina {
             void pause();
             float stop();
             float duration();
+            std::string getDurationString();
+        private:
+            static std::string padZero(int d, int num);
     };
 }
 

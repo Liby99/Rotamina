@@ -37,3 +37,19 @@ float StopWatch::duration() {
     }
     return d.count();
 }
+
+std::string StopWatch::getDurationString() {
+    float d = duration();
+    int m = floor(d / 60);
+    int s = floor(fmod(d, 60));
+    int ms = floor(fmod(d, 1) * 1000);
+    return padZero(2, m) + " : " + padZero(2, s) + " : " + padZero(3, ms);
+}
+
+std::string StopWatch::padZero(int d, int num) {
+    std::string s = std::to_string(num);
+    while (s.size() < d) {
+        s = "0" + s;
+    }
+    return s;
+}

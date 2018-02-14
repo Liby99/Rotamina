@@ -11,19 +11,31 @@ AnimationViewer::AnimationViewer(int w, int h, std::string n, Animator & animato
 
     using namespace nanogui;
 
-    int sh = h - 2 * HEADER_HEIGHT - 2 * PADDING - ANIMATION_CONTROL_HEIGHT;
+    int sh = h - 2 * HEADER_HEIGHT - ANIMATION_CONTROL_HEIGHT;
     scene->setHeight(sh);
 
     animationControlWindow = new Window(this, "Animation Control");
-    animationControlWindow->setPosition({ 0, sh });
-    animationControlWindow->setFixedSize({ w - PADDING, HEADER_HEIGHT + ANIMATION_CONTROL_HEIGHT });
-    animationControlWindow->setLayout(new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 10, 5));
+    animationControlWindow->setPosition({ 0, sh + HEADER_HEIGHT });
+    animationControlWindow->setFixedSize({ w, HEADER_HEIGHT + ANIMATION_CONTROL_HEIGHT });
+    animationControlWindow->setLayout(new GridLayout(Orientation::Horizontal, 1, Alignment::Middle, 10, 5));
 
-    playPauseBtn = new Button(animationControlWindow, "Play");
+    Widget * left = new Widget(animationControlWindow);
+    left->setLayout(new BoxLayout(Orientation::Horizontal, Alignment::Middle, 0, 6));
+
+    playPauseBtn = new Button(left, "Play");
     playPauseBtn->setCallback([this] () {
         togglePlay();
     });
-    stopBtn = new Button(animationControlWindow, "Stop");
+
+    timeText = new Label(left, "s");
+    timeText->setFontSize(20);
+    timeText->setWidth(100);
+    scene->setDisplayCallback([this] () {
+        this->timeText->setCaption(this->animator->getStopWatch().getDurationString());
+        performLayout();
+    });
+
+    stopBtn = new Button(left, "Stop");
     stopBtn->setCallback([this] () {
         stop();
     });
@@ -61,11 +73,13 @@ bool AnimationViewer::isPlaying() {
 void AnimationViewer::play() {
     playPauseBtn->setCaption("Pause");
     this->animator->start();
+    performLayout();
 }
 
 void AnimationViewer::pause() {
     playPauseBtn->setCaption("Play");
     this->animator->pause();
+    performLayout();
 }
 
 void AnimationViewer::stop() {

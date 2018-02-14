@@ -7,6 +7,14 @@ Animator::Animator(Animation & animation) {
     this->animation = &animation;
 }
 
+StopWatch & Animator::getStopWatch() {
+    return watch;
+}
+
+Animation & Animator::getAnimation() {
+    return *animation;
+}
+
 void Animator::start() {
     watch.start();
 }
@@ -21,6 +29,10 @@ void Animator::stop() {
 
 bool Animator::isPlaying() {
     return watch.isCounting();
+}
+
+float Animator::duration() {
+    return watch.duration();
 }
 
 void Animator::updateAnimation(float t) {
