@@ -42,6 +42,7 @@ namespace rotamina {
             void setNext(Keyframe &);
             void removeNext();
             Keyframe & getNext();
+            void forceUpdate();
         private:
             float calculateInTangent();
             float calculateOutTangent();

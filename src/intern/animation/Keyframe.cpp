@@ -12,8 +12,9 @@ Keyframe::Keyframe(const float & t, const float & v) :
 
 void Keyframe::setTime(const float & t) {
     this->time = t;
-    this->inTangentCached = false;
-    this->outTangentCached = false;
+    this->forceUpdate();
+    if (this->prev) this->prev->forceUpdate();
+    if (this->next) this->next->forceUpdate();
 }
 
 float Keyframe::getTime() const {
@@ -22,8 +23,9 @@ float Keyframe::getTime() const {
 
 void Keyframe::setValue(const float & v) {
     this->value = v;
-    this->inTangentCached = false;
-    this->outTangentCached = false;
+    this->forceUpdate();
+    if (this->prev) this->prev->forceUpdate();
+    if (this->next) this->next->forceUpdate();
 }
 
 float Keyframe::getValue() const {
@@ -96,6 +98,8 @@ bool Keyframe::hasPrev() const {
 
 void Keyframe::setPrev(Keyframe & k) {
     this->prev = &k;
+    this->forceUpdate();
+    if (this->prev) this->prev->forceUpdate();
 }
 
 void Keyframe::removePrev() {
@@ -112,6 +116,8 @@ bool Keyframe::hasNext() const {
 
 void Keyframe::setNext(Keyframe & k) {
     this->next = &k;
+    this->forceUpdate();
+    if (this->next) this->next->forceUpdate();
 }
 
 void Keyframe::removeNext() {
@@ -120,6 +126,11 @@ void Keyframe::removeNext() {
 
 Keyframe & Keyframe::getNext() {
     return *next;
+}
+
+void Keyframe::forceUpdate() {
+    this->inTangentCached = false;
+    this->outTangentCached = false;
 }
 
 float Keyframe::calculateInTangent() {
