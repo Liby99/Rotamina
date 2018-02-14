@@ -38,6 +38,7 @@ void ChannelEditor::removeKeyframe() {
     if (currKeyframe) {
         channel->removeKeyframe(*currKeyframe);
         currKeyframe = nullptr;
+        draggingKeyframe = nullptr;
     }
 }
 
@@ -84,15 +85,21 @@ bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bo
             float xp = (k.getTime() - xmin) / (xmax - xmin) * 0.8 + 0.1;
             float yp = (k.getValue() - ymin) / (ymax - ymin) * 0.8 + 0.1;
             int x = mSize[0] * xp + padding;
-            int y = mSize[1] * yp + offset + padding;
+            int y = mSize[1] * (1 - yp) + offset + padding;
             float dist = sqrt(pow(x - p[0], 2) + pow(y - p[1], 2));
             if (dist < 7) {
                 currKeyframe = &k;
+                if (down) {
+                    draggingKeyframe = &k;
+                }
+                else {
+                    draggingKeyframe = nullptr;
+                }
                 return true;
             }
 
-            Eigen::Vector2f lh = { -1, -k.getInTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
-            Eigen::Vector2f rh = { 1, k.getOutTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
+            Eigen::Vector2f lh = { -1, k.getInTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
+            Eigen::Vector2f rh = { 1, -k.getOutTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
             lh.normalize();
             rh.normalize();
 
@@ -116,7 +123,7 @@ bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bo
 
         if (down) {
             float xp = float(p[0] - padding) / float(mSize[0]);
-            float yp = float(p[1] - padding - offset) / float(mSize[1]);
+            float yp = float(mSize[1] - p[1] - padding - offset) / float(mSize[1]);
             float t = (xp - 0.1) / 0.8 * (xmax - xmin) + xmin;
             float v = (yp - 0.1) / 0.8 * (ymax - ymin) + ymin;
             channel->addKeyframe(t, v);
@@ -126,15 +133,23 @@ bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bo
     return false;
 }
 
-bool ChannelEditor::keyboardEvent(int key, int scancode, int action, int modifiers) {
-    std::cout << "omg" << std::endl;
-    if ((key == GLFW_KEY_BACKSPACE || key == GLFW_KEY_X || key == GLFW_KEY_DELETE) && action == GLFW_PRESS) {
-        std::cout << "yeah" << std::endl;
-        if (currKeyframe) {
-            std::cout << "hahah" << std::endl;
-            channel->removeKeyframe(*currKeyframe);
-            return true;
+bool ChannelEditor::mouseDragEvent(const Eigen::Vector2i & p, const Eigen::Vector2i & rel, int button, int modifiers) {
+    if (draggingKeyframe) {
+        float xp = float(rel[0]) / float(mSize[0]);
+        float yp = float(rel[1]) / float(mSize[1]);
+        float dt = xp / 0.8 * (xmax - xmin);
+        float dv = yp / 0.8 * (ymax - ymin);
+        float nt = draggingKeyframe->getTime() + dt;
+        float nv = draggingKeyframe->getValue() - dv;
+        if (draggingKeyframe->hasNext()) {
+            nt = std::min(nt, draggingKeyframe->getNext().getTime() - 0.01f);
         }
+        if (draggingKeyframe->hasPrev()) {
+            nt = std::max(nt, draggingKeyframe->getPrev().getTime() + 0.01f);
+        }
+        draggingKeyframe->setTime(nt);
+        draggingKeyframe->setValue(nv);
+        return true;
     }
     return false;
 }
@@ -204,7 +219,7 @@ void ChannelEditor::drawAxis(NVGcontext * ctx, float xmin, float xmax, float ymi
 void ChannelEditor::drawKeyframeBox(NVGcontext * ctx, float xp, float yp, bool selected) {
     auto c = selected ? nvgRGB(255, 255, 0) : nvgRGB(200, 200, 200);
     nvgBeginPath(ctx);
-    nvgRect(ctx, mSize[0] * xp + padding - 4, mSize[1] * yp + offset + padding - 4, 8, 8);
+    nvgRect(ctx, mSize[0] * xp + padding - 4, mSize[1] * (1 - yp) + offset + padding - 4, 8, 8);
     nvgFillColor(ctx, c);
     nvgFill(ctx);
 }
@@ -212,13 +227,13 @@ void ChannelEditor::drawKeyframeBox(NVGcontext * ctx, float xp, float yp, bool s
 void ChannelEditor::drawKeyframeHandlebar(NVGcontext * ctx, float xp, float yp, float xoff, float yoff, bool selected) {
     auto c = selected ? nvgRGB(255, 255, 0) : nvgRGB(200, 200, 200);
     nvgBeginPath(ctx);
-    nvgMoveTo(ctx, mSize[0] * xp + padding, mSize[1] * yp + offset + padding);
-    nvgLineTo(ctx, mSize[0] * xp + padding + xoff, mSize[1] * yp + offset + padding + yoff);
+    nvgMoveTo(ctx, mSize[0] * xp + padding, mSize[1] * (1 - yp) + offset + padding);
+    nvgLineTo(ctx, mSize[0] * xp + padding + xoff, mSize[1] * (1 - yp) + offset + padding + yoff);
     nvgStrokeColor(ctx, c);
     nvgStroke(ctx);
 
     nvgBeginPath(ctx);
-    nvgCircle(ctx, mSize[0] * xp + padding + xoff, mSize[1] * yp + offset + padding + yoff, 3);
+    nvgCircle(ctx, mSize[0] * xp + padding + xoff, mSize[1] * (1 - yp) + offset + padding + yoff, 3);
     nvgFillColor(ctx, c);
     nvgFill(ctx);
 }
@@ -230,8 +245,8 @@ void ChannelEditor::drawKeyframe(NVGcontext * ctx, Keyframe & k) {
 
     drawKeyframeBox(ctx, xp, yp, currKeyframe == &k);
 
-    Eigen::Vector2f lh = { -1, -k.getInTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
-    Eigen::Vector2f rh = { 1, k.getOutTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
+    Eigen::Vector2f lh = { -1, k.getInTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
+    Eigen::Vector2f rh = { 1, -k.getOutTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
     lh.normalize();
     rh.normalize();
 
@@ -253,7 +268,7 @@ void ChannelEditor::drawCurve(NVGcontext *ctx) {
         float t = startx + i / 200.0f * dur;
         float y = channel->evaluate(t);
         int px = (t - startx) / dur * mSize[0] + padding;
-        int py = (y - basey) / rangey * mSize[1] + offset + padding;
+        int py = (1 - (y - basey) / rangey) * mSize[1] + offset + padding;
         nvgLineTo(ctx, px, py);
     }
     nvgStrokeColor(ctx, nvgRGB(200, 200, 200));
