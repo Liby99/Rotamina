@@ -5,28 +5,29 @@ using namespace rotamina;
 const int AnimationViewer::ANIMATION_CONTROL_HEIGHT = 50;
 
 AnimationViewer::AnimationViewer(int w, int h, std::string n, Animator & animator) : Viewer(w, h, n) {
+    
     this->animator = &animator;
     scene->addObject(animator);
     scene->getShader().initTwoLights();
-
+    
     using namespace nanogui;
-
+    
     int sh = h - 2 * HEADER_HEIGHT - ANIMATION_CONTROL_HEIGHT;
     scene->setHeight(sh);
-
+    
     animationControlWindow = new Window(this, "Animation Control");
     animationControlWindow->setPosition({ 0, sh + HEADER_HEIGHT });
     animationControlWindow->setFixedSize({ w, HEADER_HEIGHT + ANIMATION_CONTROL_HEIGHT });
     animationControlWindow->setLayout(new GridLayout(Orientation::Horizontal, 1, Alignment::Middle, 10, 5));
-
+    
     Widget * left = new Widget(animationControlWindow);
     left->setLayout(new BoxLayout(Orientation::Horizontal, Alignment::Middle, 0, 6));
-
+    
     playPauseBtn = new Button(left, "Play");
     playPauseBtn->setCallback([this] () {
         togglePlay();
     });
-
+    
     timeText = new Label(left, "s");
     timeText->setFontSize(20);
     timeText->setWidth(100);
@@ -34,14 +35,14 @@ AnimationViewer::AnimationViewer(int w, int h, std::string n, Animator & animato
         this->timeText->setCaption(this->animator->getStopWatch().getDurationString());
         performLayout();
     });
-
+    
     stopBtn = new Button(left, "Stop");
     stopBtn->setCallback([this] () {
         stop();
     });
-
+    
     performLayout();
-
+    
     play();
 }
 
