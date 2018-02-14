@@ -9,7 +9,7 @@ namespace rotamina {
         protected:
             int padding = 5;
             int offset = 30;
-            float xmin, xmax, ymin, ymax;
+            float xmin, xmax, ymin, ymax, currTime;
             Channel * channel;
             Keyframe * currKeyframe;
             Keyframe * draggingKeyframe;
@@ -21,6 +21,7 @@ namespace rotamina {
             void setFlat();
             void setSmooth();
             void removeKeyframe();
+            void setCurrTime(float);
             virtual void draw(NVGcontext * ctx) override;
             virtual bool mouseButtonEvent(const nanogui::Vector2i &p, int button, bool down, int modifiers) override;
             virtual bool mouseDragEvent(const Eigen::Vector2i & p, const Eigen::Vector2i & rel, int button, int modifiers) override;
@@ -33,6 +34,7 @@ namespace rotamina {
             void drawKeyframeBox(NVGcontext * ctx, float xp, float yp, bool selected);
             void drawKeyframeHandlebar(NVGcontext * ctx, float xp, float yp, float xoff, float yoff, bool selected);
             void drawKeyframe(NVGcontext * ctx, Keyframe &);
+            void drawCurrTime(NVGcontext *);
             void drawCurve(NVGcontext * ctx);
     };
 }

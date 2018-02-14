@@ -217,6 +217,7 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
 void CharAnimViewer::displayCallback() {
     AnimationViewer::displayCallback();
     showJoint(currJoint);
+    editor->setCurrTime(characterAnimator->duration());
 }
 
 void CharAnimViewer::push(nanogui::Button * btn) {

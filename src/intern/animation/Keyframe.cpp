@@ -4,11 +4,16 @@ using namespace rotamina;
 
 Keyframe::Keyframe() : Keyframe(0, 0) {}
     
-Keyframe::Keyframe(const float & t, const float & v) : time(t), value(v), consistent(true),
-    in(Tangent::Flat), out(Tangent::Flat), inSlope(0), outSlope(0), prev(nullptr), next(nullptr) {}
+Keyframe::Keyframe(const float & t, const float & v) :
+    time(t), value(v),
+    consistent(true), inTangentCached(false),
+    in(Tangent::Flat), out(Tangent::Flat), inSlope(0), outSlope(0),
+    prev(nullptr), next(nullptr) {}
 
 void Keyframe::setTime(const float & t) {
     this->time = t;
+    this->inTangentCached = false;
+    this->outTangentCached = false;
 }
 
 float Keyframe::getTime() const {
@@ -17,6 +22,8 @@ float Keyframe::getTime() const {
 
 void Keyframe::setValue(const float & v) {
     this->value = v;
+    this->inTangentCached = false;
+    this->outTangentCached = false;
 }
 
 float Keyframe::getValue() const {

@@ -42,6 +42,10 @@ void ChannelEditor::removeKeyframe() {
     }
 }
 
+void ChannelEditor::setCurrTime(float t) {
+    this->currTime = t;
+}
+
 void ChannelEditor::draw(NVGcontext * ctx) {
     Widget::draw(ctx);
     if (channel && channel->getKeyframeAmount()) {
@@ -71,6 +75,9 @@ void ChannelEditor::draw(NVGcontext * ctx) {
         for (int i = 0; i < channel->getKeyframeAmount(); i++) {
             drawKeyframe(ctx, channel->getKeyframe(i));
         }
+        
+        //
+        drawCurrTime(ctx);
     }
     else {
         drawAxis(ctx, -1, 1, -1, 1);
@@ -191,11 +198,11 @@ void ChannelEditor::drawAxis(NVGcontext * ctx, float xmin, float xmax, float ymi
     this->ymin = ymin;
     this->ymax = ymax;
 
-    drawXAxis(ctx, 0.1, nvgRGB(100, 100, 100));
-    drawXAxis(ctx, 0.3, nvgRGB(100, 100, 100));
-    drawXAxis(ctx, 0.5, nvgRGB(150, 150, 150));
-    drawXAxis(ctx, 0.7, nvgRGB(100, 100, 100));
-    drawXAxis(ctx, 0.9, nvgRGB(100, 100, 100));
+    drawXAxis(ctx, 0.1, nvgRGB(150, 150, 150));
+    drawXAxis(ctx, 0.3, nvgRGB(60, 60, 60));
+    drawXAxis(ctx, 0.5, nvgRGB(60, 60, 60));
+    drawXAxis(ctx, 0.7, nvgRGB(60, 60, 60));
+    drawXAxis(ctx, 0.9, nvgRGB(150, 150, 150));
 
     drawXAxisText(ctx, 0.1, xmin);
     drawXAxisText(ctx, 0.3, xmin + (xmax - xmin) / 4);
@@ -204,9 +211,9 @@ void ChannelEditor::drawAxis(NVGcontext * ctx, float xmin, float xmax, float ymi
     drawXAxisText(ctx, 0.9, xmax);
 
     drawYAxis(ctx, 0.1, nvgRGB(150, 150, 150));
-    drawYAxis(ctx, 0.3, nvgRGB(100, 100, 100));
-    drawYAxis(ctx, 0.5, nvgRGB(100, 100, 100));
-    drawYAxis(ctx, 0.7, nvgRGB(100, 100, 100));
+    drawYAxis(ctx, 0.3, nvgRGB(60, 60, 60));
+    drawYAxis(ctx, 0.5, nvgRGB(60, 60, 60));
+    drawYAxis(ctx, 0.7, nvgRGB(60, 60, 60));
     drawYAxis(ctx, 0.9, nvgRGB(150, 150, 150));
 
     drawYAxisText(ctx, 0.9, ymin);
@@ -252,6 +259,11 @@ void ChannelEditor::drawKeyframe(NVGcontext * ctx, Keyframe & k) {
 
     drawKeyframeHandlebar(ctx, xp, yp, lh[0] * 30, lh[1] * 30, currKeyframe == &k);
     drawKeyframeHandlebar(ctx, xp, yp, rh[0] * 30, rh[1] * 30, currKeyframe == &k);
+}
+
+void ChannelEditor::drawCurrTime(NVGcontext * ctx) {
+    float d = xmax - xmin, t = fmod(currTime - xmin, d), xp = t / (xmax - xmin) * 0.8 + 0.1;
+    drawYAxis(ctx, xp, nvgRGB(200, 30, 0));
 }
 
 void ChannelEditor::drawCurve(NVGcontext *ctx) {
