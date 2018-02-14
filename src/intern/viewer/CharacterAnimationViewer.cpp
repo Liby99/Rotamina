@@ -1,13 +1,13 @@
 #include <iostream>
-#include "viewer/CharAnimViewer.h"
+#include "viewer/CharacterAnimationViewer.h"
 
 using namespace rotamina;
 
-const int CharAnimViewer::SKELETON_VIEWER_WIDTH = 300;
-const int CharAnimViewer::JOINT_VIEWER_WIDTH= 300;
-const int CharAnimViewer::CHANNEL_EDITOR_HEIGHT = 300;
+const int CharacterAnimationViewer::SKELETON_VIEWER_WIDTH = 300;
+const int CharacterAnimationViewer::JOINT_VIEWER_WIDTH= 300;
+const int CharacterAnimationViewer::CHANNEL_EDITOR_HEIGHT = 300;
 
-CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & ca) : AnimationViewer(w, h, n, ca) {
+CharacterAnimationViewer::CharacterAnimationViewer(int w, int h, std::string n, CharacterAnimator & ca) : AnimationViewer(w, h, n, ca) {
 
     // First initiate the object to draw
     this->characterAnimator = &ca;
@@ -261,13 +261,13 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
     performLayout();
 }
 
-void CharAnimViewer::displayCallback() {
+void CharacterAnimationViewer::displayCallback() {
     AnimationViewer::displayCallback();
     showJoint(currJoint);
     editor->setCurrTime(characterAnimator->duration());
 }
 
-void CharAnimViewer::push(nanogui::Button * btn) {
+void CharacterAnimationViewer::push(nanogui::Button * btn) {
     for (auto b : btn->buttonGroup()) {
         b->setPushed(false);
     }
@@ -275,7 +275,7 @@ void CharAnimViewer::push(nanogui::Button * btn) {
     btn->callback()();
 }
 
-void CharAnimViewer::showChannel(Channel * c) {
+void CharacterAnimationViewer::showChannel(Channel * c) {
     editor->setChannel(c);
     for (int i = 0; i < 5; i++) {
         nanogui::Button * inButton = (nanogui::Button *) channelEditorWindow->childAt(1)->childAt(0)->childAt(0)->childAt(i);
@@ -287,7 +287,7 @@ void CharAnimViewer::showChannel(Channel * c) {
     }
 }
 
-void CharAnimViewer::clearJointInfo() {
+void CharacterAnimationViewer::clearJointInfo() {
     int count = jointViewer->childCount();
     for (int i = 0; i < count; i++) {
         jointViewer->removeChild(0);
@@ -295,7 +295,7 @@ void CharAnimViewer::clearJointInfo() {
     performLayout();
 }
 
-void CharAnimViewer::showJoint(Joint * joint) {
+void CharacterAnimationViewer::showJoint(Joint * joint) {
 
     currJoint = joint;
 

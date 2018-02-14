@@ -6,7 +6,7 @@
 #include "viewer/AnimationViewer.h"
 
 namespace rotamina {
-    class CharAnimViewer : public AnimationViewer {
+    class CharacterAnimationViewer : public AnimationViewer {
         protected:
             const static int SKELETON_VIEWER_WIDTH;
             const static int JOINT_VIEWER_WIDTH;
@@ -20,7 +20,7 @@ namespace rotamina {
             std::vector<nanogui::Button *> jointButtonGroup;
             std::vector<nanogui::Button *> dofButtonGroup;
         public:
-            CharAnimViewer(int, int, std::string, CharacterAnimator &);
+            CharacterAnimationViewer(int, int, std::string, CharacterAnimator &);
             virtual void displayCallback();
             void push(nanogui::Button *);
             void showChannel(Channel *);

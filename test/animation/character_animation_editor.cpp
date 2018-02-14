@@ -1,7 +1,7 @@
 #include "animation/AnimationParser.h"
 #include "object/character/CharacterParser.h"
 #include "object/animator/CharacterAnimator.h"
-#include "viewer/CharAnimViewer.h"
+#include "viewer/CharacterAnimationViewer.h"
 
 using namespace rotamina;
 
@@ -15,7 +15,7 @@ int main() {
 
     nanogui::init();
     
-    CharAnimViewer viewer(1600, 960, "Wasp Walk Viewer", wa);
+    CharacterAnimationViewer viewer(1600, 960, "Wasp Walk Viewer", wa);
     viewer.drawAll();
     viewer.setVisible(true);
     

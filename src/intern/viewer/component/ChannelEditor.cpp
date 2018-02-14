@@ -238,7 +238,7 @@ void ChannelEditor::drawXAxisText(NVGcontext * ctx, float perc, float f) {
     nvgFontFace(ctx, "sans-bold");
     nvgTextAlign(ctx, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
     nvgFillColor(ctx, nvgRGB(120, 120, 120));
-    nvgText(ctx, mSize[0] * perc + 5 + padding, offset + padding + mSize[1] * 0.95, std::to_string(f).c_str(), NULL);
+    nvgText(ctx, mSize[0] * perc + 5 + padding, offset + padding + mSize[1] * 0.95, std::to_string(f).substr(0, f >= 0 ? 4 : 5).c_str(), NULL);
 }
 
 void ChannelEditor::drawYAxisText(NVGcontext * ctx, float perc, float f) {
@@ -246,7 +246,7 @@ void ChannelEditor::drawYAxisText(NVGcontext * ctx, float perc, float f) {
     nvgFontFace(ctx, "sans-bold");
     nvgTextAlign(ctx, NVG_ALIGN_RIGHT | NVG_ALIGN_BOTTOM);
     nvgFillColor(ctx, nvgRGB(120, 120, 120));
-    nvgText(ctx, mSize[0] * 0.1 + padding - 5, offset + padding + mSize[1] * perc - 5, std::to_string(f).c_str(), NULL);
+    nvgText(ctx, mSize[0] * 0.1 + padding - 5, offset + padding + mSize[1] * perc - 5, std::to_string(f).substr(0, f >= 0 ? 4 : 5).c_str(), NULL);
 }
 
 void ChannelEditor::drawAxis(NVGcontext * ctx, float xmin, float xmax, float ymin, float ymax) {
@@ -255,24 +255,36 @@ void ChannelEditor::drawAxis(NVGcontext * ctx, float xmin, float xmax, float ymi
     this->xmax = xmax;
     this->ymin = ymin;
     this->ymax = ymax;
-
+    
     drawXAxis(ctx, 0.1, nvgRGB(150, 150, 150));
     drawXAxis(ctx, 0.3, nvgRGB(60, 60, 60));
     drawXAxis(ctx, 0.5, nvgRGB(60, 60, 60));
     drawXAxis(ctx, 0.7, nvgRGB(60, 60, 60));
     drawXAxis(ctx, 0.9, nvgRGB(150, 150, 150));
 
+    // drawXAxisText(ctx, 0.1, xmin);
+    // drawXAxisText(ctx, 0.3, xmin + (xmax - xmin) / 4);
+    // drawXAxisText(ctx, 0.5, xmin + (xmax - xmin) / 2);
+    // drawXAxisText(ctx, 0.7, xmin + (xmax - xmin) * 3 / 4);
+    // drawXAxisText(ctx, 0.9, xmax);
+    
+    float expectWidth = 100;
+    int amount = floor(mSize[0] * 0.8 / expectWidth);
+    float step = 0.8 / amount;
+    drawYAxis(ctx, 0.1, nvgRGB(150, 150, 150));
     drawXAxisText(ctx, 0.1, xmin);
-    drawXAxisText(ctx, 0.3, xmin + (xmax - xmin) / 4);
-    drawXAxisText(ctx, 0.5, xmin + (xmax - xmin) / 2);
-    drawXAxisText(ctx, 0.7, xmin + (xmax - xmin) * 3 / 4);
+    for (float x = 0.1 + step; x < 0.9; x += step) {
+        drawYAxis(ctx, x, nvgRGB(60, 60, 60));
+        drawXAxisText(ctx, x, xmin + step * (xmax - xmin));
+    }
+    drawYAxis(ctx, 0.9, nvgRGB(150, 150, 150));
     drawXAxisText(ctx, 0.9, xmax);
 
-    drawYAxis(ctx, 0.1, nvgRGB(150, 150, 150));
-    drawYAxis(ctx, 0.3, nvgRGB(60, 60, 60));
-    drawYAxis(ctx, 0.5, nvgRGB(60, 60, 60));
-    drawYAxis(ctx, 0.7, nvgRGB(60, 60, 60));
-    drawYAxis(ctx, 0.9, nvgRGB(150, 150, 150));
+    // drawYAxis(ctx, 0.1, nvgRGB(150, 150, 150));
+    // drawYAxis(ctx, 0.3, nvgRGB(60, 60, 60));
+    // drawYAxis(ctx, 0.5, nvgRGB(60, 60, 60));
+    // drawYAxis(ctx, 0.7, nvgRGB(60, 60, 60));
+    // drawYAxis(ctx, 0.9, nvgRGB(150, 150, 150));
 
     drawYAxisText(ctx, 0.9, ymin);
     drawYAxisText(ctx, 0.7, ymin + (ymax - ymin) / 4);
