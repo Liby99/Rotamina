@@ -32,8 +32,7 @@ AnimationViewer::AnimationViewer(int w, int h, std::string n, Animator & animato
     timeText->setFontSize(20);
     timeText->setWidth(100);
     scene->setDisplayCallback([this] () {
-        this->timeText->setCaption(this->animator->getStopWatch().getDurationString());
-        performLayout();
+        this->displayCallback();
     });
     
     stopBtn = new Button(left, "Stop");
@@ -44,6 +43,11 @@ AnimationViewer::AnimationViewer(int w, int h, std::string n, Animator & animato
     performLayout();
     
     play();
+}
+
+void AnimationViewer::displayCallback() {
+    this->timeText->setCaption(this->animator->getStopWatch().getDurationString());
+    performLayout();
 }
 
 void AnimationViewer::create(int w, int h, std::string name, Animator & a, std::function<void(AnimationViewer &)> init) {

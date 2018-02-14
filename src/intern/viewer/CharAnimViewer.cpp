@@ -83,7 +83,8 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
         jointViewer->setFixedSize({ JOINT_VIEWER_WIDTH, h - CHANNEL_EDITOR_HEIGHT });
         jointViewer->setPosition({ w - JOINT_VIEWER_WIDTH, 0 });
 
-        // TODO
+        jointViewer->setLayout(new GroupLayout());
+        showJoint(&ca.getCharacter().getSkeleton().getRoot());
     }
 
     // Then setup the channel editor
@@ -180,6 +181,11 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
     performLayout();
 }
 
+void CharAnimViewer::displayCallback() {
+    AnimationViewer::displayCallback();
+    showJoint(currJoint);
+}
+
 void CharAnimViewer::push(nanogui::Button * btn) {
     for (auto b : btn->buttonGroup()) {
         b->setPushed(false);
@@ -200,6 +206,64 @@ void CharAnimViewer::showChannel(Channel * c) {
     }
 }
 
-void CharAnimViewer::showJoint(Joint *) {
+void CharAnimViewer::clearJointInfo() {
+    int count = jointViewer->childCount();
+    for (int i = 0; i < count; i++) {
+        jointViewer->removeChild(0);
+    }
+    performLayout();
+}
 
+void CharAnimViewer::showJoint(Joint * joint) {
+
+    currJoint = joint;
+
+    clearJointInfo();
+
+    using namespace nanogui;
+
+    // Title and Joint Type
+    Label * l = new Label(jointViewer, joint->getName());
+    l->setFontSize(24);
+    l->setFont("sans-bold");
+    l = new Label(jointViewer, "Type: " + joint->getJointType());
+    l->setFontSize(18);
+
+    // DOFS
+    auto dofs = joint->getDOFs();
+    l = new Label(jointViewer, "Degrees of Freedom (" + std::to_string(dofs.size()) + ")");
+    l->setFontSize(18);
+    if (dofs.size() > 0) {
+        Widget * w = new Widget(jointViewer);
+        GridLayout * layout = new GridLayout(Orientation::Horizontal, 2, Alignment::Maximum, 0, 5);
+        layout->setMargin(5);
+        layout->setColAlignment({ Alignment::Maximum, Alignment::Fill });
+        layout->setSpacing(0, 10);
+        w->setLayout(layout);
+        for (auto dp : dofs) {
+            DOF * dof = dp.second;
+            new Label(w, dp.first + " :", "sans-bold");
+            new Label(w, std::to_string(dof->getValue()) + " rad");
+        }
+    }
+
+    // Variables
+    auto vars = joint->getVars();
+    l = new Label(jointViewer, "Variables (" + std::to_string(vars.size()) + ")");
+    l->setFontSize(18);
+    if (vars.size() > 0) {
+        Widget * w = new Widget(jointViewer);
+        GridLayout * layout = new GridLayout(Orientation::Horizontal, 2, Alignment::Maximum, 0, 5);
+        layout->setMargin(5);
+        layout->setColAlignment({ Alignment::Maximum, Alignment::Fill });
+        layout->setSpacing(0, 10);
+        w->setLayout(layout);
+        for (auto var : vars) {
+            l = new Label(w, var.first + " :", "sans-bold");
+            l = new Label(w, var.second);
+            l->setFixedWidth(200);
+        }
+    }
+
+    performLayout();
 }

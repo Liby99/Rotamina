@@ -15,6 +15,7 @@ namespace rotamina {
             nanogui::Label * timeText;
         public:
             AnimationViewer(int, int, std::string, Animator &);
+            virtual void displayCallback();
             static void create(int, int, std::string, Animator &, std::function<void(AnimationViewer &)>);
         protected:
             void togglePlay();
