@@ -10,6 +10,7 @@ namespace rotamina {
             std::vector<DOF *> cachedDOFs;
         public:
             CharacterAnimator(Animation &, Character &);
+            Character & getCharacter();
             virtual void updateAnimation(float);
             virtual void draw(Shader &);
         private:

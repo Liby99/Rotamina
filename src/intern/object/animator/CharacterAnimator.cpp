@@ -6,6 +6,10 @@ CharacterAnimator::CharacterAnimator(Animation & a, Character & c) : Animator(a)
     initiateDOFs();
 }
 
+Character & CharacterAnimator::getCharacter() {
+    return *character;
+}
+
 void CharacterAnimator::updateAnimation(float t) {
 
     // First update skeleton position
