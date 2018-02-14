@@ -273,9 +273,9 @@ void ChannelEditor::drawAxis(NVGcontext * ctx, float xmin, float xmax, float ymi
     float step = 0.8 / amount;
     drawYAxis(ctx, 0.1, nvgRGB(150, 150, 150));
     drawXAxisText(ctx, 0.1, xmin);
-    for (float x = 0.1 + step; x < 0.9; x += step) {
+    for (float x = 0.1 + step; x <= 0.9 - step; x += step) {
         drawYAxis(ctx, x, nvgRGB(60, 60, 60));
-        drawXAxisText(ctx, x, xmin + step * (xmax - xmin));
+        drawXAxisText(ctx, x, xmin + (x - 0.1) / 0.8 * (xmax - xmin));
     }
     drawYAxis(ctx, 0.9, nvgRGB(150, 150, 150));
     drawXAxisText(ctx, 0.9, xmax);
