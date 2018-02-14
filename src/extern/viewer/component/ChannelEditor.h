@@ -1,6 +1,8 @@
 #ifndef CHANNEL_EDITOR_H
 #define CHANNEL_EDITOR_H
 
+#include <iomanip>
+#include <sstream>
 #include <nanogui/nanogui.h>
 #include "animation/Channel.h"
 

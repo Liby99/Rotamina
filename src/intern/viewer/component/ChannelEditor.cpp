@@ -234,19 +234,29 @@ void ChannelEditor::drawYAxis(NVGcontext * ctx, float perc, NVGcolor color) {
 }
 
 void ChannelEditor::drawXAxisText(NVGcontext * ctx, float perc, float f) {
+    
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(2) << f;
+    std::string s = stream.str();
+    
     nvgFontSize(ctx, 16.0f);
     nvgFontFace(ctx, "sans-bold");
     nvgTextAlign(ctx, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
     nvgFillColor(ctx, nvgRGB(120, 120, 120));
-    nvgText(ctx, mSize[0] * perc + 5 + padding, offset + padding + mSize[1] * 0.95, std::to_string(f).substr(0, f >= 0 ? 4 : 5).c_str(), NULL);
+    nvgText(ctx, mSize[0] * perc + 5 + padding, offset + padding + mSize[1] * 0.95, s.c_str(), NULL);
 }
 
 void ChannelEditor::drawYAxisText(NVGcontext * ctx, float perc, float f) {
+    
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(2) << f;
+    std::string s = stream.str();
+    
     nvgFontSize(ctx, 16.0f);
     nvgFontFace(ctx, "sans-bold");
     nvgTextAlign(ctx, NVG_ALIGN_RIGHT | NVG_ALIGN_BOTTOM);
     nvgFillColor(ctx, nvgRGB(120, 120, 120));
-    nvgText(ctx, mSize[0] * 0.1 + padding - 5, offset + padding + mSize[1] * perc - 5, std::to_string(f).substr(0, f >= 0 ? 4 : 5).c_str(), NULL);
+    nvgText(ctx, mSize[0] * 0.1 + padding - 5, offset + padding + mSize[1] * perc - 5, s.c_str(), NULL);
 }
 
 void ChannelEditor::drawAxis(NVGcontext * ctx, float xmin, float xmax, float ymin, float ymax) {
