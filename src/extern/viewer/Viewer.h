@@ -5,7 +5,7 @@
 #include <functional>
 #include <nanogui/nanogui.h>
 
-#include "Scene.h"
+#include "viewer/component/Scene.h"
 
 namespace rotamina {
     class Viewer : public nanogui::Screen {

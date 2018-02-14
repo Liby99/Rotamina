@@ -1,4 +1,4 @@
-#include "viewer/Scene.h"
+#include "viewer/component/Scene.h"
 
 using namespace rotamina;
 

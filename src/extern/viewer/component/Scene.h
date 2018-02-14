@@ -3,7 +3,7 @@
 
 #include <functional>
 #include <nanogui/nanogui.h>
-#include <viewer/Camera.h>
+#include <viewer/component/Camera.h>
 #include <object/Object.h>
 
 namespace rotamina {
