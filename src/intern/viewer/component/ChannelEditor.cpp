@@ -2,7 +2,10 @@
 
 using namespace rotamina;
 
-ChannelEditor::ChannelEditor(Widget *parent) : Widget(parent), channel(nullptr), currKeyframe(nullptr) {}
+ChannelEditor::ChannelEditor(Widget *parent) :
+    Widget(parent), channel(nullptr), currTime(0),
+    currKeyframe(nullptr), draggingKeyframe(nullptr),
+    draggingInHandle(false), draggingOutHandle(false) {}
 
 void ChannelEditor::setChannel(Channel * c) {
     this->currKeyframe = nullptr;
@@ -94,10 +97,12 @@ bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bo
             int x = mSize[0] * xp + padding;
             int y = mSize[1] * (1 - yp) + offset + padding;
             float dist = sqrt(pow(x - p[0], 2) + pow(y - p[1], 2));
-            if (dist < 7) {
+            if (dist < 8) {
                 currKeyframe = &k;
                 if (down) {
                     draggingKeyframe = &k;
+                    draggingInHandle = false;
+                    draggingOutHandle = false;
                 }
                 else {
                     draggingKeyframe = nullptr;
@@ -114,16 +119,34 @@ bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bo
             int lx = x + lxoff;
             int ly = y + lyoff;
             dist = sqrt(pow(lx - p[0], 2) + pow(ly - p[1], 2));
-            if (dist < 5) {
+            if (dist < 6) {
                 currKeyframe = &k;
+                if (down) {
+                    draggingKeyframe = &k;
+                    draggingInHandle = true;
+                    draggingOutHandle = false;
+                }
+                else {
+                    draggingKeyframe = nullptr;
+                    draggingInHandle = false;
+                }
                 return true;
             }
 
             int rx = x + rxoff;
             int ry = y + ryoff;
             dist = sqrt(pow(rx - p[0], 2) + pow(ry - p[1], 2));
-            if (dist < 5) {
+            if (dist < 6) {
                 currKeyframe = &k;
+                if (down) {
+                    draggingKeyframe = &k;
+                    draggingOutHandle = true;
+                    draggingInHandle = false;
+                }
+                else {
+                    draggingKeyframe = nullptr;
+                    draggingOutHandle = false;
+                }
                 return true;
             }
         }
@@ -142,21 +165,55 @@ bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bo
 
 bool ChannelEditor::mouseDragEvent(const Eigen::Vector2i & p, const Eigen::Vector2i & rel, int button, int modifiers) {
     if (draggingKeyframe) {
-        float xp = float(rel[0]) / float(mSize[0]);
-        float yp = float(rel[1]) / float(mSize[1]);
-        float dt = xp / 0.8 * (xmax - xmin);
-        float dv = yp / 0.8 * (ymax - ymin);
-        float nt = draggingKeyframe->getTime() + dt;
-        float nv = draggingKeyframe->getValue() - dv;
-        if (draggingKeyframe->hasNext()) {
-            nt = std::min(nt, draggingKeyframe->getNext().getTime() - 0.01f);
+        if (draggingInHandle) {
+            Eigen::Vector2f lh = { -1, draggingKeyframe->getInTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
+            lh.normalize();
+            lh *= 30;
+            Eigen::Vector2f tmp;
+            tmp[0] = lh[0] + rel[0];
+            tmp[1] = lh[1] + rel[1];
+            if (tmp[0] >= -0.5) {
+                tmp[0] = -0.5;
+            }
+            tmp.normalize();
+            tmp /= abs(tmp[0]);
+            float slope = tmp[1] / ((xmax - xmin) / (mSize[0] / 8)) * ((ymax - ymin) / (mSize[1] / 8));
+            draggingKeyframe->setConsistent(false);
+            draggingKeyframe->setInTangent(slope);
         }
-        if (draggingKeyframe->hasPrev()) {
-            nt = std::max(nt, draggingKeyframe->getPrev().getTime() + 0.01f);
+        else if (draggingOutHandle) {
+            Eigen::Vector2f rh = { 1, -draggingKeyframe->getOutTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
+            rh.normalize();
+            rh *= 30;
+            Eigen::Vector2f tmp;
+            tmp[0] = rh[0] + rel[0];
+            tmp[1] = rh[1] + rel[1];
+            if (tmp[0] <= 0.5) {
+                tmp[0] = 0.5;
+            }
+            tmp.normalize();
+            tmp /= abs(tmp[0]);
+            float slope = tmp[1] / ((xmax - xmin) / (mSize[0] / 8)) * ((ymax - ymin) / (mSize[1] / 8));
+            draggingKeyframe->setConsistent(false);
+            draggingKeyframe->setOutTangent(-slope);
         }
-        draggingKeyframe->setTime(nt);
-        draggingKeyframe->setValue(nv);
-        return true;
+        else {
+            float xp = float(rel[0]) / float(mSize[0]);
+            float yp = float(rel[1]) / float(mSize[1]);
+            float dt = xp / 0.8 * (xmax - xmin);
+            float dv = yp / 0.8 * (ymax - ymin);
+            float nt = draggingKeyframe->getTime() + dt;
+            float nv = draggingKeyframe->getValue() - dv;
+            if (draggingKeyframe->hasNext()) {
+                nt = std::min(nt, draggingKeyframe->getNext().getTime() - 0.01f);
+            }
+            if (draggingKeyframe->hasPrev()) {
+                nt = std::max(nt, draggingKeyframe->getPrev().getTime() + 0.01f);
+            }
+            draggingKeyframe->setTime(nt);
+            draggingKeyframe->setValue(nv);
+            return true;
+        }
     }
     return false;
 }

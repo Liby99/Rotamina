@@ -13,6 +13,8 @@ namespace rotamina {
             Channel * channel;
             Keyframe * currKeyframe;
             Keyframe * draggingKeyframe;
+            bool draggingInHandle;
+            bool draggingOutHandle;
         public:
             ChannelEditor(Widget * parent);
             void setChannel(Channel *);

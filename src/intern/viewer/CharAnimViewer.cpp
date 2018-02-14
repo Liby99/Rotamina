@@ -148,11 +148,31 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
         inBounce->setFlags(Button::RadioButton);
         inBounce->setFontSize(14);
 
-        inConstant->setCallback([this] () { if (this->editor->getChannel()) this->editor->getChannel()->setInExtrapolation(Channel::Extrapolation::Constant); });
-        inLinear->setCallback([this] () { if (this->editor->getChannel()) this->editor->getChannel()->setInExtrapolation(Channel::Extrapolation::Linear); });
-        inCycle->setCallback([this] () { if (this->editor->getChannel()) this->editor->getChannel()->setInExtrapolation(Channel::Extrapolation::Cycle); });
-        inCycleOffset->setCallback([this] () { if (this->editor->getChannel()) this->editor->getChannel()->setInExtrapolation(Channel::Extrapolation::CycleOffset); });
-        inBounce->setCallback([this] () { if (this->editor->getChannel()) this->editor->getChannel()->setInExtrapolation(Channel::Extrapolation::Bounce); });
+        inConstant->setCallback([this] () {
+            if (this->editor->getChannel()) {
+                this->editor->getChannel()->setInExtrapolation(Channel::Extrapolation::Constant);
+            }
+        });
+        inLinear->setCallback([this] () {
+            if (this->editor->getChannel()) {
+                this->editor->getChannel()->setInExtrapolation(Channel::Extrapolation::Linear);
+            }
+        });
+        inCycle->setCallback([this] () {
+            if (this->editor->getChannel()) {
+                this->editor->getChannel()->setInExtrapolation(Channel::Extrapolation::Cycle);
+            }
+        });
+        inCycleOffset->setCallback([this] () {
+            if (this->editor->getChannel()) {
+                this->editor->getChannel()->setInExtrapolation(Channel::Extrapolation::CycleOffset);
+            }
+        });
+        inBounce->setCallback([this] () {
+            if (this->editor->getChannel()) {
+                this->editor->getChannel()->setInExtrapolation(Channel::Extrapolation::Bounce);
+            }
+        });
 
         Widget * middle = new Widget(channelControl);
         middle->setLayout(new GridLayout(Orientation::Horizontal, 1, Alignment::Middle));
@@ -204,11 +224,31 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
         outBounce->setFlags(Button::RadioButton);
         outBounce->setFontSize(14);
 
-        outConstant->setCallback([this] () { if (this->editor->getChannel()) this->editor->getChannel()->setOutExtrapolation(Channel::Extrapolation::Constant); });
-        outLinear->setCallback([this] () { if (this->editor->getChannel()) this->editor->getChannel()->setOutExtrapolation(Channel::Extrapolation::Linear); });
-        outCycle->setCallback([this] () { if (this->editor->getChannel()) this->editor->getChannel()->setOutExtrapolation(Channel::Extrapolation::Cycle); });
-        outCycleOffset->setCallback([this] () { if (this->editor->getChannel()) this->editor->getChannel()->setOutExtrapolation(Channel::Extrapolation::CycleOffset); });
-        outBounce->setCallback([this] () { if (this->editor->getChannel()) this->editor->getChannel()->setOutExtrapolation(Channel::Extrapolation::Bounce); });
+        outConstant->setCallback([this] () {
+            if (this->editor->getChannel()) {
+                this->editor->getChannel()->setOutExtrapolation(Channel::Extrapolation::Constant);
+            }
+        });
+        outLinear->setCallback([this] () {
+            if (this->editor->getChannel()) {
+                this->editor->getChannel()->setOutExtrapolation(Channel::Extrapolation::Linear);
+            }
+        });
+        outCycle->setCallback([this] () {
+            if (this->editor->getChannel()) {
+                this->editor->getChannel()->setOutExtrapolation(Channel::Extrapolation::Cycle);
+            }
+        });
+        outCycleOffset->setCallback([this] () {
+            if (this->editor->getChannel()) {
+                this->editor->getChannel()->setOutExtrapolation(Channel::Extrapolation::CycleOffset);
+            }
+        });
+        outBounce->setCallback([this] () {
+            if (this->editor->getChannel()) {
+                this->editor->getChannel()->setOutExtrapolation(Channel::Extrapolation::Bounce);
+            }
+        });
     }
 
     performLayout();
