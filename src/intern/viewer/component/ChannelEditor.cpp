@@ -123,7 +123,7 @@ bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bo
 
         if (down) {
             float xp = float(p[0] - padding) / float(mSize[0]);
-            float yp = float(mSize[1] - p[1] - padding - offset) / float(mSize[1]);
+            float yp = 1 - float(p[1] - padding - offset) / float(mSize[1]);
             float t = (xp - 0.1) / 0.8 * (xmax - xmin) + xmin;
             float v = (yp - 0.1) / 0.8 * (ymax - ymin) + ymin;
             channel->addKeyframe(t, v);

@@ -34,15 +34,36 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
         skeletonViewer->setLayout(new GroupLayout(0));
         VScrollPanel * scrollPanel = new VScrollPanel(skeletonViewer);
         scrollPanel->setFixedSize({ SKELETON_VIEWER_WIDTH, height - HEADER_HEIGHT });
-        Widget * jointList = new Widget(scrollPanel);
-        jointList->setLayout(new GridLayout(Orientation::Horizontal, 2, Alignment::Fill, 15, 5));
-
-        new Label(jointList, "Joint");
-        new Label(jointList, "DOFs");
+        Widget * outer = new Widget(scrollPanel);
+        outer->setLayout(new GroupLayout(10));
 
         Animation & a = ca.getAnimation();
         Character & c = ca.getCharacter();
         Skeleton & s = c.getSkeleton();
+
+        Widget * positionLabel = new Widget(outer);
+        positionLabel->setLayout(new GridLayout(Orientation::Horizontal, 1, Alignment::Fill, 0, 5));
+        new Label(positionLabel, "Position");
+
+        Widget * positionBtns = new Widget(outer);
+        positionBtns->setLayout(new GridLayout(Orientation::Horizontal, 3, Alignment::Fill, 0, 5));
+        for (int i = 0; i < 3; i++) {
+            Button * posBtn = new Button(positionBtns, std::string(1, char('X' + i)));
+            posBtn->setFlags(Button::RadioButton);
+            posBtn->setFontSize(14);
+            dofButtonGroup.push_back(posBtn);
+            Channel * c = &a.getChannel(i);
+            posBtn->setCallback([this, c] () {
+                this->showChannel(c);
+            });
+        }
+
+        Widget * jointList = new Widget(outer);
+        jointList->setLayout(new GridLayout(Orientation::Horizontal, 2, Alignment::Fill, 0, 5));
+
+        new Label(jointList, "Joint");
+        new Label(jointList, "DOFs");
+
         int counter = 3;
         for (int i = 0; i < s.jointAmount(); i++) {
             Joint * j = &(s.getJoint(i));

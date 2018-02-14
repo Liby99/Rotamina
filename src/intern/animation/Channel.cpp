@@ -262,9 +262,9 @@ float Channel::evaluateBeforeStartCycle(float t) const {
 
 float Channel::evaluateBeforeStartCycleOffset(float t) const {
     float s = getStartTime(), d = getDuration(), o = getValueOffset();
-    float tp = s + fmod((s - t), d);
+    float tp = s + (d - fmod((s - t), d));
     float off = ceil((s - t) / d) * o;
-    return off + evaluate(tp);
+    return -off + evaluate(tp);
 }
 
 float Channel::evaluateBeforeStartBounce(float t) const {
