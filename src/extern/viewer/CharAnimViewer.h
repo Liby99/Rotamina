@@ -13,8 +13,9 @@ namespace rotamina {
             const static int CHANNEL_EDITOR_HEIGHT;
             CharacterAnimator * characterAnimator;
             nanogui::Window * skeletonViewer;
-            nanogui::Window * channelEditor;
+            nanogui::Window * channelEditorWindow;
             nanogui::Window * jointViewer;
+            ChannelEditor * editor;
             std::vector<nanogui::Button *> jointButtonGroup;
             std::vector<nanogui::Button *> dofButtonGroup;
         public:

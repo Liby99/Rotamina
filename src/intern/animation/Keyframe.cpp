@@ -118,10 +118,12 @@ float Keyframe::calculateInTangent() {
         case Tangent::Smooth:
             if (prev && next) return getSlope(*prev, *next);
             else if (prev) return getSlope(*prev, *this);
-            else return getSlope(*this, *next);
+            else if (next) return getSlope(*this, *next);
+            else return 0;
         case Tangent::Linear:
             if (prev) return getSlope(*prev, *this);
-            else return getSlope(*this, *next);
+            else if (next) return getSlope(*this, *next);
+            else return 0;
         case Tangent::Flat:
             return 0;
         case Tangent::Custom:
@@ -134,10 +136,12 @@ float Keyframe::calculateOutTangent() {
         case Tangent::Smooth:
             if (prev && next) return getSlope(*prev, *next);
             else if (next) return getSlope(*this, *next);
-            else return getSlope(*prev, *this);
+            else if (prev) return getSlope(*prev, *this);
+            else return 0;
         case Tangent::Linear:
             if (next) return getSlope(*this, *next);
-            else return getSlope(*prev, *this);
+            else if (prev) return getSlope(*prev, *this);
+            else return 0;
         case Tangent::Flat:
             return 0;
         case Tangent::Custom:

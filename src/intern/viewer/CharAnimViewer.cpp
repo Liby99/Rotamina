@@ -88,19 +88,19 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
 
     // Then setup the channel editor
     {
-        channelEditor = new Window(this, "Channel Editor");
-        channelEditor->setFixedSize({ w, CHANNEL_EDITOR_HEIGHT });
-        channelEditor->setPosition({ 0, h - CHANNEL_EDITOR_HEIGHT });
-        channelEditor->setLayout(new GroupLayout(15));
+        channelEditorWindow = new Window(this, "Channel Editor");
+        channelEditorWindow->setFixedSize({ w, CHANNEL_EDITOR_HEIGHT });
+        channelEditorWindow->setPosition({ 0, h - CHANNEL_EDITOR_HEIGHT });
+        channelEditorWindow->setLayout(new GroupLayout(15));
 
         int cw = w - 2 * PADDING;
         int iw = cw / 3 - 20;
 
-        ChannelEditor * editor = new ChannelEditor(channelEditor);
+        editor = new ChannelEditor(channelEditorWindow);
         editor->setSize({ cw, CHANNEL_EDITOR_HEIGHT - HEADER_HEIGHT - 45 - 2 * PADDING });
 
 
-        Widget * channelControl = new Widget(channelEditor);
+        Widget * channelControl = new Widget(channelEditorWindow);
         channelControl->setLayout(new GridLayout(Orientation::Horizontal, 3, Alignment::Fill));
         channelControl->setFixedWidth(cw);
 
@@ -176,8 +176,8 @@ void CharAnimViewer::push(nanogui::Button * btn) {
     btn->callback()();
 }
 
-void CharAnimViewer::showChannel(Channel *) {
-
+void CharAnimViewer::showChannel(Channel * c) {
+    editor->setChannel(c);
 }
 
 void CharAnimViewer::showJoint(Joint *) {

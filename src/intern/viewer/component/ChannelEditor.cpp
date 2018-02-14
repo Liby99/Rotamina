@@ -2,12 +2,45 @@
 
 using namespace rotamina;
 
-ChannelEditor::ChannelEditor(Widget *parent) : Widget(parent) {}
+ChannelEditor::ChannelEditor(Widget *parent) : Widget(parent), channel(nullptr) {}
+
+void ChannelEditor::setChannel(Channel * c) {
+    this->channel = c;
+}
 
 void ChannelEditor::draw(NVGcontext * ctx) {
     Widget::draw(ctx);
-    drawAxis(ctx, 0, 10, -3, 3);
-    drawKeyframe(ctx, 0.5, 0.5, false);
+    if (channel && channel->getKeyframeAmount()) {
+
+        // First Draw the axis based on the keyframe
+        if (channel->getKeyframeAmount() == 1) {
+            Keyframe & k = channel->getKeyframe(0);
+            float t = k.getTime();
+            float v = k.getValue();
+            drawAxis(ctx, t - 1, t + 1, v - 1, v + 1);
+        }
+        else {
+            Keyframe & k0 = channel->getKeyframe(0);
+            float vmin = k0.getValue(), vmax = k0.getValue();
+            for (int i = 0; i < channel->getKeyframeAmount(); i++) {
+                float v = channel->getKeyframe(i).getValue();
+                if (v > vmax) vmax = v;
+                if (v < vmin) vmin = v;
+            }
+            drawAxis(ctx, k0.getTime(), channel->getLastKeyframe().getTime(), vmin, vmax);
+        }
+
+        // Then draw the keyframes
+        for (int i = 0; i < channel->getKeyframeAmount(); i++) {
+            drawKeyframe(ctx, channel->getKeyframe(i));
+        }
+
+        // Finally draw the curve
+        drawCurve(ctx);
+    }
+    else {
+        drawAxis(ctx, -1, 1, -1, 1);
+    }
     nvgEndFrame(ctx);
 }
 
@@ -42,6 +75,11 @@ void ChannelEditor::drawYAxisText(NVGcontext * ctx, float perc, float f) {
 }
 
 void ChannelEditor::drawAxis(NVGcontext * ctx, float xmin, float xmax, float ymin, float ymax) {
+
+    this->xmin = xmin;
+    this->xmax = xmax;
+    this->ymin = ymin;
+    this->ymax = ymax;
 
     drawXAxis(ctx, 0.1, nvgRGB(100, 100, 100));
     drawXAxis(ctx, 0.3, nvgRGB(100, 100, 100));
@@ -88,8 +126,39 @@ void ChannelEditor::drawKeyframeHandlebar(NVGcontext * ctx, float xp, float yp, 
     nvgFill(ctx);
 }
 
-void ChannelEditor::drawKeyframe(NVGcontext * ctx, float xp, float yp, bool selected) {
+void ChannelEditor::drawKeyframe(NVGcontext * ctx, Keyframe & k) {
+
+    float xp = (k.getTime() - xmin) / (xmax - xmin) * 0.8 + 0.1;
+    float yp = (k.getValue() - ymin) / (ymax - ymin) * 0.8 + 0.1;
+
     drawKeyframeBox(ctx, xp, yp, false);
-    drawKeyframeHandlebar(ctx, xp, yp, -50, -50);
-    drawKeyframeHandlebar(ctx, xp, yp, 50, 50);
+
+    Eigen::Vector2f lh = { -1, -k.getInTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
+    Eigen::Vector2f rh = { 1, k.getOutTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
+    lh.normalize();
+    rh.normalize();
+
+    drawKeyframeHandlebar(ctx, xp, yp, lh[0] * 30, lh[1] * 30);
+    drawKeyframeHandlebar(ctx, xp, yp, rh[0] * 30, rh[1] * 30);
+}
+
+void ChannelEditor::drawCurve(NVGcontext *ctx) {
+    nvgBeginPath(ctx);
+    float u = (xmax - xmin) / 8;
+    float v = (ymax - ymin) / 8;
+    float startx = xmin - u;
+    float starty = channel->evaluate(startx);
+    float dur = u * 10;
+    float basey = ymin - v;
+    float rangey = v * 10;
+    nvgMoveTo(ctx, startx, starty);
+    for (int i = 0; i < 200; i++) {
+        float t = startx + i / 200.0f * dur;
+        float y = channel->evaluate(t);
+        int px = (t - startx) / dur * mSize[0] + padding;
+        int py = (y - basey) / rangey * mSize[1] + offset + padding;
+        nvgLineTo(ctx, px, py);
+    }
+    nvgStrokeColor(ctx, nvgRGB(200, 200, 200));
+    nvgStroke(ctx);
 }

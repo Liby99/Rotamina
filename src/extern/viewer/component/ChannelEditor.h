@@ -9,9 +9,11 @@ namespace rotamina {
         protected:
             int padding = 5;
             int offset = 30;
+            float xmin, xmax, ymin, ymax;
             Channel * channel;
         public:
             ChannelEditor(Widget * parent);
+            void setChannel(Channel *);
             virtual void draw(NVGcontext * ctx) override;
         protected:
             void drawXAxis(NVGcontext * ctx, float perc, NVGcolor color);
@@ -21,7 +23,9 @@ namespace rotamina {
             void drawAxis(NVGcontext * ctx, float xmin, float xmax, float ymin, float ymax);
             void drawKeyframeBox(NVGcontext * ctx, float xp, float yp, bool selected);
             void drawKeyframeHandlebar(NVGcontext * ctx, float xp, float yp, float xoff, float yoff);
-            void drawKeyframe(NVGcontext * ctx, float xp, float yp, bool selected);
+            void drawKeyframe(NVGcontext * ctx, Keyframe &);
+
+            void drawCurve(NVGcontext * ctx);
     };
 }
 
