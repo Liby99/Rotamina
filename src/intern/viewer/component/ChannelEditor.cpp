@@ -8,6 +8,10 @@ void ChannelEditor::setChannel(Channel * c) {
     this->channel = c;
 }
 
+Channel * ChannelEditor::getChannel() {
+    return this->channel;
+}
+
 void ChannelEditor::draw(NVGcontext * ctx) {
     Widget::draw(ctx);
     if (channel && channel->getKeyframeAmount()) {

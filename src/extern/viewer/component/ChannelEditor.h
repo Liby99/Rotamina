@@ -14,6 +14,7 @@ namespace rotamina {
         public:
             ChannelEditor(Widget * parent);
             void setChannel(Channel *);
+            Channel * getChannel();
             virtual void draw(NVGcontext * ctx) override;
         protected:
             void drawXAxis(NVGcontext * ctx, float perc, NVGcolor color);

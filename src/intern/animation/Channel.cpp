@@ -299,7 +299,7 @@ float Channel::evaluateAfterEndBounce(float t) const {
     float tp = fmod((t - s), d) + s;
     int r = (int) floor((t - s) / d);
     if (r % 2) {
-        tp = d - (tp - s);
+        tp = e - (tp - s);
     }
     return evaluate(tp);
 }
