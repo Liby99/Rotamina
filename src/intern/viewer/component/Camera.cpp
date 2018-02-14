@@ -1,4 +1,4 @@
-#include "viewer/Camera.h"
+#include "viewer/component/Camera.h"
 
 using namespace rotamina;
 
