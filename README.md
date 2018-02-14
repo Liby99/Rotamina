@@ -27,10 +27,13 @@ Then use `make` to compile the project
 $ make
 ```
 
-Now all the files will be in the `test/` folder. In command line, for example, open a test file by
+Now all the test executable files will be in the `test/` folder. Note that there are extra CMake
+files in `test` folder. They will be executed for copying all the relevant files for that test set.
+In command line, for example, open a test file by
 
 ``` bash
-$ ./test/project1/dragon_skel
+$ cd test/animation
+$ ./char_anim_viewer
 ```
 
 ## Example
@@ -42,3 +45,7 @@ $ ./test/project1/dragon_skel
 ### Texture & Morphing
 
 ![Texture & Morphing](https://github.com/Liby99/Rotamina/blob/master/web/public/image/tex_morph.png?raw=true)
+
+### Animation
+
+![Animation](https://github.com/Liby99/Rotamina/blob/master/web/public/image/animation.png?raw=true)
