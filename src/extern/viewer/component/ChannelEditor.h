@@ -28,6 +28,7 @@ namespace rotamina {
             virtual bool mouseButtonEvent(const nanogui::Vector2i &p, int button, bool down, int modifiers) override;
             virtual bool mouseDragEvent(const Eigen::Vector2i & p, const Eigen::Vector2i & rel, int button, int modifiers) override;
         protected:
+            float getNewSlope(Eigen::Vector2f handle, const Eigen::Vector2i & rel);
             void drawXAxis(NVGcontext * ctx, float perc, NVGcolor color);
             void drawYAxis(NVGcontext * ctx, float perc, NVGcolor color);
             void drawXAxisText(NVGcontext * ctx, float perc, float f);

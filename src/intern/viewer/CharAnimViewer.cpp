@@ -114,22 +114,21 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
         channelEditorWindow->setFixedSize({ w, CHANNEL_EDITOR_HEIGHT });
         channelEditorWindow->setPosition({ 0, h - CHANNEL_EDITOR_HEIGHT });
         channelEditorWindow->setLayout(new GroupLayout(15));
-
+        
         int cw = w - 2 * PADDING;
         int iw = cw / 3 - 20;
-
+        
         editor = new ChannelEditor(channelEditorWindow);
         editor->setSize({ cw, CHANNEL_EDITOR_HEIGHT - HEADER_HEIGHT - 45 - 2 * PADDING });
-
-
+        
         Widget * channelControl = new Widget(channelEditorWindow);
         channelControl->setLayout(new GridLayout(Orientation::Horizontal, 3, Alignment::Fill));
         channelControl->setFixedWidth(cw);
-
+        
         Widget * left = new Widget(channelControl);
         left->setLayout(new GridLayout(Orientation::Horizontal, 1, Alignment::Minimum));
         left->setFixedWidth(iw);
-
+        
         Widget * leftChannelControl = new Widget(left);
         leftChannelControl->setLayout(new BoxLayout(Orientation::Horizontal, Alignment::Fill));
         Button * inConstant = new Button(leftChannelControl, "Constant");
@@ -147,7 +146,7 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
         Button * inBounce = new Button(leftChannelControl, "Bounce");
         inBounce->setFlags(Button::RadioButton);
         inBounce->setFontSize(14);
-
+        
         inConstant->setCallback([this] () {
             if (this->editor->getChannel()) {
                 this->editor->getChannel()->setInExtrapolation(Channel::Extrapolation::Constant);
@@ -195,8 +194,16 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
         keySmooth->setCallback([this] () {
             editor->setSmooth();
         });
-
+        
+        // Button * keyConsistent = new Button(middleKeyframeControl, "Is Consistent");
+        // keyConsistent->setFlags(Button::ToggleButton);
+        // keyConsistent->setFontSize(14);
+        // keyConsistent->setChangeCallback([this] (bool b) {
+        //     editor->setConsistent(b);
+        // });
+        
         Button * keyRemove = new Button(middleKeyframeControl, "Remove");
+        keyRemove->setBackgroundColor(Color(200, 0, 0, 100));
         keyRemove->setFontSize(14);
         keyRemove->setCallback([this] () {
             editor->removeKeyframe();

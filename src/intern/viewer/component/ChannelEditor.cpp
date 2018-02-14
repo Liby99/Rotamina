@@ -91,7 +91,12 @@ void ChannelEditor::draw(NVGcontext * ctx) {
 bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bool down, int modifiers) {
     if (channel) {
         for (int i = 0; i < channel->getKeyframeAmount(); i++) {
+            
+            // Cache the keyframe
             Keyframe & k = channel->getKeyframe(i);
+            float ratio = ((ymax - ymin) / mSize[1]) / ((xmax - xmin) / mSize[0]);
+            
+            // Check if the mouse touch the keyframe box
             float xp = (k.getTime() - xmin) / (xmax - xmin) * 0.8 + 0.1;
             float yp = (k.getValue() - ymin) / (ymax - ymin) * 0.8 + 0.1;
             int x = mSize[0] * xp + padding;
@@ -109,13 +114,11 @@ bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bo
                 }
                 return true;
             }
-
-            Eigen::Vector2f lh = { -1, k.getInTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
-            Eigen::Vector2f rh = { 1, -k.getOutTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
+            
+            // Check if the mouse touches the left handle
+            Eigen::Vector2f lh = { -1, k.getInTangent() / ratio };
             lh.normalize();
-            rh.normalize();
-
-            float lxoff = lh[0] * 30, lyoff = lh[1] * 30, rxoff = rh[0] * 30, ryoff = rh[1] * 30;
+            float lxoff = lh[0] * 30, lyoff = lh[1] * 30;
             int lx = x + lxoff;
             int ly = y + lyoff;
             dist = sqrt(pow(lx - p[0], 2) + pow(ly - p[1], 2));
@@ -132,7 +135,11 @@ bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bo
                 }
                 return true;
             }
-
+            
+            // Check if the mouse touches the right handle
+            Eigen::Vector2f rh = { 1, -k.getOutTangent() / ratio };
+            rh.normalize();
+            float rxoff = rh[0] * 30, ryoff = rh[1] * 30;
             int rx = x + rxoff;
             int ry = y + ryoff;
             dist = sqrt(pow(rx - p[0], 2) + pow(ry - p[1], 2));
@@ -163,39 +170,33 @@ bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bo
     return false;
 }
 
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
+
+float ChannelEditor::getNewSlope(Eigen::Vector2f handle, const Eigen::Vector2i & rel) {
+    handle.normalize();
+    handle *= 30;
+    handle[0] += rel[0];
+    handle[1] += rel[1];
+    if (abs(handle[0]) <= 0.5) {
+        handle[0] = sgn(handle[0]) * 0.5;
+    }
+    handle.normalize();
+    handle /= abs(handle[0]);
+    return handle[1];
+}
+
 bool ChannelEditor::mouseDragEvent(const Eigen::Vector2i & p, const Eigen::Vector2i & rel, int button, int modifiers) {
     if (draggingKeyframe) {
+        float ratio = ((ymax - ymin) / mSize[1]) / ((xmax - xmin) / mSize[0]);
         if (draggingInHandle) {
-            Eigen::Vector2f lh = { -1, draggingKeyframe->getInTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
-            lh.normalize();
-            lh *= 30;
-            Eigen::Vector2f tmp;
-            tmp[0] = lh[0] + rel[0];
-            tmp[1] = lh[1] + rel[1];
-            if (tmp[0] >= -0.5) {
-                tmp[0] = -0.5;
-            }
-            tmp.normalize();
-            tmp /= abs(tmp[0]);
-            float slope = tmp[1] / ((xmax - xmin) / (mSize[0] / 8)) * ((ymax - ymin) / (mSize[1] / 8));
             draggingKeyframe->setConsistent(false);
-            draggingKeyframe->setInTangent(slope);
+            draggingKeyframe->setInTangent(getNewSlope({ -1, draggingKeyframe->getInTangent() / ratio }, rel) * ratio);
         }
         else if (draggingOutHandle) {
-            Eigen::Vector2f rh = { 1, -draggingKeyframe->getOutTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
-            rh.normalize();
-            rh *= 30;
-            Eigen::Vector2f tmp;
-            tmp[0] = rh[0] + rel[0];
-            tmp[1] = rh[1] + rel[1];
-            if (tmp[0] <= 0.5) {
-                tmp[0] = 0.5;
-            }
-            tmp.normalize();
-            tmp /= abs(tmp[0]);
-            float slope = tmp[1] / ((xmax - xmin) / (mSize[0] / 8)) * ((ymax - ymin) / (mSize[1] / 8));
             draggingKeyframe->setConsistent(false);
-            draggingKeyframe->setOutTangent(-slope);
+            draggingKeyframe->setOutTangent(-getNewSlope({ 1, -draggingKeyframe->getOutTangent() / ratio }, rel) * ratio);
         }
         else {
             float xp = float(rel[0]) / float(mSize[0]);
