@@ -5,7 +5,7 @@ using namespace rotamina;
 Keyframe::Keyframe() : Keyframe(0, 0) {}
     
 Keyframe::Keyframe(const float & t, const float & v) : time(t), value(v), consistent(true),
-    in(Tangent::Linear), out(Tangent::Linear), inSlope(0), outSlope(0), prev(nullptr), next(nullptr) {}
+    in(Tangent::Flat), out(Tangent::Flat), inSlope(0), outSlope(0), prev(nullptr), next(nullptr) {}
 
 void Keyframe::setTime(const float & t) {
     this->time = t;
@@ -62,6 +62,7 @@ void Keyframe::setOutTangent(const Tangent & out) {
     if (isConsistent()) {
         this->in = out;
     }
+    outTangentCached = false;
 }
 
 void Keyframe::setOutTangent(const float & s) {
@@ -71,6 +72,7 @@ void Keyframe::setOutTangent(const float & s) {
         this->in = Tangent::Custom;
         this->outSlope = s;
     }
+    outTangentCached = false;
 }
 
 float Keyframe::getOutTangent() {

@@ -2,14 +2,43 @@
 
 using namespace rotamina;
 
-ChannelEditor::ChannelEditor(Widget *parent) : Widget(parent), channel(nullptr) {}
+ChannelEditor::ChannelEditor(Widget *parent) : Widget(parent), channel(nullptr), currKeyframe(nullptr) {}
 
 void ChannelEditor::setChannel(Channel * c) {
+    this->currKeyframe = nullptr;
     this->channel = c;
 }
 
 Channel * ChannelEditor::getChannel() {
     return this->channel;
+}
+
+void ChannelEditor::setLinear() {
+    if (currKeyframe) {
+        currKeyframe->setInTangent(Keyframe::Tangent::Linear);
+        currKeyframe->setOutTangent(Keyframe::Tangent::Linear);
+    }
+}
+
+void ChannelEditor::setFlat() {
+    if (currKeyframe) {
+        currKeyframe->setInTangent(Keyframe::Tangent::Flat);
+        currKeyframe->setOutTangent(Keyframe::Tangent::Flat);
+    }
+}
+
+void ChannelEditor::setSmooth() {
+    if (currKeyframe) {
+        currKeyframe->setInTangent(Keyframe::Tangent::Smooth);
+        currKeyframe->setOutTangent(Keyframe::Tangent::Smooth);
+    }
+}
+
+void ChannelEditor::removeKeyframe() {
+    if (currKeyframe) {
+        channel->removeKeyframe(*currKeyframe);
+        currKeyframe = nullptr;
+    }
 }
 
 void ChannelEditor::draw(NVGcontext * ctx) {
@@ -34,18 +63,80 @@ void ChannelEditor::draw(NVGcontext * ctx) {
             drawAxis(ctx, k0.getTime(), channel->getLastKeyframe().getTime(), vmin, vmax);
         }
 
-        // Then draw the keyframes
+        // Then draw the curve
+        drawCurve(ctx);
+
+        // Finally draw the keyframes
         for (int i = 0; i < channel->getKeyframeAmount(); i++) {
             drawKeyframe(ctx, channel->getKeyframe(i));
         }
-
-        // Finally draw the curve
-        drawCurve(ctx);
     }
     else {
         drawAxis(ctx, -1, 1, -1, 1);
     }
     nvgEndFrame(ctx);
+}
+
+bool ChannelEditor::mouseButtonEvent(const nanogui::Vector2i & p, int button, bool down, int modifiers) {
+    if (channel) {
+        for (int i = 0; i < channel->getKeyframeAmount(); i++) {
+            Keyframe & k = channel->getKeyframe(i);
+            float xp = (k.getTime() - xmin) / (xmax - xmin) * 0.8 + 0.1;
+            float yp = (k.getValue() - ymin) / (ymax - ymin) * 0.8 + 0.1;
+            int x = mSize[0] * xp + padding;
+            int y = mSize[1] * yp + offset + padding;
+            float dist = sqrt(pow(x - p[0], 2) + pow(y - p[1], 2));
+            if (dist < 7) {
+                currKeyframe = &k;
+                return true;
+            }
+
+            Eigen::Vector2f lh = { -1, -k.getInTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
+            Eigen::Vector2f rh = { 1, k.getOutTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
+            lh.normalize();
+            rh.normalize();
+
+            float lxoff = lh[0] * 30, lyoff = lh[1] * 30, rxoff = rh[0] * 30, ryoff = rh[1] * 30;
+            int lx = x + lxoff;
+            int ly = y + lyoff;
+            dist = sqrt(pow(lx - p[0], 2) + pow(ly - p[1], 2));
+            if (dist < 5) {
+                currKeyframe = &k;
+                return true;
+            }
+
+            int rx = x + rxoff;
+            int ry = y + ryoff;
+            dist = sqrt(pow(rx - p[0], 2) + pow(ry - p[1], 2));
+            if (dist < 5) {
+                currKeyframe = &k;
+                return true;
+            }
+        }
+
+        if (down) {
+            float xp = float(p[0] - padding) / float(mSize[0]);
+            float yp = float(p[1] - padding - offset) / float(mSize[1]);
+            float t = (xp - 0.1) / 0.8 * (xmax - xmin) + xmin;
+            float v = (yp - 0.1) / 0.8 * (ymax - ymin) + ymin;
+            channel->addKeyframe(t, v);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool ChannelEditor::keyboardEvent(int key, int scancode, int action, int modifiers) {
+    std::cout << "omg" << std::endl;
+    if ((key == GLFW_KEY_BACKSPACE || key == GLFW_KEY_X || key == GLFW_KEY_DELETE) && action == GLFW_PRESS) {
+        std::cout << "yeah" << std::endl;
+        if (currKeyframe) {
+            std::cout << "hahah" << std::endl;
+            channel->removeKeyframe(*currKeyframe);
+            return true;
+        }
+    }
+    return false;
 }
 
 void ChannelEditor::drawXAxis(NVGcontext * ctx, float perc, NVGcolor color) {
@@ -111,22 +202,24 @@ void ChannelEditor::drawAxis(NVGcontext * ctx, float xmin, float xmax, float ymi
 }
 
 void ChannelEditor::drawKeyframeBox(NVGcontext * ctx, float xp, float yp, bool selected) {
+    auto c = selected ? nvgRGB(255, 255, 0) : nvgRGB(200, 200, 200);
     nvgBeginPath(ctx);
     nvgRect(ctx, mSize[0] * xp + padding - 4, mSize[1] * yp + offset + padding - 4, 8, 8);
-    nvgFillColor(ctx, nvgRGB(200, 200, 200));
+    nvgFillColor(ctx, c);
     nvgFill(ctx);
 }
 
-void ChannelEditor::drawKeyframeHandlebar(NVGcontext * ctx, float xp, float yp, float xoff, float yoff) {
+void ChannelEditor::drawKeyframeHandlebar(NVGcontext * ctx, float xp, float yp, float xoff, float yoff, bool selected) {
+    auto c = selected ? nvgRGB(255, 255, 0) : nvgRGB(200, 200, 200);
     nvgBeginPath(ctx);
     nvgMoveTo(ctx, mSize[0] * xp + padding, mSize[1] * yp + offset + padding);
     nvgLineTo(ctx, mSize[0] * xp + padding + xoff, mSize[1] * yp + offset + padding + yoff);
-    nvgStrokeColor(ctx, nvgRGB(200, 200, 200));
+    nvgStrokeColor(ctx, c);
     nvgStroke(ctx);
 
     nvgBeginPath(ctx);
     nvgCircle(ctx, mSize[0] * xp + padding + xoff, mSize[1] * yp + offset + padding + yoff, 3);
-    nvgFillColor(ctx, nvgRGB(200, 200, 200));
+    nvgFillColor(ctx, c);
     nvgFill(ctx);
 }
 
@@ -135,15 +228,15 @@ void ChannelEditor::drawKeyframe(NVGcontext * ctx, Keyframe & k) {
     float xp = (k.getTime() - xmin) / (xmax - xmin) * 0.8 + 0.1;
     float yp = (k.getValue() - ymin) / (ymax - ymin) * 0.8 + 0.1;
 
-    drawKeyframeBox(ctx, xp, yp, false);
+    drawKeyframeBox(ctx, xp, yp, currKeyframe == &k);
 
     Eigen::Vector2f lh = { -1, -k.getInTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
     Eigen::Vector2f rh = { 1, k.getOutTangent() / ((ymax - ymin) / (mSize[1] / 8)) * ((xmax - xmin) / (mSize[0] / 8)) };
     lh.normalize();
     rh.normalize();
 
-    drawKeyframeHandlebar(ctx, xp, yp, lh[0] * 30, lh[1] * 30);
-    drawKeyframeHandlebar(ctx, xp, yp, rh[0] * 30, rh[1] * 30);
+    drawKeyframeHandlebar(ctx, xp, yp, lh[0] * 30, lh[1] * 30, currKeyframe == &k);
+    drawKeyframeHandlebar(ctx, xp, yp, rh[0] * 30, rh[1] * 30, currKeyframe == &k);
 }
 
 void ChannelEditor::drawCurve(NVGcontext *ctx) {

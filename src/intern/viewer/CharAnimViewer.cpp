@@ -142,12 +142,27 @@ CharAnimViewer::CharAnimViewer(int w, int h, std::string n, CharacterAnimator & 
         Button * keyFlat = new Button(middleKeyframeControl, "Flat");
         keyFlat->setFlags(Button::RadioButton);
         keyFlat->setFontSize(14);
+        keyFlat->setCallback([this] () {
+            editor->setFlat();
+        });
         Button * keyLinear = new Button(middleKeyframeControl, "Linear");
         keyLinear->setFlags(Button::RadioButton);
         keyLinear->setFontSize(14);
+        keyLinear->setCallback([this] () {
+            editor->setLinear();
+        });
         Button * keySmooth = new Button(middleKeyframeControl, "Smooth");
         keySmooth->setFlags(Button::RadioButton);
         keySmooth->setFontSize(14);
+        keySmooth->setCallback([this] () {
+            editor->setSmooth();
+        });
+
+        Button * keyRemove = new Button(middleKeyframeControl, "Remove");
+        keyRemove->setFontSize(14);
+        keyRemove->setCallback([this] () {
+            editor->removeKeyframe();
+        });
 
         Widget * right = new Widget(channelControl);
         right->setLayout(new GridLayout(Orientation::Horizontal, 1, Alignment::Maximum));
