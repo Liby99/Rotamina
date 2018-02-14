@@ -5,7 +5,7 @@ using namespace rotamina;
 const float Scene::SCROLL_SPEED = 0.1f;
 const float Scene::MOVE_SPEED = 0.004f;
 
-Scene::Scene(Widget *parent) : nanogui::GLCanvas(parent), azimuth(0), incline(0), dist(3), hasDisplayCallback(false) {
+Scene::Scene(Widget * parent) : nanogui::GLCanvas(parent), azimuth(0), incline(0), dist(3), hasDisplayCallback(false) {
     shader = new Shader();
     shader->init();
 }
@@ -65,7 +65,7 @@ void Scene::updateCamera() {
     Matrix3f m;
     m = AngleAxisf(azimuth, Vector3f::UnitY()) * AngleAxisf(incline, Vector3f::UnitX());
     
-    camera.setPosition(m * pos);
+    camera.setPosition(camera.getTarget() + m * pos);
 }
 
 Shader & Scene::getShader() {
