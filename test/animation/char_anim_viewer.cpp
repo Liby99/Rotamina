@@ -15,7 +15,7 @@ int main() {
 
     nanogui::init();
     
-    CharacterAnimationViewer viewer(1680, 960, "Wasp Walk Viewer", wa);
+    CharacterAnimationViewer viewer(1600, 960, "Wasp Walk Viewer", wa);
     viewer.drawAll();
     viewer.setVisible(true);
     
