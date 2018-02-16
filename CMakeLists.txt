@@ -22,7 +22,9 @@ add_definitions(${NANOGUI_EXTRA_DEFS})
 # =========================================================================== #
 
 # Generate single header file using the script
-execute_process(COMMAND python ${CMAKE_CURRENT_LIST_DIR}/script/generate_header.py rotamina)
+execute_process(
+    COMMAND python ${CMAKE_CURRENT_LIST_DIR}/script/generate_header.py rotamina ${CMAKE_CURRENT_LIST_DIR}/src/extern/
+)
 
 # Set Include Directory to Extern
 include_directories(src/extern)

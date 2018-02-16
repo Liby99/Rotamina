@@ -1,9 +1,8 @@
 *.DS_Store
+*.gch
 
 .idea/
-cmake-build-debug/
 build/
 deploy/
 xcode/
-
-*.gch
+cmake-build-debug/
