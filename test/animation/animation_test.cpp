@@ -1,4 +1,4 @@
-#include "animation/AnimationParser.h"
+#include <rotamina/rotamina.h>
 
 using namespace rotamina;
 

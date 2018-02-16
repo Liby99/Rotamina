@@ -1,7 +1,4 @@
-#include "viewer/AdvanceCharacterViewer.h"
-#include "object/skin/MorphParser.h"
-#include "object/character/CharacterParser.h"
-#include "object/character/AdvanceCharacter.h"
+#include <rotamina/rotamina.h>
 
 using namespace rotamina;
 

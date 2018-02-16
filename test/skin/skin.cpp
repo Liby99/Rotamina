@@ -1,8 +1,6 @@
 #include <iostream>
 #include <vector>
-
-#include "object/character/CharacterParser.h"
-#include "object/skeleton/SkeletonParser.h"
+#include <rotamina/rotamina.h>
 
 using namespace rotamina;
 

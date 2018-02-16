@@ -1,13 +1,13 @@
 #include <string>
 #include <iostream>
-#include "animation/Channel.h"
+#include <rotamina/rotamina.h>
 
 using namespace rotamina;
 
 void error(std::string str) { throw std::runtime_error(str); }
-void assert(bool b) { if (!b) { error("Assert Boolean Error"); }}
-void assert(float f1, float f2) { if (f1 != f2) { error("Assert Failed - Actual: " + std::to_string(f1) + ", Expected: " + std::to_string(f2)); }}
-void assert(int i1, int i2) { if (i1 != i2) { error("Assert Failed - Actual: " + std::to_string(i1) + ", Expected: " + std::to_string(i2)); }}
+void test(bool b) { if (!b) { error("Assert Boolean Error"); }}
+void test(float f1, float f2) { if (f1 != f2) { error("Assert Failed - Actual: " + std::to_string(f1) + ", Expected: " + std::to_string(f2)); }}
+void test(int i1, int i2) { if (i1 != i2) { error("Assert Failed - Actual: " + std::to_string(i1) + ", Expected: " + std::to_string(i2)); }}
 void print(const std::string & str) { std::cout << str << std::endl; }
 void printChannel(Channel & t) {
     std::vector<Keyframe *> ks = t.getKeyframes(); std::cout << "[ ";
@@ -34,65 +34,65 @@ void test1() {
     
     print("-------- Testing Add Keyframes --------");
     
-    assert(t.addKeyframe(0, 0));
-    assert(t.getKeyframeAmount(), 1);
-    assert(t.addKeyframe(1, 1));
-    assert(t.getKeyframeAmount(), 2);
-    assert(t.addKeyframe(3, -1));
-    assert(t.getKeyframeAmount(), 3);
-    assert(t.addKeyframe(2, -2));
-    assert(t.getKeyframeAmount(), 4);
+    test(t.addKeyframe(0, 0));
+    test(t.getKeyframeAmount(), 1);
+    test(t.addKeyframe(1, 1));
+    test(t.getKeyframeAmount(), 2);
+    test(t.addKeyframe(3, -1));
+    test(t.getKeyframeAmount(), 3);
+    test(t.addKeyframe(2, -2));
+    test(t.getKeyframeAmount(), 4);
     
     printChannel(t);
     printChannelInLinkedList(t);
     
-    assert(t.getKeyframe(0).getTime(), 0.0f);
-    assert(t.getKeyframe(1).getTime(), 1.0f);
-    assert(t.getKeyframe(2).getTime(), 2.0f);
-    assert(t.getKeyframe(3).getTime(), 3.0f);
-    assert(t.getKeyframeAmount(), 4);
+    test(t.getKeyframe(0).getTime(), 0.0f);
+    test(t.getKeyframe(1).getTime(), 1.0f);
+    test(t.getKeyframe(2).getTime(), 2.0f);
+    test(t.getKeyframe(3).getTime(), 3.0f);
+    test(t.getKeyframeAmount(), 4);
     
-    assert(!t.addKeyframe(0, 0));
-    assert(!t.addKeyframe(1, 0));
-    assert(!t.addKeyframe(2, 0));
-    assert(!t.addKeyframe(3, 0));
-    assert(t.getKeyframeAmount(), 4);
+    test(!t.addKeyframe(0, 0));
+    test(!t.addKeyframe(1, 0));
+    test(!t.addKeyframe(2, 0));
+    test(!t.addKeyframe(3, 0));
+    test(t.getKeyframeAmount(), 4);
     
     printChannel(t);
     printChannelInLinkedList(t);
     
-    assert(t.addKeyframe(0.5, 1.5));
-    assert(t.getKeyframeAmount() == 5);
-    assert(t.getKeyframe(1).getTime() == 0.5);
-    assert(t.getKeyframe(2).getTime() == 1);
-    assert(t.getKeyframe(3).getTime() == 2);
-    assert(t.addKeyframe(-1, -10));
-    assert(t.getKeyframeAmount() == 6);
-    assert(t.getKeyframe(0).getTime() == -1);
-    assert(t.addKeyframe(50, 3));
-    assert(t.getKeyframeAmount() == 7);
+    test(t.addKeyframe(0.5, 1.5));
+    test(t.getKeyframeAmount() == 5);
+    test(t.getKeyframe(1).getTime() == 0.5);
+    test(t.getKeyframe(2).getTime() == 1);
+    test(t.getKeyframe(3).getTime() == 2);
+    test(t.addKeyframe(-1, -10));
+    test(t.getKeyframeAmount() == 6);
+    test(t.getKeyframe(0).getTime() == -1);
+    test(t.addKeyframe(50, 3));
+    test(t.getKeyframeAmount() == 7);
     
     printChannel(t);
     printChannelInLinkedList(t);
     
     print("-------- Testing Remove Keyframes --------");
     
-    assert(t.removeKeyframe(t.getKeyframe(1)));
+    test(t.removeKeyframe(t.getKeyframe(1)));
     
     printChannelInLinkedList(t);
     
     Keyframe tmp = Keyframe(0.3, 5);
-    assert(!t.removeKeyframe(tmp));
+    test(!t.removeKeyframe(tmp));
     
     printChannelInLinkedList(t);
     
     Keyframe k1 = t.getKeyframe(1);
-    assert(t.removeKeyframe(k1));
+    test(t.removeKeyframe(k1));
     
     printChannelInLinkedList(t);
     
-    assert(t.removeKeyframe(0));
-    assert(t.removeKeyframe(3));
+    test(t.removeKeyframe(0));
+    test(t.removeKeyframe(3));
     
     printChannelInLinkedList(t);
 

@@ -1,7 +1,5 @@
 #include <iostream>
-#include "utility/Texture.h"
-#include "viewer/Viewer.h"
-#include "object/Object.h"
+#include <rotamina/rotamina.h>
 
 using namespace rotamina;
 

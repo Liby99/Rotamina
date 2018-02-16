@@ -1,7 +1,4 @@
-#include "animation/AnimationParser.h"
-#include "object/character/CharacterParser.h"
-#include "object/animator/CharacterAnimator.h"
-#include "viewer/CharacterAnimationViewer.h"
+#include <rotamina/rotamina.h>
 
 using namespace rotamina;
 

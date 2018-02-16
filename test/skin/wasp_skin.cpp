@@ -1,8 +1,6 @@
 #include <iostream>
 #include <vector>
-
-#include "viewer/CharacterViewer.h"
-#include "object/character/CharacterParser.h"
+#include <rotamina/rotamina.h>
 
 using namespace rotamina;
 

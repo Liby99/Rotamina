@@ -4,7 +4,7 @@
 
 # Basic setups
 cmake_minimum_required(VERSION 3.5)
-project(CSE169-Animator)
+project(Rotamina)
 
 # Basic flag
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++14")
@@ -15,11 +15,14 @@ include_directories(lib/nanogui/include)
 include_directories(${NANOGUI_EXTRA_INCS})
 add_definitions(${NANOGUI_EXTRA_DEFS})
 
-# Include GLM
-add_subdirectory(lib/glm EXCLUDE_FROM_ALL)
-include_directories(lib/glm/)
+# Include GLM (Deprecating)
+# add_subdirectory(lib/glm EXCLUDE_FROM_ALL)
+# include_directories(lib/glm/)
 
 # =========================================================================== #
+
+# Generate single header file using the script
+execute_process(COMMAND python ${CMAKE_CURRENT_LIST_DIR}/script/generate_header.py rotamina)
 
 # Set Include Directory to Extern
 include_directories(src/extern)
@@ -28,7 +31,7 @@ include_directories(src/extern)
 file(GLOB animator_sources src/intern/*.cpp src/intern/*/*.cpp src/intern/*/*/*.cpp src/extern/*.h src/extern/*/*.h src/extern/*/*/*.h)
 set(rotamina ${animator_sources})
 add_library(rotamina ${rotamina})
-target_link_libraries(rotamina nanogui ${NANOGUI_EXTRA_LIBS} glm)
+target_link_libraries(rotamina nanogui ${NANOGUI_EXTRA_LIBS})
 
 # Compile all the test files
 file(GLOB test_sources test/*.cpp test/*/*.cpp test/*/*/*.cpp)

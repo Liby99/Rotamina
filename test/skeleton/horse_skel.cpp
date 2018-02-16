@@ -1,10 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "viewer/SkeletonViewer.h"
-#include "object/Cube.h"
-#include "object/skeleton/Skeleton.h"
-#include "object/skeleton/SkeletonParser.h"
+#include <rotamina/rotamina.h>
 
 using namespace rotamina;
 
