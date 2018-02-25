@@ -58,14 +58,14 @@ AdvanceCharacterViewer::AdvanceCharacterViewer(int w, int h, std::string name, A
         weightsHolder->setLayout(new GroupLayout());
     
         // For each weight add slider to it
-        std::vector<float> & weights = this->advanceCharacter->getAdvanceSkin().getWeights();
+        std::vector<float> & weights = this->advanceCharacter->getSkin().getWeights();
         for (int i = 0; i < weights.size(); i++) {
     
             // Add label and slider
             new Label(weightsHolder, "Morph " + std::to_string(i + 1) + ": ");
             Slider * slider = new Slider(weightsHolder);
             slider->setCallback([this, i] (float p) {
-                this->advanceCharacter->getAdvanceSkin().setWeight(i, p);
+                this->advanceCharacter->getSkin().setWeight(i, p);
             });
         }
     }
@@ -103,11 +103,11 @@ void AdvanceCharacterViewer::showSkeleton() {
 void AdvanceCharacterViewer::showSkin() {
     scene->setShader(*textureShader);
     advanceCharacter->setShowSkin();
-    advanceCharacter->getAdvanceSkin().setRenderTexture(true);
+    advanceCharacter->getSkin().setRenderTexture(true);
 }
 
 void AdvanceCharacterViewer::showSkinWithoutTexture() {
     scene->setShader(*origShader);
     advanceCharacter->setShowSkin();
-    advanceCharacter->getAdvanceSkin().setRenderTexture(false);
+    advanceCharacter->getSkin().setRenderTexture(false);
 }
