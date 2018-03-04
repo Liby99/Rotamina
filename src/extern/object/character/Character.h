@@ -6,23 +6,23 @@
 
 namespace rotamina {
     class Character : public Object {
-        protected:
-            bool showSkinFlag;
-            Skeleton skeleton;
-            Skin skin;
-        public:
-            
-            Character();
-            
-            bool isShowingSkin();
-            void setShowSkin();
-            void setShowSkeleton();
-            
-            virtual Skeleton & getSkeleton();
-            virtual Skin & getSkin();
-            
-            virtual void update();
-            virtual void draw(Shader &);
+    protected:
+        bool showSkinFlag;
+        Skeleton skeleton;
+        Skin skin;
+    public:
+        
+        Character();
+        
+        bool isShowingSkin();
+        void setShowSkin();
+        void setShowSkeleton();
+        
+        virtual Skeleton & getSkeleton();
+        virtual Skin & getSkin();
+        
+        virtual void update();
+        virtual void draw(Shader &);
     };
 }
 

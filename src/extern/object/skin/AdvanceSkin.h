@@ -6,9 +6,9 @@
 
 namespace rotamina {
     class AdvanceSkin : public TexturedSkin, public MorphSkin {
-        public:
-            AdvanceSkin();
-            virtual void draw(Shader &);
+    public:
+        AdvanceSkin();
+        virtual void draw(Shader &);
     };
 }
 

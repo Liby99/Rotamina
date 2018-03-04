@@ -9,12 +9,12 @@
 
 namespace rotamina {
     class SkeletonParser : public Parser {
-        public:
-            static Skeleton load(std::string filename);
-            static void load(Skeleton & skel, std::string filename);
-        private:
-            static bool loadChildren(Skeleton & skel, Joint & joint, Tokenizer & tokenizer, std::string type);
-            static BallJoint * loadBallJoint(Skeleton & skel, Tokenizer & tokenizer);
+    public:
+        static Skeleton load(std::string filename);
+        static void load(Skeleton & skel, std::string filename);
+    private:
+        static bool loadChildren(Skeleton & skel, Joint & joint, Tokenizer & tokenizer, std::string type);
+        static BallJoint * loadBallJoint(Skeleton & skel, Tokenizer & tokenizer);
     };
 }
 

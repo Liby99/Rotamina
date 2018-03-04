@@ -9,20 +9,20 @@
 
 namespace rotamina {
     class Skeleton : public Object {
-        protected:
-            std::vector<Joint *> joints;
-            Joint * root;
-        public:
-            Skeleton();
-            ~Skeleton();
-            void setRoot(Joint & root);
-            Joint & getRoot();
-            int jointAmount();
-            void addJoint(Joint & j);
-            Joint & getJoint(int i);
-            std::vector<Eigen::Matrix4f> getJointTransforms();
-            virtual void update();
-            virtual void draw(rotamina::Shader &);
+    protected:
+        std::vector<Joint *> joints;
+        Joint * root;
+    public:
+        Skeleton();
+        ~Skeleton();
+        void setRoot(Joint & root);
+        Joint & getRoot();
+        int jointAmount();
+        void addJoint(Joint & j);
+        Joint & getJoint(int i);
+        std::vector<Eigen::Matrix4f> getJointTransforms();
+        virtual void update();
+        virtual void draw(rotamina::Shader &);
     };
 }
 

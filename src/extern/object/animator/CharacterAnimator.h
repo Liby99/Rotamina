@@ -5,16 +5,16 @@
 
 namespace rotamina {
     class CharacterAnimator : public Animator {
-        protected:
-            Character * character;
-            std::vector<DOF *> cachedDOFs;
-        public:
-            CharacterAnimator(Animation &, Character &);
-            Character & getCharacter();
-            virtual void updateAnimation(float);
-            virtual void draw(Shader &);
-        private:
-            void initiateDOFs();
+    protected:
+        Character * character;
+        std::vector<DOF *> cachedDOFs;
+    public:
+        CharacterAnimator(Animation &, Character &);
+        Character & getCharacter();
+        virtual void updateAnimation(float);
+        virtual void draw(Shader &);
+    private:
+        void initiateDOFs();
     };
 }
 

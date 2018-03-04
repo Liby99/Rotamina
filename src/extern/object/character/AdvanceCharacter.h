@@ -6,11 +6,11 @@
 
 namespace rotamina {
     class AdvanceCharacter : public Character {
-        protected:
-            AdvanceSkin skin;
-        public:
-            AdvanceCharacter();
-            AdvanceSkin & getSkin();
+    protected:
+        AdvanceSkin skin;
+    public:
+        AdvanceCharacter();
+        AdvanceSkin & getSkin();
     };
 }
 

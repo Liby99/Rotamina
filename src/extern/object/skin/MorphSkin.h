@@ -5,16 +5,16 @@
 
 namespace rotamina {
     class MorphSkin : virtual public Skin {
-        protected:
-            std::vector<float> weights;
-        public:
-            MorphSkin();
-            void addWeight();
-            void setWeight(int, float);
-            std::vector<float> & getWeights();
-            float getWeight(int);
-        protected:
-            virtual void loadPosNorm(Eigen::MatrixXf &, Eigen::MatrixXf &);
+    protected:
+        std::vector<float> weights;
+    public:
+        MorphSkin();
+        void addWeight();
+        void setWeight(int, float);
+        std::vector<float> & getWeights();
+        float getWeight(int);
+    protected:
+        virtual void loadPosNorm(Eigen::MatrixXf &, Eigen::MatrixXf &);
     };
 }
 

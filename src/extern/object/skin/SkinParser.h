@@ -6,15 +6,15 @@
 
 namespace rotamina {
     class SkinParser : public Parser {
-        public:
-            static void load(Skin & skin, std::string filename);
-        private:
-            static void loadPositions(Skin & skin, Tokenizer & tokenizer);
-            static void loadNormals(Skin & skin, Tokenizer & tokenizer);
-            static void loadSkinWeights(Skin & skin, Tokenizer & tokenizer);
-            static void loadTriangles(Skin & skin, Tokenizer & tokenizer);
-            static void loadBindings(Skin & skin, Tokenizer & tokenizer);
-            static void loadTexCoords(Skin & skin, Tokenizer & tokenizer);
+    public:
+        static void load(Skin & skin, std::string filename);
+    private:
+        static void loadPositions(Skin & skin, Tokenizer & tokenizer);
+        static void loadNormals(Skin & skin, Tokenizer & tokenizer);
+        static void loadSkinWeights(Skin & skin, Tokenizer & tokenizer);
+        static void loadTriangles(Skin & skin, Tokenizer & tokenizer);
+        static void loadBindings(Skin & skin, Tokenizer & tokenizer);
+        static void loadTexCoords(Skin & skin, Tokenizer & tokenizer);
     };
 }
 

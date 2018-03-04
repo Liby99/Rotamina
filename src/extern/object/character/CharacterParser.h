@@ -7,8 +7,8 @@
 
 namespace rotamina {
     class CharacterParser : public Parser {
-        public:
-            static void load(Character &, const std::string &, const std::string &);
+    public:
+        static void load(Character &, const std::string &, const std::string &);
     };
 }
 
