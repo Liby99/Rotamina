@@ -38,3 +38,8 @@
 #include "object/skeleton/BallJoint.h"
 #include "object/animator/CharacterAnimator.h"
 #include "object/animator/Animator.h"
+#include "object/cloth/Triangle.h"
+#include "object/cloth/Cloth.h"
+#include "object/cloth/ClothParticle.h"
+#include "object/cloth/StringDamper.h"
+#include "object/particle/Particle.h"
