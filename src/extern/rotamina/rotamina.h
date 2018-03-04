@@ -10,6 +10,7 @@
 #include "viewer/CharacterAnimationViewer.h"
 #include "object/Cube.h"
 #include "object/Object.h"
+#include "physics/ForceField.h"
 #include "utility/Shader.h"
 #include "utility/Parser.h"
 #include "utility/Tokenizer.h"
@@ -42,4 +43,5 @@
 #include "object/cloth/Cloth.h"
 #include "object/cloth/ClothParticle.h"
 #include "object/cloth/StringDamper.h"
+#include "object/particle/ParticleSystem.h"
 #include "object/particle/Particle.h"
