@@ -13,13 +13,29 @@ ParticleSystem::~ParticleSystem() {
     }
 }
 
-void ParticleSystem::update() {
-    float curr = stopWatch.duration(), diff = curr - prevTime;
+void ParticleSystem::addForceField(ForceField & field) {
+    fields.push_back(&field);
+}
+
+ForceField & ParticleSystem::getForceField(int i) {
+    return *fields[i];
+}
+
+int ParticleSystem::forceFieldAmount() {
+    return fields.size();
+}
+
+void ParticleSystem::updateForce() {
     for (auto part : particles) {
         for (auto field : fields) {
             field->applyForceTo(*part);
         }
     }
+}
+
+void ParticleSystem::update() {
+    updateForce();
+    float curr = stopWatch.duration(), diff = curr - prevTime;
     for (auto part : particles) {
         part->update(diff);
     }

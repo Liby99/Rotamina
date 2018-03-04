@@ -19,8 +19,11 @@ namespace rotamina {
         ParticleSystem();
         ~ParticleSystem();
         void addForceField(ForceField & field);
-        void update();
-        void draw(Shader & shader);
+        ForceField & getForceField(int i);
+        int forceFieldAmount();
+        virtual void updateForce();
+        virtual void update();
+        virtual void draw(Shader & shader);
     };
 }
 
