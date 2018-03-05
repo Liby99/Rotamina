@@ -49,3 +49,7 @@ $ ./char_anim_viewer
 ### Animation
 
 ![Animation](https://github.com/Liby99/Rotamina/blob/master/web/public/image/animation.png?raw=true)
+
+### Cloth Simulation
+
+![Animation](https://github.com/Liby99/Rotamina/blob/master/web/public/image/flag2.png?raw=true)
