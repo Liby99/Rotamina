@@ -4,17 +4,31 @@
 using namespace rotamina;
 
 Cloth::Cloth(float w, float h, int sx, int sy) : width(w), height(h), subdivision(Eigen::Vector2i(sx, sy)) {
-    if (sx == 0 || sy == 0) {
+    
+    // Check error
+    if (sx <= 0 || sy <= 0) {
         std::cout << "Subdivision x or y cannot be 0" << std::endl;
         exit(1);
     }
+    
+    // Initiate Variables
+    springConstant = 35;
+    dampingFacter = 0.6;
+    windSpeed = Eigen::Vector3f(0, 0, 0);
+    airDensity = 1.12;
+    dragCoefficient = 0.2;
+    groundHeight = -1;
+    elasticity = 0.1;
+    friction = 0.2;
+    
+    // Finally generate cloth
     generateCloth();
 }
 
 Cloth::~Cloth() {
     clear();
 }
-    
+
 void Cloth::updateForce() {
     
     // First do the original update force
@@ -22,20 +36,19 @@ void Cloth::updateForce() {
     
     // Update Spring Damper Force
     for (int i = 0; i < springDampers.size(); i++) {
-        springDampers[i]->applyForce();
+        springDampers[i]->applyForce(springConstant, dampingFacter);
     }
     
     // Update Aerodynamics Force
-   for (int i = 0; i < triangles.size(); i++) {
-       triangles[i]->applyForce(Eigen::Vector3f(5, 0, 7.23), 1.12, 0.2);
-   }
+    for (int i = 0; i < triangles.size(); i++) {
+        triangles[i]->applyForce(windSpeed, airDensity, dragCoefficient);
+    }
 }
 
 void Cloth::updateCollision() {
-    float ground = -7, elasticity = 0.01, friction = 0.2;
     for (int i = 0; i < particles.size(); i++) {
-        if (particles[i]->position[1] < ground) {
-            particles[i]->position[1] = 2 * ground - particles[i]->position[1];
+        if (particles[i]->position[1] < groundHeight) {
+            particles[i]->position[1] = 2 * groundHeight - particles[i]->position[1];
             particles[i]->velocity[1] = -elasticity * particles[i]->velocity[1];
             particles[i]->velocity[0] *= (1 - friction);
             particles[i]->velocity[2] *= (1 - friction);
@@ -44,10 +57,10 @@ void Cloth::updateCollision() {
 }
 
 void Cloth::draw(Shader & shader) {
-
+    
     // First update the normals of the particles
     updateNormal();
-
+    
     // Then pass in the positions, normals and indicies
     using namespace nanogui;
     int pa = particles.size(), ta = subdivision[0] * subdivision[1] * 2;
@@ -65,7 +78,8 @@ void Cloth::draw(Shader & shader) {
             indices.col(index + 1) << getIndex(i, j + 1), getIndex(i + 1, j + 1), getIndex(i + 1, j);
         }
     }
-
+    
+    // Then let the shader draw the cloth
     shader.setUniform("model", transform.getTransform());
     shader.uploadIndices(indices);
     shader.uploadAttrib("position", positions);
@@ -74,54 +88,47 @@ void Cloth::draw(Shader & shader) {
 }
 
 void Cloth::clear() {
+    
+    // Remove all spring dampers
     for (int i = 0; i < springDampers.size(); i++) {
         delete springDampers[i];
     }
+    
+    // Remove all triangles
     for (int i = 0; i < triangles.size(); i++) {
         delete triangles[i];
     }
-    ParticleSystem::clear();
 }
 
 void Cloth::generateCloth() {
-    float sc = 30, df = 0.8;
-    float sx = width / subdivision[0], sy = height / subdivision[1], x = -width / 2, y = height / 2,
-          dd = sqrt(sx * sx + sy * sy);
+    
+    // Initiate parameters
+    float sx = width / subdivision[0], sy = height / subdivision[1],
+          x = -width / 2, y = height / 2;
+    
+    // Loop to generate particles
     for (int j = 0; j <= subdivision[1]; j++) {
         for (int i = 0; i <= subdivision[0]; i++) {
+            
+            // Create particle and put to the correct position
             ClothParticle * p = new ClothParticle();
-            p->fixed = i == 0;
             p->position = Eigen::Vector3f(x + sx * i, y - sy * j, 0);
-            if (i > 0) {
-                springDampers.push_back(new SpringDamper(*p, getParticle(i - 1, j), sx, sc, df));
-            }
-            if (j > 0) {
-                springDampers.push_back(new SpringDamper(*p, getParticle(i, j - 1), sy, sc, df));
-            }
-            if (i > 0 && j > 0) {
-                springDampers.push_back(new SpringDamper(*p, getParticle(i - 1, j - 1), dd, sc, df));
-            }
-            if (i < subdivision[0] && j > 0) {
-                springDampers.push_back(new SpringDamper(*p, getParticle(i + 1, j - 1), dd, sc, df));
-            }
-            if (i > 1) {
-                springDampers.push_back(new SpringDamper(*p, getParticle(i - 2, j), sx * 2, sc, df));
-            }
-            if (j > 1) {
-                springDampers.push_back(new SpringDamper(*p, getParticle(i, j - 2), sy * 2, sc, df));
-            }
             particles.push_back(p);
             
+            // Add Spring Dampers
+            if (i > 0) springDampers.push_back(new SpringDamper(*p, getParticle(i - 1, j)));
+            if (j > 0) springDampers.push_back(new SpringDamper(*p, getParticle(i, j - 1)));
+            if (i > 0 && j > 0) springDampers.push_back(new SpringDamper(*p, getParticle(i - 1, j - 1)));
+            if (i < subdivision[0] && j > 0) springDampers.push_back(new SpringDamper(*p, getParticle(i + 1, j - 1)));
+            if (i > 1) springDampers.push_back(new SpringDamper(*p, getParticle(i - 2, j)));
+            if (j > 1) springDampers.push_back(new SpringDamper(*p, getParticle(i, j - 2)));
+            
+            // Add Cloth Triangle for Aerodynamics
             if (i > 0 && j > 0) {
                 ClothParticle & p0 = getParticle(i - 1, j - 1), & p1 = getParticle(i, j - 1), & p2 = getParticle(i - 1, j);
                 triangles.push_back(new ClothTriangle(p0, p1, p2));
                 triangles.push_back(new ClothTriangle(p1, *p, p2));
             }
-
-            if (i > 0 && j > 0) p->normalizeFactor++;
-            if (i > 0 && j < subdivision[1]) p->normalizeFactor++;
-            if (i < subdivision[0] && j > 0) p->normalizeFactor++;
-            if (i < subdivision[0] && j < subdivision[1]) p->normalizeFactor++;
         }
     }
 }
@@ -129,6 +136,7 @@ void Cloth::generateCloth() {
 void Cloth::updateNormal() {
     for (int j = 0; j <= subdivision[1]; j++) {
         for (int i = 0; i <= subdivision[0]; i++) {
+            int d = 0;
             ClothParticle & p = getParticle(i, j);
             p.normal = Eigen::Vector3f(0, 0, 0);
             if (i > 0) {
@@ -136,10 +144,12 @@ void Cloth::updateNormal() {
                 if (j > 0) {
                     Eigen::Vector3f ud = getParticle(i, j - 1).position - p.position;
                     p.normal += ud.cross(ld).normalized();
+                    d++;
                 }
                 if (j < subdivision[1]) {
                     Eigen::Vector3f dd = getParticle(i, j + 1).position - p.position;
                     p.normal += ld.cross(dd).normalized();
+                    d++;
                 }
             }
             if (i < subdivision[0]) {
@@ -147,13 +157,15 @@ void Cloth::updateNormal() {
                 if (j > 0) {
                     Eigen::Vector3f ud = getParticle(i, j - 1).position - p.position;
                     p.normal += rd.cross(ud).normalized();
+                    d++;
                 }
                 if (j < subdivision[1]) {
                     Eigen::Vector3f dd = getParticle(i, j + 1).position - p.position;
                     p.normal += dd.cross(rd).normalized();
+                    d++;
                 }
             }
-            p.normal /= p.normalizeFactor;
+            p.normal /= d;
         }
     }
 }

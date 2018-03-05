@@ -2,10 +2,11 @@
 
 using namespace rotamina;
 
-SpringDamper::SpringDamper(ClothParticle & p1, ClothParticle & p2, float rl, float sc, float df) :
-    p1(&p1), p2(&p2), restLength(rl), springConstant(sc), dampingFacter(df) {}
+SpringDamper::SpringDamper(ClothParticle & p1, ClothParticle & p2) : p1(&p1), p2(&p2) {
+    restLength = (p1.position - p2.position).norm();
+}
 
-void SpringDamper::applyForce() {
+void SpringDamper::applyForce(float springConstant, float dampingFacter) {
     Eigen::Vector3f diff, e, f1, f2;
     float l, v1, v2, f;
     diff = p2->position - p1->position;

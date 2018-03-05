@@ -9,10 +9,30 @@
 namespace rotamina {
     class Cloth : public ParticleSystem {
     public:
+        
+        // Cloth Parameters
         float width, height;
         Eigen::Vector2i subdivision;
+        
+        // Spring Damper Parameters
+        float springConstant;
+        float dampingFacter;
+        
+        // Wind Parameters
+        Eigen::Vector3f windSpeed;
+        float airDensity;
+        float dragCoefficient;
+        
+        // Ground Parameters
+        float groundHeight;
+        float elasticity;
+        float friction;
+        
+        // Dampers and
         std::vector<SpringDamper *> springDampers;
         std::vector<ClothTriangle *> triangles;
+        
+        // Methods
         Cloth(float w, float h, int sx, int sy);
         ~Cloth();
         virtual void updateForce();
