@@ -40,10 +40,11 @@ namespace rotamina {
         virtual void draw(Shader & shader);
         virtual void clear();
         virtual void reset();
+        void resetFixture();
+        ClothParticle & getParticle(int i, int j);
     private:
         void generateCloth();
         void updateNormal();
-        ClothParticle & getParticle(int i, int j);
         int getIndex(int i, int j);
     };
 }

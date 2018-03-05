@@ -3,6 +3,7 @@
 
 #include "viewer/Viewer.h"
 #include "object/cloth/Cloth.h"
+#include "physics/Gravity.h"
 
 namespace rotamina {
     class ClothViewer : public Viewer {
@@ -10,6 +11,7 @@ namespace rotamina {
         Cloth * cloth;
     public:
         static const int CONTROL_PANEL_WIDTH;
+        static const int PLAYBACK_PANEL_HEIGHT;
         nanogui::Window * controlPanel;
         ClothViewer(int w, int h, std::string name, Cloth & cloth);
     private:

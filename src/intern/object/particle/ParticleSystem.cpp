@@ -2,7 +2,7 @@
 
 using namespace rotamina;
 
-ParticleSystem::ParticleSystem() : Object() {
+ParticleSystem::ParticleSystem() : Object(), iterationCount(1) {
     stopWatch.start();
     prevTime = stopWatch.duration();
 }
@@ -36,13 +36,15 @@ void ParticleSystem::updateCollision() {
 }
 
 void ParticleSystem::update() {
-    updateForce();
     float curr = stopWatch.duration(), diff = curr - prevTime;
-    for (auto part : particles) {
-        part->update(diff);
+    for (int i = 0; i < iterationCount; i++) {
+        updateForce();
+        for (auto part : particles) {
+            part->update(diff / iterationCount);
+        }
+        updateCollision();
     }
     prevTime = curr;
-    updateCollision();
 }
 
 void ParticleSystem::draw(Shader & shader) {

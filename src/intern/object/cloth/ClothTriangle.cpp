@@ -2,8 +2,7 @@
 
 using namespace rotamina;
 
-ClothTriangle::ClothTriangle(ClothParticle & p1, ClothParticle & p2, ClothParticle & p3) :
-    p1(&p1), p2(&p2), p3(&p3) {}
+ClothTriangle::ClothTriangle(ClothParticle & p1, ClothParticle & p2, ClothParticle & p3) : p1(&p1), p2(&p2), p3(&p3) {}
 
 void ClothTriangle::applyForce(const Eigen::Vector3f & wind, float airDensity, float dragCoef) {
     Eigen::Vector3f vs, d21, d31, c, n, f;
@@ -13,7 +12,7 @@ void ClothTriangle::applyForce(const Eigen::Vector3f & wind, float airDensity, f
     c = d21.cross(d31);
     n = c.normalized();
     float a = d21.cross(d31).norm() / 2 * wind.normalized().dot(n);
-    f = -airDensity * wind.squaredNorm() * dragCoef * a * n / 6;
+    f = -airDensity * (vs - wind).squaredNorm() * dragCoef * a * n / 6;
     p1->applyForce(f);
     p2->applyForce(f);
     p3->applyForce(f);

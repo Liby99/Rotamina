@@ -10,6 +10,7 @@
 namespace rotamina {
     class ParticleSystem : public Object {
     public:
+        int iterationCount;
         std::vector<ForceField *> fields;
         std::vector<Particle *> particles;
         StopWatch stopWatch;

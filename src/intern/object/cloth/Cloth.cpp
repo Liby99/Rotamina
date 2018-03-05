@@ -112,6 +112,12 @@ void Cloth::reset() {
     generateCloth();
 }
 
+void Cloth::resetFixture() {
+    for (int i = 0; i < particles.size(); i++) {
+        particles[i]->fixed = false;
+    }
+}
+
 void Cloth::generateCloth() {
     
     // Initiate parameters
