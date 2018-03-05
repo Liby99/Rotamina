@@ -30,7 +30,33 @@ void Cloth::updateForce() {
 }
 
 void Cloth::draw(Shader & shader) {
-    ParticleSystem::draw(shader);
+
+    // First update the normals of the particles
+    updateNormal();
+
+    // Then pass in the positions, normals and indicies
+    using namespace nanogui;
+    int pa = particles.size(), ta = subdivision[0] * subdivision[1] * 2;
+    MatrixXf positions(3, pa), normals(3, pa);
+    for (int i = 0; i < pa; i++) {
+        ClothParticle * cp = (ClothParticle *) particles[i];
+        positions.col(i) << cp->position[0], cp->position[1], cp->position[2];
+        normals.col(i) << cp->normal[0], cp->normal[1], cp->normal[2];
+    }
+    MatrixXu indices(3, ta);
+    for (int j = 0; j < subdivision[1]; j++) {
+        for (int i = 0; i < subdivision[0]; i++) {
+            int index = 2 * (j * subdivision[0] + i);
+            indices.col(index) << getIndex(i, j), getIndex(i, j + 1), getIndex(i + 1, j);
+            indices.col(index + 1) << getIndex(i, j + 1), getIndex(i + 1, j + 1), getIndex(i + 1, j);
+        }
+    }
+
+    shader.setUniform("model", transform.getTransform());
+    shader.uploadIndices(indices);
+    shader.uploadAttrib("position", positions);
+    shader.uploadAttrib("normal", normals);
+    shader.drawIndexed(GL_TRIANGLES, 0, ta);
 }
 
 void Cloth::generateCloth() {
@@ -39,9 +65,9 @@ void Cloth::generateCloth() {
           dd = sqrt(sx * sx + sy * sy);
     for (int j = 0; j <= subdivision[1]; j++) {
         for (int i = 0; i <= subdivision[0]; i++) {
-            Particle * p = new Particle();
+            ClothParticle * p = new ClothParticle();
             p->fixed = j == 0;
-            p->position = Eigen::Vector3f(x + sx * i, y - sy * j, 0);
+            p->position = Eigen::Vector3f(x + sx * i, 0, y - sy * j);
             if (i > 0) {
                 springDampers.push_back(new SpringDamper(*p, getParticle(i - 1, j), sx, sc, df));
             }
@@ -61,6 +87,11 @@ void Cloth::generateCloth() {
                 springDampers.push_back(new SpringDamper(*p, getParticle(i, j - 2), sy * 2, sc, df));
             }
             particles.push_back(p);
+
+            if (i > 0 && j > 0) p->normalizeFactor++;
+            if (i > 0 && j < subdivision[1]) p->normalizeFactor++;
+            if (i < subdivision[0] && j > 0) p->normalizeFactor++;
+            if (i < subdivision[0] && j < subdivision[1]) p->normalizeFactor++;
         }
     }
 }
@@ -68,12 +99,46 @@ void Cloth::generateCloth() {
 void Cloth::updateNormal() {
     for (int j = 0; j <= subdivision[1]; j++) {
         for (int i = 0; i <= subdivision[0]; i++) {
-            Eigen::Vector3f normal;
+            ClothParticle & p = getParticle(i, j);
+            p.normal = Eigen::Vector3f(0, 0, 0);
+            if (i > 0) {
+                Particle & l = getParticle(i - 1, j);
+                Eigen::Vector3f ld = l.position - p.position;
+                if (j > 0) {
+                    Particle & u = getParticle(i, j - 1);
+                    Eigen::Vector3f ud = u.position - p.position;
+                    p.normal += ud.cross(ld).normalized();
+                }
+                if (j < subdivision[1]) {
+                    Particle & d = getParticle(i, j + 1);
+                    Eigen::Vector3f dd = d.position - p.position;
+                    p.normal += ld.cross(dd).normalized();
+                }
+            }
+            if (i < subdivision[0]) {
+                Particle & r = getParticle(i + 1, j);
+                Eigen::Vector3f rd = r.position - p.position;
+                if (j > 0) {
+                    Particle & u = getParticle(i, j - 1);
+                    Eigen::Vector3f ud = u.position - p.position;
+                    p.normal += rd.cross(ud).normalized();
+                }
+                if (j < subdivision[1]) {
+                    Particle & d = getParticle(i, j + 1);
+                    Eigen::Vector3f dd = d.position - p.position;
+                    p.normal += dd.cross(rd).normalized();
+                }
+            }
+            p.normal /= p.normalizeFactor;
         }
     }
 }
 
-Particle & Cloth::getParticle(int i, int j) {
-    return *particles[j * (subdivision[0] + 1) + i];
+ClothParticle & Cloth::getParticle(int i, int j) {
+    return * (ClothParticle *) particles[getIndex(i, j)];
+}
+
+int Cloth::getIndex(int i, int j) {
+    return j * (subdivision[0] + 1) + i;
 }
 

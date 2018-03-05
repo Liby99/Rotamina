@@ -43,5 +43,6 @@
 #include "object/cloth/SpringDamper.h"
 #include "object/cloth/Triangle.h"
 #include "object/cloth/Cloth.h"
+#include "object/cloth/ClothParticle.h"
 #include "object/particle/ParticleSystem.h"
 #include "object/particle/Particle.h"

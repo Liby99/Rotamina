@@ -2,6 +2,7 @@
 #define CLOTH_H
 
 #include "object/particle/ParticleSystem.h"
+#include "object/cloth/ClothParticle.h"
 #include "object/cloth/SpringDamper.h"
 
 namespace rotamina {
@@ -17,7 +18,8 @@ namespace rotamina {
     private:
         void generateCloth();
         void updateNormal();
-        Particle & getParticle(int i, int j);
+        ClothParticle & getParticle(int i, int j);
+        int getIndex(int i, int j);
     };
 }
 
