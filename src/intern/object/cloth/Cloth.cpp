@@ -29,10 +29,11 @@ void Cloth::draw(Shader & shader) {
 }
 
 void Cloth::generateCloth() {
+    float sx = width / subdivision[0], sy = height / subdivision[1], x = -width / 2, y = -height / 2;
     for (int i = 0; i <= subdivision[0]; i++) {
         for (int j = 0; j <= subdivision[1]; j++) {
             Particle * p = new Particle();
-            
+            p->position = Eigen::Vector3f(x + sx * i, y + sy * j, 0);
             particles.push_back(p);
         }
     }
