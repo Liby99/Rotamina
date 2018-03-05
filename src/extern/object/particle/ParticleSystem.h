@@ -22,8 +22,10 @@ namespace rotamina {
         ForceField & getForceField(int i);
         int forceFieldAmount();
         virtual void updateForce();
+        virtual void updateCollision();
         virtual void update();
         virtual void draw(Shader & shader);
+        virtual void clear();
     };
 }
 

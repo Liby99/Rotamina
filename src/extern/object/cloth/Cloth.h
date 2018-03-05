@@ -16,7 +16,9 @@ namespace rotamina {
         Cloth(float w, float h, int sx, int sy);
         ~Cloth();
         virtual void updateForce();
+        virtual void updateCollision();
         virtual void draw(Shader & shader);
+        virtual void clear();
     private:
         void generateCloth();
         void updateNormal();

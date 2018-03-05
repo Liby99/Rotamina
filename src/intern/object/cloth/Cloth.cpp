@@ -3,8 +3,7 @@
 
 using namespace rotamina;
 
-Cloth::Cloth(float w, float h, int sx, int sy) :
-    width(w), height(h), subdivision(Eigen::Vector2i(sx, sy)) {
+Cloth::Cloth(float w, float h, int sx, int sy) : width(w), height(h), subdivision(Eigen::Vector2i(sx, sy)) {
     if (sx == 0 || sy == 0) {
         std::cout << "Subdivision x or y cannot be 0" << std::endl;
         exit(1);
@@ -13,9 +12,7 @@ Cloth::Cloth(float w, float h, int sx, int sy) :
 }
 
 Cloth::~Cloth() {
-    for (int i = 0; i < springDampers.size(); i++) {
-        delete springDampers[i];
-    }
+    clear();
 }
     
 void Cloth::updateForce() {
@@ -29,8 +26,20 @@ void Cloth::updateForce() {
     }
     
     // Update Aerodynamics Force
-    for (int i = 0; i < triangles.size(); i++) {
-        triangles[i]->applyForce(Eigen::Vector3f(10, -2.5, 7.23), 1.12, 0.2);
+   for (int i = 0; i < triangles.size(); i++) {
+       triangles[i]->applyForce(Eigen::Vector3f(5, 0, 7.23), 1.12, 0.2);
+   }
+}
+
+void Cloth::updateCollision() {
+    float ground = -7, elasticity = 0.01, friction = 0.2;
+    for (int i = 0; i < particles.size(); i++) {
+        if (particles[i]->position[1] < ground) {
+            particles[i]->position[1] = 2 * ground - particles[i]->position[1];
+            particles[i]->velocity[1] = -elasticity * particles[i]->velocity[1];
+            particles[i]->velocity[0] *= (1 - friction);
+            particles[i]->velocity[2] *= (1 - friction);
+        }
     }
 }
 
@@ -64,14 +73,24 @@ void Cloth::draw(Shader & shader) {
     shader.drawIndexed(GL_TRIANGLES, 0, ta);
 }
 
+void Cloth::clear() {
+    for (int i = 0; i < springDampers.size(); i++) {
+        delete springDampers[i];
+    }
+    for (int i = 0; i < triangles.size(); i++) {
+        delete triangles[i];
+    }
+    ParticleSystem::clear();
+}
+
 void Cloth::generateCloth() {
-    float sc = 35, df = 0.6;
+    float sc = 30, df = 0.8;
     float sx = width / subdivision[0], sy = height / subdivision[1], x = -width / 2, y = height / 2,
           dd = sqrt(sx * sx + sy * sy);
     for (int j = 0; j <= subdivision[1]; j++) {
         for (int i = 0; i <= subdivision[0]; i++) {
             ClothParticle * p = new ClothParticle();
-            p->fixed = j == 0;
+            p->fixed = i == 0;
             p->position = Eigen::Vector3f(x + sx * i, y - sy * j, 0);
             if (i > 0) {
                 springDampers.push_back(new SpringDamper(*p, getParticle(i - 1, j), sx, sc, df));
@@ -113,30 +132,24 @@ void Cloth::updateNormal() {
             ClothParticle & p = getParticle(i, j);
             p.normal = Eigen::Vector3f(0, 0, 0);
             if (i > 0) {
-                Particle & l = getParticle(i - 1, j);
-                Eigen::Vector3f ld = l.position - p.position;
+                Eigen::Vector3f ld = getParticle(i - 1, j).position - p.position;
                 if (j > 0) {
-                    Particle & u = getParticle(i, j - 1);
-                    Eigen::Vector3f ud = u.position - p.position;
+                    Eigen::Vector3f ud = getParticle(i, j - 1).position - p.position;
                     p.normal += ud.cross(ld).normalized();
                 }
                 if (j < subdivision[1]) {
-                    Particle & d = getParticle(i, j + 1);
-                    Eigen::Vector3f dd = d.position - p.position;
+                    Eigen::Vector3f dd = getParticle(i, j + 1).position - p.position;
                     p.normal += ld.cross(dd).normalized();
                 }
             }
             if (i < subdivision[0]) {
-                Particle & r = getParticle(i + 1, j);
-                Eigen::Vector3f rd = r.position - p.position;
+                Eigen::Vector3f rd = getParticle(i + 1, j).position - p.position;
                 if (j > 0) {
-                    Particle & u = getParticle(i, j - 1);
-                    Eigen::Vector3f ud = u.position - p.position;
+                    Eigen::Vector3f ud = getParticle(i, j - 1).position - p.position;
                     p.normal += rd.cross(ud).normalized();
                 }
                 if (j < subdivision[1]) {
-                    Particle & d = getParticle(i, j + 1);
-                    Eigen::Vector3f dd = d.position - p.position;
+                    Eigen::Vector3f dd = getParticle(i, j + 1).position - p.position;
                     p.normal += dd.cross(rd).normalized();
                 }
             }

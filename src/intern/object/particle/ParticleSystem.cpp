@@ -8,9 +8,7 @@ ParticleSystem::ParticleSystem() : Object() {
 }
 
 ParticleSystem::~ParticleSystem() {
-    for (auto part : particles) {
-        delete part;
-    }
+    clear();
 }
 
 void ParticleSystem::addForceField(ForceField & field) {
@@ -33,6 +31,10 @@ void ParticleSystem::updateForce() {
     }
 }
 
+void ParticleSystem::updateCollision() {
+    // Do Nothing Since No Collision
+}
+
 void ParticleSystem::update() {
     updateForce();
     float curr = stopWatch.duration(), diff = curr - prevTime;
@@ -40,6 +42,7 @@ void ParticleSystem::update() {
         part->update(diff);
     }
     prevTime = curr;
+    updateCollision();
 }
 
 void ParticleSystem::draw(Shader & shader) {
@@ -57,4 +60,10 @@ void ParticleSystem::draw(Shader & shader) {
     shader.uploadAttrib("position", positions);
     shader.uploadAttrib("normal", normals);
     shader.drawArray(GL_POINTS, 0, particles.size());
+}
+
+void ParticleSystem::clear() {
+    for (auto part : particles) {
+        delete part;
+    }
 }
