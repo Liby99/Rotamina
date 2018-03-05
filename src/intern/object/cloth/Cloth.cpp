@@ -12,12 +12,13 @@ Cloth::Cloth(float w, float h, int sx, int sy) : width(w), height(h), subdivisio
     }
     
     // Initiate Variables
-    springConstant = 35;
-    dampingFacter = 0.6;
+    iterationCount = 2;
+    springConstant = 100;
+    dampingFacter = 1;
     windSpeed = Eigen::Vector3f(0, 0, 0);
     airDensity = 1.12;
     dragCoefficient = 0.2;
-    groundHeight = -1;
+    groundHeight = -2;
     elasticity = 0.1;
     friction = 0.2;
     

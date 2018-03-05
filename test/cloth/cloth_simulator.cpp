@@ -6,7 +6,7 @@ using namespace rotamina;
 int main() {
     nanogui::init();
 
-    Cloth c(5, 5, 18, 18);
+    Cloth c(4, 4, 25, 25);
     Gravity gravity;
     c.addForceField(gravity);
     c.transform.position = Eigen::Vector3f(0, 1, 0);
