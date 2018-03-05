@@ -43,5 +43,15 @@ void ParticleSystem::update() {
 }
 
 void ParticleSystem::draw(Shader & shader) {
-    // Do nothing
+    using namespace nanogui;
+    int amount = particles.size();
+    MatrixXf positions(3, amount);
+    for (int i = 0; i < amount; i++) {
+        Vector3f p = particles[i]->position;
+        positions.col(i) << p[0], p[1], p[2];
+    }
+    Matrix4f model = transform.getTransform();
+    shader.setUniform("model", model);
+    shader.uploadAttrib("position", positions);
+    shader.drawIndexed(GL_POINTS, 0, particles.size());
 }
