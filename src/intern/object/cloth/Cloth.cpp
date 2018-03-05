@@ -27,6 +27,11 @@ void Cloth::updateForce() {
     for (int i = 0; i < springDampers.size(); i++) {
         springDampers[i]->applyForce();
     }
+    
+    // Update Aerodynamics Force
+    for (int i = 0; i < triangles.size(); i++) {
+        triangles[i]->applyForce(Eigen::Vector3f(10, -2.5, 7.23), 1.12, 0.2);
+    }
 }
 
 void Cloth::draw(Shader & shader) {
@@ -60,14 +65,14 @@ void Cloth::draw(Shader & shader) {
 }
 
 void Cloth::generateCloth() {
-    float sc = 8, df = 0.05;
+    float sc = 35, df = 0.6;
     float sx = width / subdivision[0], sy = height / subdivision[1], x = -width / 2, y = height / 2,
           dd = sqrt(sx * sx + sy * sy);
     for (int j = 0; j <= subdivision[1]; j++) {
         for (int i = 0; i <= subdivision[0]; i++) {
             ClothParticle * p = new ClothParticle();
             p->fixed = j == 0;
-            p->position = Eigen::Vector3f(x + sx * i, 0, y - sy * j);
+            p->position = Eigen::Vector3f(x + sx * i, y - sy * j, 0);
             if (i > 0) {
                 springDampers.push_back(new SpringDamper(*p, getParticle(i - 1, j), sx, sc, df));
             }
@@ -87,6 +92,12 @@ void Cloth::generateCloth() {
                 springDampers.push_back(new SpringDamper(*p, getParticle(i, j - 2), sy * 2, sc, df));
             }
             particles.push_back(p);
+            
+            if (i > 0 && j > 0) {
+                ClothParticle & p0 = getParticle(i - 1, j - 1), & p1 = getParticle(i, j - 1), & p2 = getParticle(i - 1, j);
+                triangles.push_back(new ClothTriangle(p0, p1, p2));
+                triangles.push_back(new ClothTriangle(p1, *p, p2));
+            }
 
             if (i > 0 && j > 0) p->normalizeFactor++;
             if (i > 0 && j < subdivision[1]) p->normalizeFactor++;
@@ -141,4 +152,3 @@ ClothParticle & Cloth::getParticle(int i, int j) {
 int Cloth::getIndex(int i, int j) {
     return j * (subdivision[0] + 1) + i;
 }
-

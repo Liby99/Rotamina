@@ -2,7 +2,7 @@
 
 using namespace rotamina;
 
-Particle::Particle() : fixed(false), mass(0.1f),
+Particle::Particle() : fixed(false), mass(0.5f),
     position(Eigen::Vector3f(0, 0, 0)), velocity(Eigen::Vector3f(0, 0, 0)),
     force(Eigen::Vector3f(0, 0, 0)) {}
     

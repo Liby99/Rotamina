@@ -18,7 +18,7 @@ int main() {
     viewer.drawAll();
     viewer.setVisible(true);
 
-    Cloth * c = new Cloth(2, 1, 100, 50);
+    Cloth * c = new Cloth(2, 1, 20, 10);
     Gravity gravity;
     c->addForceField(gravity);
 
