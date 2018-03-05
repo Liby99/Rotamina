@@ -5,6 +5,7 @@
 #include "viewer/Viewer.h"
 #include "viewer/SkeletonViewer.h"
 #include "viewer/AdvanceCharacterViewer.h"
+#include "viewer/ClothViewer.h"
 #include "viewer/AnimationViewer.h"
 #include "viewer/CharacterViewer.h"
 #include "viewer/CharacterAnimationViewer.h"

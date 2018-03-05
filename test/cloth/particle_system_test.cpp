@@ -3,32 +3,19 @@
 
 using namespace rotamina;
 
-class ClothViewer : public Viewer {
-public:
-    ClothViewer(int w, int h, std::string name) : Viewer::Viewer(w, h, name) {
-        scene->getShader().initTwoLights();
-    }
-};
-
 int main() {
     nanogui::init();
 
+    Cloth c(5, 5, 15, 15);
+    Gravity gravity;
+    c.addForceField(gravity);
+    c.transform.position = Eigen::Vector3f(0, 1, 0);
+
     // Initiate Viewer
-    ClothViewer viewer = ClothViewer(1280, 720, "Cloth Particle Test");
+    ClothViewer viewer = ClothViewer(1280, 720, "Cloth Particle Test", c);
     viewer.drawAll();
     viewer.setVisible(true);
 
-    Cloth * c = new Cloth(5, 5, 15, 15);
-    Gravity gravity;
-    c->addForceField(gravity);
-
-    c->transform.position = Eigen::Vector3f(0, 1, 0);
-
-    viewer.getScene().addObject(*c);
-
     nanogui::mainloop();
-
-    delete c;
-
     nanogui::shutdown();
 }

@@ -66,4 +66,5 @@ void ParticleSystem::clear() {
     for (auto part : particles) {
         delete part;
     }
+    particles.clear();
 }

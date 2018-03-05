@@ -39,6 +39,7 @@ namespace rotamina {
         virtual void updateCollision();
         virtual void draw(Shader & shader);
         virtual void clear();
+        virtual void reset();
     private:
         void generateCloth();
         void updateNormal();

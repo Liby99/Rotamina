@@ -93,11 +93,23 @@ void Cloth::clear() {
     for (int i = 0; i < springDampers.size(); i++) {
         delete springDampers[i];
     }
+    springDampers.clear();
     
     // Remove all triangles
     for (int i = 0; i < triangles.size(); i++) {
         delete triangles[i];
     }
+    triangles.clear();
+
+    for (int i = 0; i < particles.size(); i++) {
+        delete particles[i];
+    }
+    particles.clear();
+}
+
+void Cloth::reset() {
+    clear();
+    generateCloth();
 }
 
 void Cloth::generateCloth() {
