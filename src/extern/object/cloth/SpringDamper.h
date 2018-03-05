@@ -1,7 +1,7 @@
 #ifndef SPRING_DAMPER_H
 #define SPRING_DAMPER_H
 
-#include "object/particle/Particle.h"
+#include "object/cloth/ClothParticle.h"
 
 namespace rotamina {
     class SpringDamper {
@@ -9,8 +9,8 @@ namespace rotamina {
         float restLength;
         float springConstant;
         float dampingFacter;
-        Particle * p1, * p2;
-        SpringDamper(Particle & p1, Particle & p2, float rl, float sc, float df);
+        ClothParticle * p1, * p2;
+        SpringDamper(ClothParticle & p1, ClothParticle & p2, float rl, float sc, float df);
         void applyForce();
     };
 }

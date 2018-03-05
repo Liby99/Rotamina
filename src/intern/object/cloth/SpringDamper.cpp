@@ -2,7 +2,7 @@
 
 using namespace rotamina;
 
-SpringDamper::SpringDamper(Particle & p1, Particle & p2, float rl, float sc, float df) :
+SpringDamper::SpringDamper(ClothParticle & p1, ClothParticle & p2, float rl, float sc, float df) :
     p1(&p1), p2(&p2), restLength(rl), springConstant(sc), dampingFacter(df) {}
 
 void SpringDamper::applyForce() {

@@ -4,6 +4,7 @@
 #include "object/particle/ParticleSystem.h"
 #include "object/cloth/ClothParticle.h"
 #include "object/cloth/SpringDamper.h"
+#include "object/cloth/ClothTriangle.h"
 
 namespace rotamina {
     class Cloth : public ParticleSystem {
@@ -11,6 +12,7 @@ namespace rotamina {
         float width, height;
         Eigen::Vector2i subdivision;
         std::vector<SpringDamper *> springDampers;
+        std::vector<ClothTriangle *> triangles;
         Cloth(float w, float h, int sx, int sy);
         ~Cloth();
         virtual void updateForce();
