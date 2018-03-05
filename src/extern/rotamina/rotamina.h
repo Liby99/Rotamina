@@ -10,6 +10,7 @@
 #include "viewer/CharacterAnimationViewer.h"
 #include "object/Cube.h"
 #include "object/Object.h"
+#include "physics/Gravity.h"
 #include "physics/ForceField.h"
 #include "utility/Shader.h"
 #include "utility/Parser.h"

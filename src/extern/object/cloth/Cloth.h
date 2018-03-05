@@ -16,6 +16,8 @@ namespace rotamina {
         virtual void draw(Shader & shader);
     private:
         void generateCloth();
+        void updateNormal();
+        Particle & getParticle(int i, int j);
     };
 }
 

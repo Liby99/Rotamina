@@ -4,7 +4,9 @@ using namespace rotamina;
 
 class ClothViewer : public Viewer {
 public:
-    ClothViewer(int w, int h, std::string name) : Viewer::Viewer(w, h, name) {}
+    ClothViewer(int w, int h, std::string name) : Viewer::Viewer(w, h, name) {
+
+    }
 };
 
 int main() {
@@ -15,7 +17,9 @@ int main() {
     viewer.drawAll();
     viewer.setVisible(true);
 
-    Cloth * c = new Cloth(5, 5, 5, 5);
+    Cloth * c = new Cloth(2, 2, 10, 10);
+    Gravity gravity;
+    c->addForceField(gravity);
 
     viewer.getScene().addObject(*c);
 
