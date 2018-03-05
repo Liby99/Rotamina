@@ -32,6 +32,18 @@ Eigen::Vector3f Transform::getScale() const {
     return scale;
 }
 
+Eigen::Vector3f Transform::forward() const {
+    return (Eigen::Matrix3f(getRotationMatrix()) * Eigen::Vector3f(0, 0, 1)).normalized();
+}
+
+Eigen::Vector3f Transform::right() const {
+    return (Eigen::Matrix3f(getRotationMatrix()) * Eigen::Vector3f(1, 0, 0)).normalized();
+}
+
+Eigen::Vector3f Transform::up() const {
+    return (Eigen::Matrix3f(getRotationMatrix()) * Eigen::Vector3f(0, 1, 0)).normalized();
+}
+
 void Transform::setAnchor(Eigen::Vector3f anchor) {
     this->anchor = anchor;
 }

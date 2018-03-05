@@ -22,6 +22,9 @@ namespace rotamina {
         Eigen::Vector3f getPosition() const;
         Eigen::Vector3f getRotation() const;
         Eigen::Vector3f getScale() const;
+        Eigen::Vector3f forward() const;
+        Eigen::Vector3f right() const;
+        Eigen::Vector3f up() const;
         
         void setAnchor(Eigen::Vector3f anchor);
         void setAnchorX(float x);
