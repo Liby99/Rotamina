@@ -11,7 +11,7 @@ namespace rotamina {
     public:
         InteractiveScene(Widget *);
         ~InteractiveScene();
-        virtual bool mouseButtonEvent(const Vector2i & p, int button, bool down, int modifiers);
+        virtual bool mouseButtonEvent(const Eigen::Vector2i & p, int button, bool down, int modifiers);
     };
 }
 

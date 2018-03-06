@@ -6,6 +6,10 @@ InteractiveScene::InteractiveScene(Widget * parent) : Scene(parent) {
     
 }
 
-bool InteractiveScene::mouseButtonEvent(const Vector2i & p, int button, bool down, int modifiers) {
-    
+InteractiveScene::~InteractiveScene() {
+    Scene::~Scene();
+}
+
+bool InteractiveScene::mouseButtonEvent(const Eigen::Vector2i & p, int button, bool down, int modifiers) {
+    return false;
 }
