@@ -40,16 +40,20 @@ $ ./char_anim_viewer
 
 ### Skeleton
 
-![Skeleton](https://github.com/Liby99/Rotamina/blob/master/web/public/image/skel.png?raw=true)
+![Skeleton](https://github.com/Liby99/Rotamina/blob/master/doc/images/skel.png?raw=true)
 
 ### Texture & Morphing
 
-![Texture & Morphing](https://github.com/Liby99/Rotamina/blob/master/web/public/image/tex_morph.png?raw=true)
+![Texture & Morphing](https://github.com/Liby99/Rotamina/blob/master/doc/images/tex_morph.png?raw=true)
 
 ### Animation
 
-![Animation](https://github.com/Liby99/Rotamina/blob/master/web/public/image/animation.png?raw=true)
+![Animation](https://github.com/Liby99/Rotamina/blob/master/doc/images/animation.png?raw=true)
 
 ### Cloth Simulation
 
-![Animation](https://github.com/Liby99/Rotamina/blob/master/web/public/image/flag.png?raw=true)
+![Cloth](https://github.com/Liby99/Rotamina/blob/master/doc/images/flag.png?raw=true)
+
+### Inverse Kinematics
+
+![IK](https://github.com/Liby99/Rotamina/blob/master/doc/images/ik_2.png?raw=true)
