@@ -1,0 +1,71 @@
+balljoint root_0 {
+
+	offset 0 0 0
+	boxmin -0.1 0 -0.1
+	boxmax 0.1 1 0.1
+	
+	balljoint root_1 {
+    
+    	offset 0 1 0
+    	boxmin -0.1 0 -0.1
+    	boxmax 0.1 1 0.1
+		
+		balljoint root_2 {
+        
+            offset 0 1 0
+            boxmin -0.1 0 -0.1
+            boxmax 0.1 1 0.1
+    		
+    		balljoint branch_1_0 {
+            
+                offset 0 1 0
+                boxmin -0.1 0 -0.1
+                boxmax 0.1 1 0.1
+				pose 0 0 -0.785
+        		
+        		balljoint branch_1_2 {
+                
+                    offset 0 1 0
+                    boxmin -0.1 0 -0.1
+                    boxmax 0.1 1 0.1
+
+                    balljoint branch_1_3 {
+
+                        offset 0 1 0
+                        boxmin -0.15 -0.15 -0.15
+                        boxmax 0.15 0.15 0.15
+                    }
+                }
+            }
+    		
+    		balljoint branch_2_0 {
+            
+                offset 0 1 0
+                boxmin -0.1 0 -0.1
+                boxmax 0.1 1 0.1
+				pose 0 0 0.785
+        		
+        		balljoint branch_2_2 {
+                
+                    offset 0 1 0
+                    boxmin -0.1 0 -0.1
+                    boxmax 0.1 1 0.1
+
+                    balljoint branch_2_3 {
+					
+						offset 0 1 0
+						boxmin -0.1 0 -0.1
+						boxmax 0.1 1 0.1
+
+                        balljoint branch_2_4 {
+
+                            offset 0 1 0
+                            boxmin -0.15 -0.15 -0.15
+                            boxmax 0.15 0.15 0.15
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -24,6 +24,7 @@ namespace rotamina {
         
     private:
         virtual void solve();
+        float getWeight(Joint *, Joint *);
     };
 }
 

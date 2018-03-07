@@ -22,7 +22,6 @@
 #include "utility/Texture.h"
 #include "utility/Bitmap.h"
 #include "viewer/component/Camera.h"
-#include "viewer/component/InteractiveScene.h"
 #include "viewer/component/ChannelEditor.h"
 #include "viewer/component/Scene.h"
 #include "object/skin/MorphSkin.h"

@@ -36,7 +36,7 @@ IKViewer::IKViewer(int w, int h, std::string n, IKSkeleton & skel) : SkeletonVie
             new Label(w, l + " :", "sans-bold");
             FloatBox<float> * fb = new FloatBox<float>(w);
             Vector3f & v = it->second;
-            fb->setValue(it->second[0]);
+            fb->setValue(it->second[i]);
             fb->setUnits("rad");
             fb->setDefaultValue("0.0");
             fb->setFixedSize(Vector2i(120, 24));
