@@ -14,6 +14,7 @@ namespace rotamina {
         static void load(Skeleton & skel, std::string filename);
     private:
         static bool loadChildren(Skeleton & skel, Joint & joint, Tokenizer & tokenizer, std::string type);
+        static Joint * loadJoint(Skeleton & skel, Tokenizer & tokenizer);
         static BallJoint * loadBallJoint(Skeleton & skel, Tokenizer & tokenizer);
     };
 }

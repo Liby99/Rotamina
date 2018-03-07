@@ -30,6 +30,10 @@ std::vector<std::pair<std::string, DOF *>> Joint::getDOFs() {
     return ret;
 }
 
+void Joint::setParent(Joint & j) {
+    this->parent = &j;
+}
+
 bool Joint::hasParent() {
     return parent != nullptr;
 }
@@ -51,7 +55,7 @@ int Joint::childrenCount() {
 }
 
 Eigen::Vector3f Joint::getGlobalPosition() {
-    return worldTransf.topRightCorner<1, 3>();
+    return worldTransf.topRightCorner<3, 1>();
 }
 
 Eigen::Vector3f Joint::getOffset() {
@@ -84,6 +88,7 @@ Eigen::Matrix4f Joint::getWorldTransform() {
 }
 
 void Joint::update(const Eigen::Matrix4f & currTransf) {
+    worldTransf = currTransf;
     for (rotamina::Joint * j : children) {
         j->update(currTransf);
     }

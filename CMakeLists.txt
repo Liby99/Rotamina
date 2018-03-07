@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.5)
 project(Rotamina)
 
 # Basic flag
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++14")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
 # Include NanoGui
 add_subdirectory(lib/nanogui EXCLUDE_FROM_ALL)

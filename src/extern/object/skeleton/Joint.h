@@ -34,6 +34,7 @@ namespace rotamina {
         std::string getName();
         void setName(std::string name);
         std::vector<std::pair<std::string, DOF *>> getDOFs();
+        void setParent(Joint & j);
         bool hasParent();
         Joint & getParent();
         void addChildren(rotamina::Joint & j);

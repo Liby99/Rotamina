@@ -3,45 +3,30 @@ balljoint chain_1 {
 	offset 0 0 0
 	boxmin -0.1 0 -0.1
 	boxmax 0.1 1 0.1
-    rotxlimit -1.57 1.57
-    rotylimit -1.57 1.57
-    rotzlimit -1.57 1.57
 	
 	balljoint chain_2 {
     
     	offset 0 1 0
     	boxmin -0.1 0 -0.1
     	boxmax 0.1 1 0.1
-        rotxlimit -1.57 1.57
-        rotylimit -1.57 1.57
-        rotzlimit -1.57 1.57
 		
 		balljoint chain_3 {
         
             offset 0 1 0
             boxmin -0.1 0 -0.1
             boxmax 0.1 1 0.1
-            rotxlimit -1.57 1.57
-            rotylimit -1.57 1.57
-            rotzlimit -1.57 1.57
     		
     		balljoint chain_4 {
             
                 offset 0 1 0
                 boxmin -0.1 0 -0.1
                 boxmax 0.1 1 0.1
-                rotxlimit -1.57 1.57
-                rotylimit -1.57 1.57
-                rotzlimit -1.57 1.57
         		
         		balljoint chain_5 {
                 
                     offset 0 1 0
                     boxmin -0.1 0 -0.1
                     boxmax 0.1 1 0.1
-                    rotxlimit -1.57 1.57
-                    rotylimit -1.57 1.57
-                    rotzlimit -1.57 1.57
 					
 					joint end {
 						

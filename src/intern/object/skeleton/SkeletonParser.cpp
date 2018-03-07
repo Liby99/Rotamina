@@ -31,12 +31,29 @@ bool SkeletonParser::loadChildren(Skeleton & skel, Joint & joint, Tokenizer & to
     char temp[BUF_SIZE];
     if (type == "balljoint") {
         BallJoint * bj = loadBallJoint(skel, tokenizer);
+        bj->setParent(joint);
         joint.addChildren(*(Joint *)bj);
+        return true;
+    }
+    else if (type == "joint") {
+        Joint * j = loadJoint(skel, tokenizer);
+        j->setParent(joint);
+        joint.addChildren(*j);
         return true;
     }
     else {
         return false;
     }
+}
+
+Joint * SkeletonParser::loadJoint(Skeleton & skel, Tokenizer & tokenizer) {
+    char temp[BUF_SIZE];
+    tokenizer.getToken(temp);
+    Joint * j = new Joint(std::string(temp));
+    skel.addJoint(*j);
+    tokenizer.findToken("{");
+    tokenizer.findToken("}");
+    return j;
 }
 
 BallJoint * SkeletonParser::loadBallJoint(Skeleton & skel, Tokenizer & tokenizer) {

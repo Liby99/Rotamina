@@ -10,15 +10,15 @@ namespace rotamina {
         
         // Variables
         int stepCount;
-        float beta;
+        float beta, threshold;
         std::map<Joint *, Eigen::Vector3f> targets;
         
         //
         IKSkeleton();
         
-        virtual void setTarget(Joint * j, Eigen::Vector3f t);
-        virtual void removeTarget(Joint * j);
-        virtual Eigen::Vector3f getTarget(Joint * j);
+        virtual void setTarget(Joint & j, Eigen::Vector3f t);
+        virtual void removeTarget(Joint & j);
+        virtual Eigen::Vector3f getTarget(Joint & j);
         
         virtual void update();
         

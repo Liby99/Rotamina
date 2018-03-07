@@ -98,9 +98,12 @@ void BallJoint::draw(Shader & shader) {
 }
 
 Eigen::Vector3f BallJoint::getJacobianColumn(std::string name, Joint * end) {
-    Eigen::Vector4f a(0, 0, 0);
+    Eigen::Vector4f a(0, 0, 0, 0);
     if (name == "x") a[0] = 1;
     else if (name == "y") a[1] = 1;
     else if (name == "z") a[2] = 1;
-    return a.cross(end->getGlobalPosition() - getGlobalPosition());
+    Eigen::Vector3f ap = (worldTransf * a).head<3>();
+    Eigen::Vector3f res = ap.cross(end->getGlobalPosition() - getGlobalPosition());
+//    std::cout << end->getGlobalPosition() << std::endl;
+    return res;
 }

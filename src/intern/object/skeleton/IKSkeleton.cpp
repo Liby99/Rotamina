@@ -1,22 +1,24 @@
 #include "object/skeleton/IKSkeleton.h"
+#include <iostream>
 
 using namespace rotamina;
 
-IKSkeleton::IKSkeleton() : Skeleton(), stepCount(1), beta(0.1f) {}
+IKSkeleton::IKSkeleton() : Skeleton(), stepCount(1), beta(0.001f), threshold(0.01f) {}
 
-void IKSkeleton::setTarget(Joint * j, Eigen::Vector3f t) {
-    targets[j] = t;
+void IKSkeleton::setTarget(Joint & j, Eigen::Vector3f t) {
+    targets[&j] = t;
 }
 
-void IKSkeleton::removeTarget(Joint * j) {
-    targets.erase(j);
+void IKSkeleton::removeTarget(Joint & j) {
+    targets.erase(&j);
 }
 
-Eigen::Vector3f IKSkeleton::getTarget(Joint * j) {
-    return targets[j];
+Eigen::Vector3f IKSkeleton::getTarget(Joint & j) {
+    return targets[&j];
 }
 
 void IKSkeleton::update() {
+    Skeleton::update();
     solve();
     Skeleton::update();
 }
