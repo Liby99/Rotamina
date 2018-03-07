@@ -10,8 +10,9 @@ namespace rotamina {
     class Scene : public nanogui::GLCanvas {
     protected:
         
-        static const float SCROLL_SPEED, MOVE_SPEED;
+        static const float SCROLL_SPEED, ROTATE_SPEED, MOVE_SPEED;
         float azimuth, incline, dist;
+        bool w, a, s, d;
 
         bool hasDisplayCallback;
         std::function<void()> displayCallback;
