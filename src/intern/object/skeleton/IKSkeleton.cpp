@@ -59,7 +59,7 @@ float IKSkeleton::getWeight(Joint * curr, Joint * target) {
         }
         else {
             if (c->childrenCount() > 1) {
-                weight /= 2;
+                weight /= c->childrenCount();
             }
         }
         if (c->hasParent()) {
