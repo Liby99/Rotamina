@@ -18,7 +18,6 @@ Eigen::Vector3f IKSkeleton::getTarget(Joint & j) {
 }
 
 void IKSkeleton::update() {
-    Skeleton::update();
     solve();
     Skeleton::update();
 }

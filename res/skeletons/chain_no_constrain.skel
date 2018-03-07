@@ -27,10 +27,13 @@ balljoint chain_1 {
                     offset 0 1 0
                     boxmin -0.1 0 -0.1
                     boxmax 0.1 1 0.1
-					
-					joint end {
-						
-					}
+
+                    balljoint chain_6 {
+
+                        offset 0 1 0
+                        boxmin -0.2 -0.2 -0.2
+                        boxmax 0.2 0.2 0.2
+                    }
                 }
             }
         }

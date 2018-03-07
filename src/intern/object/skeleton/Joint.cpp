@@ -63,7 +63,9 @@ Eigen::Vector3f Joint::getOffset() {
 }
 
 std::vector<std::pair<std::string, std::string>> Joint::getVars() {
-    return std::vector<std::pair<std::string, std::string>>();
+    std::vector<std::pair<std::string, std::string>> vect;
+    vect.push_back(std::make_pair("World Position", vector3fToString(getGlobalPosition())));
+    return vect;
 }
 
 std::string Joint::getJointType() {
@@ -98,4 +100,16 @@ void Joint::draw(Shader & shader) {
     for (rotamina::Joint * j : children) {
         j->draw(shader);
     }
+}
+
+std::string Joint::vector3fToString(const Eigen::Vector3f & vec) {
+    std::ostringstream os;
+    os << "< " << vec[0] << ", " << vec[1] << ", " << vec[2] << " >";
+    return os.str();
+}
+
+std::string Joint::limitToString(const DOF & dof) {
+    std::ostringstream os;
+    os << "[ " << dof.getMin() << ", " << dof.getMax() << " ]";
+    return os.str();
 }

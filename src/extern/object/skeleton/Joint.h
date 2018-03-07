@@ -52,6 +52,9 @@ namespace rotamina {
         virtual Eigen::Matrix4f getWorldTransform();
         virtual void update(const Eigen::Matrix4f & parentTransf);
         virtual void draw(Shader & shader);
+
+        static std::string vector3fToString(const Eigen::Vector3f & vec);
+        static std::string limitToString(const DOF & dof);
     };
 }
 

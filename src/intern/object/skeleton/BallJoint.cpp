@@ -55,18 +55,6 @@ void BallJoint::setPose(const Eigen::Vector3f & pose) {
     dofs["z"]->setValue(pose[2]);
 }
 
-std::string vector3fToString(const Eigen::Vector3f & vec) {
-    std::ostringstream os;
-    os << "< " << vec[0] << ", " << vec[1] << ", " << vec[2] << " >";
-    return os.str();
-}
-
-std::string limitToString(const DOF & dof) {
-    std::ostringstream os;
-    os << "[ " << dof.getMin() << ", " << dof.getMax() << " ]";
-    return os.str();
-}
-
 std::vector<std::pair<std::string, std::string>> BallJoint::getVars() {
     std::vector<std::pair<std::string, std::string>> vect;
     vect.push_back(std::make_pair("Offset", vector3fToString(offset)));
@@ -75,6 +63,7 @@ std::vector<std::pair<std::string, std::string>> BallJoint::getVars() {
     vect.push_back(std::make_pair("X Limit", limitToString(*dofs["x"])));
     vect.push_back(std::make_pair("Y Limit", limitToString(*dofs["y"])));
     vect.push_back(std::make_pair("Z Limit", limitToString(*dofs["z"])));
+    vect.push_back(std::make_pair("World Position", vector3fToString(getGlobalPosition())));
     return vect;
 }
 
@@ -88,8 +77,7 @@ void BallJoint::update(const Eigen::Matrix4f & parentTransf) {
     transf.setRotationX(dofs["x"]->getValue());
     transf.setRotationY(dofs["y"]->getValue());
     transf.setRotationZ(dofs["z"]->getValue());
-    worldTransf = parentTransf * transf.getTransform();
-    Joint::update(worldTransf);
+    Joint::update(parentTransf * transf.getTransform());
 }
 
 void BallJoint::draw(Shader & shader) {
