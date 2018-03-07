@@ -15,7 +15,7 @@ namespace rotamina {
         
         BallJoint(std::string name);
         
-        Eigen::Vector3f getOffset();
+        virtual Eigen::Vector3f getOffset();
         Eigen::Vector3f getBoxMin();
         Eigen::Vector3f getBoxMax();
         Eigen::Vector3f getPose();

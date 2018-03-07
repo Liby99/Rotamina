@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <functional>
 
 #include <Eigen/Dense>
 
@@ -35,10 +36,14 @@ namespace rotamina {
         std::string getName();
         void setName(std::string name);
         std::vector<std::pair<std::string, DOF *>> getDOFs();
+        bool hasParent();
+        Joint & getParent();
         void addChildren(rotamina::Joint & j);
         std::vector<rotamina::Joint *> getChildren();
         int childrenCount();
-        
+
+        Eigen::Vector3f getGlobalPosition();
+        virtual Eigen::Vector3f getOffset();
         virtual std::vector<std::pair<std::string, std::string>> getVars();
         virtual std::string getJointType();
         

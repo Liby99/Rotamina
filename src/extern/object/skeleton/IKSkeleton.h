@@ -10,14 +10,12 @@ namespace rotamina {
         std::map<Joint *, Eigen::Vector3f> targets;
         IKSkeleton();
         ~IKSkeleton();
-        virtual void addTarget(Joint * j, Eigen::Vector3f t);
+        virtual void setTarget(Joint * j, Eigen::Vector3f t);
         virtual void removeTarget(Joint * j);
-        virtual std::pair<Joint *, Eigen::Vector3f> getTarget(Joint * j);
+        virtual Eigen::Vector3f getTarget(Joint * j);
         virtual void update();
     private:
-        void solve();
-        void forward();
-        void backward();
+        float getTotalLength(Joint * joint);
     };
 }
 

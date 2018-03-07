@@ -41,7 +41,6 @@
 #include "object/skeleton/Skeleton.h"
 #include "object/skeleton/DOF.h"
 #include "object/skeleton/BallJoint.h"
-#include "object/skeleton/IKSolver.h"
 #include "object/animator/CharacterAnimator.h"
 #include "object/animator/Animator.h"
 #include "object/cloth/SpringDamper.h"

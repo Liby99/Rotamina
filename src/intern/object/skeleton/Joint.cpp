@@ -4,7 +4,7 @@ using namespace rotamina;
 
 Joint::Joint() : Joint("") {}
 
-Joint::Joint(std::string name) {
+Joint::Joint(std::string name) : worldTransf(worldTransf.Identity()), parent(nullptr) {
     setName(name);
 }
 
@@ -30,6 +30,14 @@ std::vector<std::pair<std::string, DOF *>> Joint::getDOFs() {
     return ret;
 }
 
+bool Joint::hasParent() {
+    return parent != nullptr;
+}
+
+Joint & Joint::getParent() {
+    return *parent;
+}
+
 void Joint::addChildren(Joint & j) {
     children.push_back(&j);
 }
@@ -40,6 +48,20 @@ std::vector<rotamina::Joint *> Joint::getChildren() {
 
 int Joint::childrenCount() {
     return children.size();
+}
+
+Eigen::Vector3f Joint::getGlobalPosition() {
+    Eigen::Vector3f pos;
+    Joint * curr = this;
+    while (curr->parent) {
+        pos += curr->getOffset();
+        curr = curr->parent;
+    }
+    return pos;
+}
+
+Eigen::Vector3f Joint::getOffset() {
+    return Eigen::Vector3f(0, 0, 0);
 }
 
 std::vector<std::pair<std::string, std::string>> Joint::getVars() {
