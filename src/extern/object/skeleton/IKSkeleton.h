@@ -7,15 +7,23 @@
 namespace rotamina {
     class IKSkeleton : public Skeleton {
     public:
+        
+        // Variables
+        int stepCount;
+        float beta;
         std::map<Joint *, Eigen::Vector3f> targets;
+        
+        //
         IKSkeleton();
-        ~IKSkeleton();
+        
         virtual void setTarget(Joint * j, Eigen::Vector3f t);
         virtual void removeTarget(Joint * j);
         virtual Eigen::Vector3f getTarget(Joint * j);
+        
         virtual void update();
+        
     private:
-        float getTotalLength(Joint * joint);
+        virtual void solve();
     };
 }
 

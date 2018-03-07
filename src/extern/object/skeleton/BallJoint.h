@@ -33,6 +33,8 @@ namespace rotamina {
         
         virtual void update(const Eigen::Matrix4f & parentTransf);
         virtual void draw(Shader & shader);
+    protected:
+        Eigen::Vector3f getJacobianColumn(std::string name, Joint * end);
     };
 }
 

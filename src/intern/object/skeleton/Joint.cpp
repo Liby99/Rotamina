@@ -51,13 +51,7 @@ int Joint::childrenCount() {
 }
 
 Eigen::Vector3f Joint::getGlobalPosition() {
-    Eigen::Vector3f pos;
-    Joint * curr = this;
-    while (curr->parent) {
-        pos += curr->getOffset();
-        curr = curr->parent;
-    }
-    return pos;
+    return worldTransf.topRightCorner<1, 3>();
 }
 
 Eigen::Vector3f Joint::getOffset() {
@@ -70,6 +64,19 @@ std::vector<std::pair<std::string, std::string>> Joint::getVars() {
 
 std::string Joint::getJointType() {
     return "Joint";
+}
+
+Eigen::MatrixXf Joint::getJacobian(Joint * end) {
+    Eigen::MatrixXf jacobian(3, dofs.size());
+    int i = 0;
+    for (auto it = dofs.begin(); it != dofs.end(); it++, i++) {
+        jacobian.col(i) << getJacobianColumn(it->first, end);
+    }
+    return jacobian;
+}
+
+Eigen::Vector3f Joint::getJacobianColumn(std::string name, Joint * end) {
+    return Eigen::Vector3f(0, 0, 0);
 }
 
 Eigen::Matrix4f Joint::getWorldTransform() {

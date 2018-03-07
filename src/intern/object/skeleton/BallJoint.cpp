@@ -96,3 +96,11 @@ void BallJoint::draw(Shader & shader) {
     box.draw(shader, worldTransf);
     Joint::draw(shader);
 }
+
+Eigen::Vector3f BallJoint::getJacobianColumn(std::string name, Joint * end) {
+    Eigen::Vector4f a(0, 0, 0);
+    if (name == "x") a[0] = 1;
+    else if (name == "y") a[1] = 1;
+    else if (name == "z") a[2] = 1;
+    return a.cross(end->getGlobalPosition() - getGlobalPosition());
+}

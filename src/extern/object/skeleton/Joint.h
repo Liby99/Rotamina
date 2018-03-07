@@ -18,8 +18,6 @@ namespace rotamina {
     class Joint {
     protected:
         
-        int BUF_SIZE = 32;
-        
         std::string name;
         std::map<std::string, DOF *> dofs;
         Eigen::Matrix4f worldTransf;
@@ -46,6 +44,9 @@ namespace rotamina {
         virtual Eigen::Vector3f getOffset();
         virtual std::vector<std::pair<std::string, std::string>> getVars();
         virtual std::string getJointType();
+
+        Eigen::MatrixXf getJacobian(Joint * end);
+        virtual Eigen::Vector3f getJacobianColumn(std::string name, Joint * end);
         
         virtual Eigen::Matrix4f getWorldTransform();
         virtual void update(const Eigen::Matrix4f & parentTransf);
