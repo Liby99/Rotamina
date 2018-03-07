@@ -3,7 +3,7 @@
 
 using namespace rotamina;
 
-IKSkeleton::IKSkeleton() : Skeleton(), stepCount(1), beta(0.001f), threshold(0.01f) {}
+IKSkeleton::IKSkeleton() : Skeleton(), stepCount(1), beta(0.01f), threshold(0.01f) {}
 
 void IKSkeleton::setTarget(Joint & j, Eigen::Vector3f t) {
     targets[&j] = t;
@@ -30,6 +30,8 @@ void IKSkeleton::solve() {
         // Go through every joint
         for (Joint * j : joints) {
 
+            float weight = 1.0f / targets.size();
+
             // Loop through multiple targets
             for (auto it = targets.begin(); it != targets.end(); it++) {
 
@@ -37,7 +39,7 @@ void IKSkeleton::solve() {
                 for (auto dp : j->getDOFs()) {
 
                     Eigen::Vector3f col = j->getJacobianColumn(dp.first, it->first);
-                    Eigen::Vector3f de = beta * (it->second - it->first->getGlobalPosition());
+                    Eigen::Vector3f de = weight * beta * (it->second - it->first->getGlobalPosition());
                     float change = col.dot(de);
                     dp.second->setValue(dp.second->getValue() + change);
 

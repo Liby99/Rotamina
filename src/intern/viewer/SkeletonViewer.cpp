@@ -64,6 +64,7 @@ void SkeletonViewer::addJointButton(rotamina::Joint * joint, nanogui::Widget * p
 }
 
 void SkeletonViewer::clearJointInfo() {
+    currJoint = nullptr;
     int count = jointInfoViewer->childCount();
     for (int i = 0; i < count; i++) {
         jointInfoViewer->removeChild(0);
@@ -74,6 +75,8 @@ void SkeletonViewer::clearJointInfo() {
 void SkeletonViewer::showJointInfo(rotamina::Joint * joint) {
     
     clearJointInfo();
+
+    currJoint = joint;
     
     using namespace nanogui;
     

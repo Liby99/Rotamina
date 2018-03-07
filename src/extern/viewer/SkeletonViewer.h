@@ -10,14 +10,15 @@ namespace rotamina {
         
         static const int JOINTS_VIEWER_WIDTH;
         static const int JOINT_INFO_VIEWER_WIDTH;
-        
+
+        rotamina::Joint * currJoint;
         rotamina::Skeleton * skeleton;
         nanogui::Window * jointsViewer;
         nanogui::Window * jointInfoViewer;
     public:
         SkeletonViewer(int, int, std::string, Skeleton & skel);
         static void createViewer(int, int, std::string, Skeleton & skel, std::function<void(SkeletonViewer &)>);
-    private:
+    protected:
         void addJointButton(rotamina::Joint *, nanogui::Widget *);
         void clearJointInfo();
         void showJointInfo(rotamina::Joint *);
